@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaSync - Notifications</title>
+    <link rel="stylesheet" href="../../../public/assets/css/Pharmacist/notification.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>PharmaSync</h1>
+                <p>Pharmacist Portal</p>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="#" class="nav-item"><i data-lucide="clipboard-list"></i> Prescription Queue</a>
+                <a href="#" class="nav-item"><i data-lucide="package"></i> Medicine Availability</a>
+                <a href="#" class="nav-item"><i data-lucide="shopping-cart"></i> Physical Sale</a>
+                <a href="#" class="nav-item"><i data-lucide="history"></i> Prescription History</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item active"><i data-lucide="bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
+                <a href="#" class="nav-item logout"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Viewport -->
+        <main class="main-content">
+            <!-- Top Header Navbar Component -->
+            <header class="top-navbar">
+                <div class="header-left">
+                    <h2 class="page-title">Notifications</h2>
+                </div>
+                <div class="header-right">
+                    <a href="#" class="link-action">Mark all as read</a>
+                    <button class="header-icon-btn"><i data-lucide="search"></i></button>
+                    <div class="profile-avatar"></div>
+                </div>
+            </header>
+
+            <!-- Notifications Central List Container -->
+            <section class="card notifications-card">
+                <div class="notifications-list">
+                    
+                    <!-- Row 1: New Upload (Unread Info) -->
+                    <div class="notification-row unread">
+                        <div class="row-left">
+                            <span class="unread-dot"></span>
+                            <div class="badge-icon type-info"><i data-lucide="file-text"></i></div>
+                            <div class="notification-body">
+                                <h4>New prescription uploaded for review</h4>
+                                <p>Patient ID: #PT-8821 has submitted a new digital order.</p>
+                            </div>
+                        </div>
+                        <span class="timestamp-text">2 mins ago</span>
+                    </div>
+
+                    <!-- Row 2: Drug Interaction (Unread Warning) -->
+                    <div class="notification-row unread">
+                        <div class="row-left">
+                            <span class="unread-dot"></span>
+                            <div class="badge-icon type-warning"><i data-lucide="triangle-alert"></i></div>
+                            <div class="notification-body">
+                                <h4>Prescription flagged: drug interaction risk</h4>
+                                <p>Potential interaction between Warfarin and recent Ibuprofen request.</p>
+                            </div>
+                        </div>
+                        <span class="timestamp-text">15 mins ago</span>
+                    </div>
+
+                    <!-- Row 3: Patient Allergy Mismatch (Unread Urgent Danger) -->
+                    <div class="notification-row unread">
+                        <div class="row-left">
+                            <span class="unread-dot"></span>
+                            <div class="badge-icon type-danger"><i data-lucide="triangle-alert"></i></div>
+                            <div class="notification-body">
+                                <h4>Urgent: Patient allergy mismatch detected</h4>
+                                <p>System detected Penicillin allergy for Prescription #RX-1120.</p>
+                            </div>
+                        </div>
+                        <span class="timestamp-text">45 mins ago</span>
+                    </div>
+
+                    <!-- Row 4: Low Stock Alert (Read Secondary Warning) -->
+                    <div class="notification-row">
+                        <div class="row-left">
+                            <span class="placeholder-dot"></span>
+                            <div class="badge-icon type-inventory"><i data-lucide="package"></i></div>
+                            <div class="notification-body">
+                                <h4>Low stock alert: Lisinopril 10mg</h4>
+                                <p>Inventory fell below threshold. Current count: 12 units.</p>
+                            </div>
+                        </div>
+                        <span class="timestamp-text">2 hours ago</span>
+                    </div>
+
+                    <!-- Row 5: Admin Message (Read System Info) -->
+                    <div class="notification-row">
+                        <div class="row-left">
+                            <span class="placeholder-dot"></span>
+                            <div class="badge-icon type-system"><i data-lucide="settings"></i></div>
+                            <div class="notification-body">
+                                <h4>Admin message: system maintenance scheduled</h4>
+                                <p>Portal will be offline for 15 mins on Sunday at 02:00 AM EST.</p>
+                            </div>
+                        </div>
+                        <span class="timestamp-text">5 hours ago</span>
+                    </div>
+
+                    <!-- Row 6: Dispensed Successfully (Read Success) -->
+                    <div class="notification-row">
+                        <div class="row-left">
+                            <span class="placeholder-dot"></span>
+                            <div class="badge-icon type-success"><i data-lucide="check"></i></div>
+                            <div class="notification-body">
+                                <h4>Prescription #RX-00234 dispensed successfully</h4>
+                                <p>Verified and completed by Pharmacist ID #9921.</p>
+                            </div>
+                        </div>
+                        <span class="timestamp-text">Yesterday</span>
+                    </div>
+
+                </div>
+
+                <!-- Footer Dropdown Actions Toggle -->
+                <button class="btn-load-older">
+                    <span>View older notifications</span>
+                    <i data-lucide="chevron-down"></i>
+                </button>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

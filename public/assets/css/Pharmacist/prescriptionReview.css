@@ -1,0 +1,408 @@
+/* Layout Reset & Core Framework foundations */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+    background-color: #f3f7f9;
+    color: #333333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Framework styling layout */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
+}
+
+.logo-area {
+    padding: 0 24px 30px 24px;
+}
+
+.logo-area h1 {
+    font-size: 24px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.logo-area p {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.nav-links {
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-item i {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-item.active {
+    background-color: #e0f2fe;
+    color: #0284c7;
+    border-left: 4px solid #0284c7;
+}
+
+.sidebar-footer {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+}
+
+.logout { color: #ef4444; }
+
+/* Main Dynamic Workspace framework panels */
+.main-content {
+    margin-left: 260px;
+    flex-grow: 1;
+    padding: 20px 35px 40px 35px;
+}
+
+/* Sub-header navigation toolbar row elements */
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.badge-status {
+    background-color: #fef3c7;
+    color: #b45309;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid #fde68a;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.btn-back {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-back i {
+    width: 15px;
+    height: 15px;
+}
+
+.divider {
+    width: 1px;
+    height: 20px;
+    background-color: #cbd5e1;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #475569;
+}
+
+.icon-btn i {
+    width: 18px;
+    height: 18px;
+}
+
+/* Card Foundations Layout */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid #e2e8f0;
+}
+
+/* Columns Split Grid Configurations */
+.review-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+/* Left Document Viewer block */
+.document-viewer-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.card-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.zoom-btn {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #006666;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.zoom-btn i {
+    width: 16px;
+    height: 16px;
+}
+
+.document-body {
+    padding: 24px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 480px;
+}
+
+.placeholder-image-box {
+    width: 100%;
+    max-width: 440px;
+    height: 380px;
+    background-color: #eef2ff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-icon {
+    width: 40px;
+    height: 40px;
+    color: #818cf8;
+}
+
+.card-footer-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background-color: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* Right Side Stack Details Column items */
+.details-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detail-card {
+    padding: 20px;
+}
+
+.panel-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.panel-title i {
+    width: 16px;
+    height: 16px;
+    color: #006666;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.3px;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.info-single {
+    margin-bottom: 15px;
+}
+
+.allergy-section {
+    border-top: 1px solid #f1f5f9;
+    padding-top: 15px;
+}
+
+.allergy-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.tag-red {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+/* Notes Section Text Area configurations */
+.textarea-container textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+    font-size: 13px;
+    color: #334155;
+    resize: vertical;
+}
+
+.textarea-container textarea::placeholder {
+    color: #94a3b8;
+}
+
+.notes-hint {
+    margin-top: 12px;
+    font-size: 11px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.notes-hint i {
+    width: 14px;
+    height: 14px;
+}
+
+/* Action Verification Layout Options */
+.actions-card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: #f8fafc;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn i {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-approve {
+    background-color: #00e5ff;
+    color: #0f172a;
+    border: none;
+}
+
+.btn-approve:hover {
+    background-color: #00c4db;
+}
+
+.btn-reject {
+    background-color: #ffffff;
+    color: #ef4444;
+    border: 1.5px solid #fca5a5;
+}
+
+.btn-reject:hover {
+    background-color: #fef2f2;
+}
+
+.action-logs-text {
+    text-align: center;
+    font-size: 10px;
+    color: #94a3b8;
+    margin-top: 4px;
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaSync - Prescription Review</title>
+    <link rel="stylesheet" href="../../../public/assets/css/Pharmacist/prescriptionReview.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>PharmaSync</h1>
+                <p>Pharmacist Portal</p>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="#" class="nav-item active"><i data-lucide="clipboard-list"></i> Prescription Queue</a>
+                <a href="#" class="nav-item"><i data-lucide="package"></i> Medicine Availability</a>
+                <a href="#" class="nav-item"><i data-lucide="shopping-cart"></i> Physical Sale</a>
+                <a href="#" class="nav-item"><i data-lucide="history"></i> Prescription History</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item"><i data-lucide="bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
+                <a href="#" class="nav-item logout"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Panels -->
+        <main class="main-content">
+            <!-- Top Subheader Control Navbar -->
+            <header class="top-navbar">
+                <div class="header-left">
+                    <h2 class="header-title">Prescription Review — #RX-00234</h2>
+                    <span class="badge-status">Pending Review</span>
+                </div>
+                <div class="header-right">
+                    <a href="#" class="btn-back"><i data-lucide="arrow-left"></i> Back to Queue</a>
+                    <div class="divider"></div>
+                    <button class="icon-btn"><i data-lucide="bell"></i></button>
+                    <button class="icon-btn"><i data-lucide="settings"></i></button>
+                </div>
+            </header>
+
+            <!-- Two-Column Grid Setup -->
+            <div class="review-grid">
+                <!-- Left Side: Prescription Document Canvas Box -->
+                <section class="card document-viewer-card">
+                    <div class="card-header">
+                        <h3>Prescription Document</h3>
+                        <button class="zoom-btn"><i data-lucide="search-code"></i></button>
+                    </div>
+                    <div class="document-body">
+                        <div class="placeholder-image-box">
+                            <i data-lucide="image" class="image-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-footer-info">
+                        <span>Uploaded: Oct 24, 2024 • 14:32</span>
+                        <span>File: PDF (1.2 MB)</span>
+                    </div>
+                </section>
+
+                <!-- Right Side: Patient Info, Actions and Review Context Layout -->
+                <div class="details-column">
+                    <!-- Patient Information Panel -->
+                    <section class="card detail-card">
+                        <div class="panel-title"><i data-lucide="user"></i> Patient Information</div>
+                        <div class="info-grid">
+                            <div>
+                                <label>FULL NAME</label>
+                                <p class="info-value">Ravindu Perera</p>
+                            </div>
+                            <div>
+                                <label>AGE / SEX</label>
+                                <p class="info-value">34y / Male</p>
+                            </div>
+                        </div>
+                        <div class="info-single">
+                            <label>CONTACT</label>
+                            <p class="info-value">0771234567</p>
+                        </div>
+                        <div class="allergy-section">
+                            <label>KNOWN ALLERGIES</label>
+                            <div class="allergy-tags">
+                                <span class="tag tag-red">PENICILLIN</span>
+                                <span class="tag tag-red">LATEX</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Pharmacist Notes Typing Area -->
+                    <section class="card detail-card">
+                        <div class="panel-title"><i data-lucide="file-text"></i> Pharmacist Notes</div>
+                        <div class="textarea-container">
+                            <label>CLINICAL NOTES</label>
+                            <textarea placeholder="Add any notes about legibility, doctor verification, or general observations..."></textarea>
+                        </div>
+                        <div class="notes-hint">
+                            <i data-lucide="info"></i> Notes are saved automatically and visible to other pharmacists.
+                        </div>
+                    </section>
+
+                    <!-- Action Verification Buttons Box -->
+                    <section class="card actions-card">
+                        <button class="btn btn-approve"><i data-lucide="check-circle-2"></i> Approve & Proceed</button>
+                        <button class="btn btn-reject"><i data-lucide="ban"></i> Reject / Flag</button>
+                        <div class="action-logs-text">Action will be logged under UID: PHAR-8821</div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

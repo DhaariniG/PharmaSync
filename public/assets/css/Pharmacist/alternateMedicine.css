@@ -1,0 +1,475 @@
+/* Core Document Structural Formats */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+    background-color: #f3f7f9;
+    color: #333333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Framework styling elements */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
+}
+
+.logo-area {
+    padding: 0 24px 30px 24px;
+}
+
+.logo-area h1 {
+    font-size: 24px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.logo-area p {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.nav-links {
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-item i {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-item.active {
+    background-color: #e0f2fe;
+    color: #0284c7;
+    border-left: 4px solid #0284c7;
+}
+
+.sidebar-footer {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+}
+
+.logout { color: #ef4444; }
+
+/* Main Working Canvas Box Panels Layout */
+.main-content {
+    margin-left: 260px;
+    flex-grow: 1;
+    padding: 20px 35px 40px 35px;
+}
+
+/* Top Navigation App Header row tools */
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.back-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #00766c;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.back-link i {
+    width: 16px;
+    height: 16px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.badge-action-required {
+    background-color: #fff7ed;
+    color: #c2410c;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid #ffedd5;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-dot {
+    color: #ea580c;
+    font-size: 14px;
+    line-height: 0;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.icon-btn i {
+    width: 18px;
+    height: 18px;
+}
+
+.page-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 15px;
+}
+
+/* Informative Context Top Notification Alert Box Banner styles */
+.info-banner {
+    background-color: #e0fbf6;
+    border: 1px solid #a7f3d0;
+    padding: 14px 20px;
+    border-radius: 8px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.banner-icon {
+    width: 18px;
+    height: 18px;
+    color: #00766c;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.info-banner p {
+    font-size: 12px;
+    color: #004d40;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+/* Structural Layout Components Modules */
+.card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    border: 1px solid #e2e8f0;
+}
+
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 2.1fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.alternatives-stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.master-alternatives-card {
+    padding: 24px;
+}
+
+.card-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.card-section-header h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.badge-count {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    background-color: #f1f5f9;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Individual Nested Item Segment Blocks */
+.medicine-review-block {
+    padding: 24px 0;
+    border-bottom: 1px dashed #cbd5e1;
+}
+
+.medicine-review-block.no-border {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.med-status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.med-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.med-qty-label {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+.badge-stock {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.stock-out {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.stock-insufficient {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+
+/* Alternative Nested Choice Rows Custom Input design layout */
+.alternatives-section h5 {
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.alt-option-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.alt-option-card:last-child {
+    margin-bottom: 0;
+}
+
+.option-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alt-option-card input[type="radio"] {
+    accent-color: #00766c;
+    width: 16px;
+    height: 16px;
+}
+
+.alt-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* Selected Alternate Card States layout */
+.alt-option-card.selected {
+    border: 1.5px solid #00766c;
+    background-color: #f0fdfa;
+}
+
+.badge-recommended {
+    background-color: #00766c;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+}
+
+/* Fallback Warning block container styles */
+.error-inline-banner {
+    background-color: #fff5f5;
+    border: 1px solid #fee2e2;
+    padding: 12px 16px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #c53030;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.error-inline-banner i {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* Local Flow Control Operation Action Buttons */
+.local-actions-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.btn {
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn i {
+    width: 15px;
+    height: 15px;
+}
+
+.btn-secondary {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+}
+
+.btn-danger {
+    background-color: #ffffff;
+    border: 1px solid #fca5a5;
+    color: #ef4444;
+}
+
+.btn-danger:hover { background-color: #fff5f5; }
+.btn-secondary:hover { background-color: #f8fafc; }
+
+.btn-cancel-link {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Right Metric Stack Invoice Calculators widgets card rules styling properties */
+.impact-card {
+    padding: 20px;
+}
+
+.impact-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 20px;
+}
+
+.impact-metrics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+}
+
+.metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.metric-label {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.metric-val {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.text-dark { color: #334155; }
+.text-teal { color: #00b4a4; }
+
+.highlight-row .metric-label {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.summary-counters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.counter-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #475569;
+    font-weight: 500;
+}
+
+.counter-num {
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.counter-num.color-alert {
+    color: #ef4444;
+}

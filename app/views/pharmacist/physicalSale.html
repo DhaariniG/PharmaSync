@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaSync - Physical Sale</title>
+    <link rel="stylesheet" href="../../../public/assets/css/Pharmacist/physicalSale.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>PharmaSync</h1>
+                <p>Pharmacist Portal</p>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="#" class="nav-item"><i data-lucide="clipboard-list"></i> Prescription Queue</a>
+                <a href="#" class="nav-item"><i data-lucide="package"></i> Medicine Availability</a>
+                <a href="#" class="nav-item active"><i data-lucide="shopping-cart"></i> Physical Sale</a>
+                <a href="#" class="nav-item"><i data-lucide="history"></i> Prescription History</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item"><i data-lucide="bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
+                <a href="#" class="nav-item logout"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Top App Header Section -->
+            <header class="top-navbar">
+                <div class="header-left">
+                    <h2 class="page-title">Physical Sale</h2>
+                </div>
+                <div class="header-right-profile">
+                    <div class="notification-wrapper">
+                        <i data-lucide="bell" class="header-bell-icon"></i>
+                        <span class="notification-indicator"></span>
+                    </div>
+                    <div class="profile-details">
+                        <span class="profile-name">Hari De Silva</span>
+                        <span class="profile-role">SENIOR PHARMACIST</span>
+                    </div>
+                    <div class="profile-avatar"></div>
+                </div>
+            </header>
+
+            <!-- Main Layout Split -->
+            <div class="workspace-grid">
+                
+                <!-- Left Column Content Panels -->
+                <div class="left-stack">
+                    
+                    <!-- Core Order Building Block -->
+                    <section class="card workflow-card">
+                        <div class="workflow-header">
+                            <div class="workflow-title-group">
+                                <i data-lucide="plus-circle" class="icon-teal"></i>
+                                <h3>Add Medicines</h3>
+                            </div>
+                            <span class="terminal-id">Terminal ID: PS-002</span>
+                        </div>
+
+                        <!-- Search Box Compound Row -->
+                        <div class="search-input-wrapper">
+                            <i data-lucide="search" class="search-inside-icon"></i>
+                            <input type="text" placeholder="Search medicine to add..." class="med-search-field">
+                            <div class="kbd-shortcuts">
+                                <kbd>ALT</kbd>
+                                <kbd>S</kbd>
+                            </div>
+                        </div>
+
+                        <!-- Itemized Selection Table list grid -->
+                        <div class="sales-table">
+                            <div class="table-header">
+                                <div>MEDICINE NAME</div>
+                                <div>BATCH / EXPIRY</div>
+                                <div>UNIT PRICE</div>
+                                <div class="text-center">QUANTITY</div>
+                                <div>SUBTOTAL</div>
+                                <div></div>
+                            </div>
+
+                            <!-- Row Item 1 -->
+                            <div class="table-row">
+                                <div class="med-identity">
+                                    <span class="med-name">Amoxicillin 500mg</span>
+                                    <span class="med-meta">Capsule • 10/Strip</span>
+                                </div>
+                                <div>
+                                    <div class="batch-badge">B-23859</div>
+                                    <div class="exp-date text-orange">7 days left</div>
+                                </div>
+                                <div class="price-cell">Rs.</div>
+                                <div class="qty-control-cell">
+                                    <button class="qty-btn">-</button>
+                                    <span class="qty-number">02</span>
+                                    <button class="qty-btn">+</button>
+                                </div>
+                                <div class="subtotal-cell">Rs.</div>
+                                <div class="action-cell">
+                                    <button class="btn-icon-delete"><i data-lucide="trash-2"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Row Item 2 -->
+                            <div class="table-row">
+                                <div class="med-identity">
+                                    <span class="med-name">Lisinopril 10mg</span>
+                                    <span class="med-meta">Tablet • 28/Bottle</span>
+                                </div>
+                                <div>
+                                    <div class="batch-badge empty">L-44182</div>
+                                    <div class="exp-date text-teal">05/2027</div>
+                                </div>
+                                <div class="price-cell">Rs.</div>
+                                <div class="qty-control-cell">
+                                    <button class="qty-btn">-</button>
+                                    <span class="qty-number">01</span>
+                                    <button class="qty-btn">+</button>
+                                </div>
+                                <div class="subtotal-cell">Rs.</div>
+                                <div class="action-cell">
+                                    <button class="btn-icon-delete"><i data-lucide="trash-2"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Optional Attachments Dropzone Card -->
+                    <section class="card workflow-card">
+                        <div class="workflow-header border-none">
+                            <div class="workflow-title-group">
+                                <i data-lucide="file-text" class="icon-teal"></i>
+                                <h3>Attach Prescription <span class="text-weight-normal">(if required)</span></h3>
+                            </div>
+                        </div>
+
+                        <label class="file-dropzone" for="prescription-upload">
+                            <input type="file" id="prescription-upload" accept=".pdf,.jpg,.jpeg,.png" class="hidden-file-input">
+                            <div class="dropzone-circle">
+                                <i data-lucide="cloud-upload"></i>
+                            </div>
+                            <p class="dropzone-text-main">Click or drag files to upload</p>
+                            <p class="dropzone-text-sub">PDF, JPG, or PNG (Max 5MB)</p>
+                        </label>
+                    </section>
+                </div>
+
+                <!-- Right Column Checkout Details Panel -->
+                <div class="right-stack">
+                    <section class="card summary-panel-card">
+                        <h3>Order Summary</h3>
+
+                        <div class="pricing-ledger">
+                            <div class="ledger-row">
+                                <span>Subtotal</span>
+                                <span class="ledger-unit">Rs.</span>
+                            </div>
+                            <div class="ledger-row align-center">
+                                <span>Discount</span>
+                                <div class="discount-input-group">
+                                    <span class="input-currency">Rs.</span>
+                                    <input type="text" value="0.00" class="discount-field">
+                                </div>
+                            </div>
+                            <div class="ledger-row">
+                                <span>Tax <span class="text-weight-normal">(VAT 5%)</span></span>
+                                <span class="ledger-unit">Rs.</span>
+                            </div>
+                        </div>
+
+                        <div class="grand-total-row">
+                            <span class="total-label">Total</span>
+                            <span class="total-amount">Rs.</span>
+                        </div>
+
+                        <!-- Customer Details Ingestion Form Block -->
+                        <div class="form-section">
+                            <h4>CUSTOMER INFORMATION</h4>
+                            <div class="form-group">
+                                <label>Customer Name</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Payment Modality Selector Elements Toggle Grid -->
+                        <div class="form-section">
+                            <h4>PAYMENT METHOD</h4>
+                            <div class="payment-toggle-grid">
+                                <label class="payment-option selected">
+                                    <input type="radio" name="payment-type" checked class="hidden-radio">
+                                    <i data-lucide="banknote"></i>
+                                    <span>Cash</span>
+                                </label>
+                                <label class="payment-option">
+                                    <input type="radio" name="payment-type" class="hidden-radio">
+                                    <i data-lucide="credit-card"></i>
+                                    <span>Card (Sandbox)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Submission Trigger Buttons Footer Links -->
+                        <div class="summary-actions-group">
+                            <button class="btn btn-complete-sale">Complete Sale <i data-lucide="arrow-right"></i></button>
+                            <button class="btn btn-print-quotation">Print Quotation</button>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

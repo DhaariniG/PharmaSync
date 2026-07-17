@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaSync Dashboard</title>
+    <link rel="stylesheet" href="../../../public/assets/css/Pharmacist/dashboard.css">
+    <!-- Lucide Icons for clean dashboard elements -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>PharmaSync</h1>
+                <p>Pharmacist Portal</p>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-item active"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="#" class="nav-item"><i data-lucide="clipboard-list"></i> Prescription Queue</a>
+                <a href="#" class="nav-item"><i data-lucide="package"></i> Medicine Availability</a>
+                <a href="#" class="nav-item"><i data-lucide="shopping-cart"></i> Physical Sale</a>
+                <a href="#" class="nav-item"><i data-lucide="history"></i> Prescription History</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item"><i data-lucide="bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
+                <a href="#" class="nav-item logout"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <main class="main-content">
+            <!-- Top Header Navbar -->
+            <header class="top-navbar">
+                <div class="header-title">Dashboard</div>
+                <div class="search-bar">
+                    <i data-lucide="search"></i>
+                    <input type="text" placeholder="Search prescriptions, medicines...">
+                </div>
+                <div class="user-profile">
+                    <button class="notification-btn"><i data-lucide="bell"></i></button>
+                    <div class="divider"></div>
+                    <div class="user-info">
+                        <span class="user-name">Hari De Silva</span>
+                        <span class="user-role">SENIOR PHARMACIST</span>
+                    </div>
+                    <div class="avatar"></div>
+                </div>
+            </header>
+
+            <!-- Metrics Cards Row -->
+            <section class="metrics-grid">
+                <div class="card metric-card">
+                    <div>
+                        <p class="metric-label">Pending<br>Prescriptions</p>
+                        <h2 class="metric-value">24</h2>
+                    </div>
+                    <div class="metric-icon icon-pending"><i data-lucide="clock"></i></div>
+                </div>
+                <div class="card metric-card">
+                    <div>
+                        <p class="metric-label">Approved Today</p>
+                        <h2 class="metric-value">142</h2>
+                    </div>
+                    <div class="metric-icon icon-approved"><i data-lucide="check-circle-2"></i></div>
+                </div>
+                <div class="card metric-card">
+                    <div>
+                        <p class="metric-label">Rejected Today</p>
+                        <h2 class="metric-value value-rejected">12</h2>
+                    </div>
+                    <div class="metric-icon icon-rejected"><i data-lucide="x-circle"></i></div>
+                </div>
+                <div class="card metric-card">
+                    <div>
+                        <p class="metric-label">Physical Sales Today</p>
+                        <h2 class="metric-value">Rs. 34,500</h2>
+                    </div>
+                    <div class="metric-icon icon-sales"><i data-lucide="banknote"></i></div>
+                </div>
+            </section>
+
+            <!-- Lower Dashboard Widgets Grid -->
+            <div class="dashboard-widgets">
+                <!-- Recent Prescription Activity Table -->
+                <section class="card table-widget">
+                    <div class="widget-header">
+                        <h3>Recent Prescription Activity</h3>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>PATIENT NAME</th>
+                                    <th>MEDICINE(S)</th>
+                                    <th>STATUS</th>
+                                    <th>SUBMITTED</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sarah Silva</td>
+                                    <td>Amoxicillin 500mg</td>
+                                    <td><span class="status status-approved">APPROVED</span></td>
+                                    <td>10:45 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>David Miller</td>
+                                    <td>Lisinopril 10mg, Metformin</td>
+                                    <td><span class="status status-pending">PENDING</span></td>
+                                    <td>11:12 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>Virat Kohli</td>
+                                    <td>Atorvastatin 20mg</td>
+                                    <td><span class="status status-approved">APPROVED</span></td>
+                                    <td>11:30 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>Mahela Jayakodi</td>
+                                    <td>Prednisone 5mg (10 Day)</td>
+                                    <td><span class="status status-rejected">REJECTED</span></td>
+                                    <td>11:55 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>John Doe</td>
+                                    <td>Sertraline 50mg</td>
+                                    <td><span class="status status-approved">APPROVED</span></td>
+                                    <td>12:15 PM</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Priority Alerts Panel -->
+                <section class="card alerts-widget">
+                    <h3>Priority Alerts</h3>
+                    
+                    <div class="alert-box alert-warning">
+                        <div class="alert-title"><i data-lucide="package-x"></i> Low Stock Alert</div>
+                        <p class="alert-desc"><strong>Medicine:</strong> Metformin 500mg</p>
+                        <p class="alert-subtext">Only 45 units remaining in current inventory.</p>
+                    </div>
+
+                    <div class="alert-box alert-danger">
+                        <div class="alert-title"><i data-lucide="calendar-x"></i> Expiring Batch</div>
+                        <p class="alert-desc"><strong>Batch:</strong> RX-892-B</p>
+                        <p class="alert-subtext">Insulin Glargine expires in 14 days.</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Action Buttons Area -->
+            <div class="action-footer">
+                <button class="btn btn-primary"><i data-lucide="text-quote"></i> Review Prescriptions</button>
+                <button class="btn btn-secondary"><i data-lucide="shopping-cart"></i> New Physical Sale</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Initialize icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

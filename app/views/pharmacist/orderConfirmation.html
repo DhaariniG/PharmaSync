@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaSync - Final Order Confirmation</title>
+    <link rel="stylesheet" href="../../../public/assets/css/Pharmacist/orderConfirmation.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>PharmaSync</h1>
+                <p>Pharmacist Portal</p>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="#" class="nav-item active"><i data-lucide="clipboard-list"></i> Prescription Queue</a>
+                <a href="#" class="nav-item"><i data-lucide="package"></i> Medicine Availability</a>
+                <a href="#" class="nav-item"><i data-lucide="shopping-cart"></i> Physical Sale</a>
+                <a href="#" class="nav-item"><i data-lucide="history"></i> Prescription History</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item"><i data-lucide="bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
+                <a href="#" class="nav-item logout"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Viewport -->
+        <main class="main-content">
+            <!-- Top App Header Section -->
+            <header class="top-navbar">
+                <div class="header-left">
+                    <a href="#" class="back-link"><i data-lucide="arrow-left"></i> Back to Medicine Selection</a>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn"><i data-lucide="bell"></i></button>
+                    <button class="icon-btn"><i data-lucide="settings"></i></button>
+                </div>
+            </header>
+
+            <h2 class="page-title">Final order confirmation</h2>
+
+            <!-- Main Split Layout Configuration -->
+            <div class="confirmation-grid">
+                
+                <!-- Left Details Content Stack -->
+                <div class="left-stack">
+                    
+                    <!-- Patient Record Context Info Card -->
+                    <section class="card summary-card-padding">
+                        <div class="patient-card-header">
+                            <h3>Patient Information</h3>
+                            <span class="rx-id-tag">#RX-00234</span>
+                        </div>
+                        <div class="patient-info-grid">
+                            <div>
+                                <label>PATIENT NAME</label>
+                                <p class="info-value">Eleanor Vance</p>
+                            </div>
+                            <div>
+                                <label>DATE OF BIRTH</label>
+                                <p class="info-value">June 14, 1978 (45 Yrs)</p>
+                            </div>
+                            <div>
+                                <label>PRESCRIBING PHYSICIAN</label>
+                                <p class="info-value">Dr. Marcus Thorne</p>
+                            </div>
+                            <div>
+                                <label>PRESCRIPTION DATE</label>
+                                <p class="info-value">Oct 24, 2023</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Final Verified Medicine List Table Card -->
+                    <section class="card summary-card-padding">
+                        <h3 class="section-title">Final Medicine List</h3>
+                        
+                        <div class="confirmation-table">
+                            <div class="table-header">
+                                <div>MEDICINE & SUBSTITUTION</div>
+                                <div>STRENGTH</div>
+                                <div>QTY</div>
+                                <div>BATCH / EXPIRY</div>
+                                <div class="text-right">SUBTOTAL</div>
+                            </div>
+
+                            <!-- Item row 1 -->
+                            <div class="table-row">
+                                <div class="med-name-cell">
+                                    <span class="med-title">Atorvastatin</span>
+                                    <span class="sub-title-text">Lipitor Brand Equivalent</span>
+                                </div>
+                                <div>20 mg</div>
+                                <div>20 Tabs</div>
+                                <div class="batch-cell">
+                                    <span>B - 99291</span>
+                                    <span class="exp-date-alert">EXP: 12/2025</span>
+                                </div>
+                                <div class="text-right subtotal-val">$12.50</div>
+                            </div>
+
+                            <!-- Item row 2 (Substitution applied variant) -->
+                            <div class="table-row">
+                                <div class="med-name-cell">
+                                    <span class="med-title title-struck">Panadol 500mg</span>
+                                    <span class="sub-applied-text"><i data-lucide="corner-down-right"></i> Paracetamol 500mg</span>
+                                </div>
+                                <div>500 mg</div>
+                                <div>20 Tabs</div>
+                                <div class="batch-cell">
+                                    <span>P - 3342</span>
+                                    <span>EXP: 08/2026</span>
+                                </div>
+                                <div class="text-right subtotal-val">$4.25</div>
+                            </div>
+
+                            <!-- Item row 3 -->
+                            <div class="table-row">
+                                <div class="med-name-cell">
+                                    <span class="med-title">Amoxicillin</span>
+                                    <span class="sub-title-text">Amoxil Brand Equivalent</span>
+                                </div>
+                                <div>500 mg</div>
+                                <div>14 Caps</div>
+                                <div class="batch-cell">
+                                    <span>A - 77626</span>
+                                    <span>EXP: 11/2026</span>
+                                </div>
+                                <div class="text-right subtotal-val">$9.00</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Calculations Invoice Panels Stack -->
+                <div class="right-stack">
+                    <!-- Billing Summary Pricing Panel -->
+                    <section class="card metrics-card">
+                        <h3>Order Summary</h3>
+                        
+                        <div class="metrics-list">
+                            <div class="metric-row">
+                                <span>Medicine Count</span>
+                                <span class="val-bold">3 Items</span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Payment Method</span>
+                                <span class="val-bold">Insurance (80%)</span>
+                            </div>
+                            <div class="metric-row">
+                                <span>Full Price</span>
+                                <span class="val-neutral">$25.75</span>
+                            </div>
+                        </div>
+
+                        <div class="total-highlight-row">
+                            <span class="total-label">Patient Total</span>
+                            <span class="total-amount">$25.75</span>
+                        </div>
+
+                        <!-- Delivery Tracking Info Notice Box -->
+                        <div class="delivery-notice">
+                            <i data-lucide="truck"></i>
+                            <div class="notice-text">
+                                Est. Delivery: Tomorrow, Oct 25 before 2:00 PM
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Document Copy Preview Card Box -->
+                    <section class="card preview-card">
+                        <h3>Prescription Image</h3>
+                        <div class="img-wrapper">
+                            <div class="mock-document">
+                                <div class="doc-line long"></div>
+                                <div class="doc-line medium"></div>
+                                <div class="doc-line short"></div>
+                                <div class="doc-line long"></div>
+                            </div>
+                        </div>
+                        <div class="preview-footer-label">DIGITAL COPY VERIFIED</div>
+                    </section>
+                </div>
+
+            </div>
+
+            <!-- Bottom Master Execution Actions Row Footer -->
+            <footer class="bottom-actions-bar">
+                <button class="btn btn-back-edit">Back to Edit</button>
+                <button class="btn btn-confirm"><i data-lucide="check-circle-2"></i> Confirm & Dispense Prescription</button>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

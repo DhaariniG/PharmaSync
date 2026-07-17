@@ -1,0 +1,582 @@
+/* Core Structural Reset Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+    background-color: #f3f7f9;
+    color: #333333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Framework styling elements */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
+}
+
+.logo-area {
+    padding: 0 24px 30px 24px;
+}
+
+.logo-area h1 {
+    font-size: 24px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.logo-area p {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.nav-links {
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-item i {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-item.active {
+    background-color: #e0f2fe;
+    color: #0284c7;
+    border-left: 4px solid #0284c7;
+}
+
+.sidebar-footer {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+}
+
+.logout { color: #ef4444; }
+
+/* Main Working Context frame panels */
+.main-content {
+    margin-left: 260px;
+    flex-grow: 1;
+    padding: 20px 35px 40px 35px;
+}
+
+/* Sub-nav Top Header bar modules */
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.back-arrow-btn {
+    color: #334155;
+    display: flex;
+    align-items: center;
+}
+
+.back-arrow-btn i {
+    width: 20px;
+    height: 20px;
+}
+
+.header-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.sub-view-link {
+    font-size: 11px;
+    color: #008485;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+.sub-view-link i {
+    width: 12px;
+    height: 12px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.badge-status-processing {
+    background-color: #e0fbf6;
+    color: #00766c;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-dot {
+    font-size: 16px;
+    line-height: 0;
+    color: #00cbb8;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #475569;
+}
+
+.icon-btn i {
+    width: 18px;
+    height: 18px;
+}
+
+/* Base card models structure */
+.card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    border: 1px solid #e2e8f0;
+}
+
+/* Split Main Dual Grid Grid system columns setup */
+.process-grid {
+    display: grid;
+    grid-template-columns: 2.1fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.left-stack, .right-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Medicine Form Entries panel styling rules */
+.medicine-form-card {
+    padding: 20px;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.form-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.items-added-text {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+}
+
+.search-input-wrapper {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: #94a3b8;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 10px 16px 10px 42px;
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    border-radius: 6px;
+    outline: none;
+    font-size: 13px;
+    color: #334155;
+}
+
+/* Tabular Structure Setup For Grid Form Rows */
+.med-rows-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.med-table-header {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1.5fr 0.8fr 1.1fr 0.3fr;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #cbd5e1;
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.3px;
+}
+
+.med-row {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1.5fr 0.8fr 1.1fr 0.3fr;
+    gap: 12px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.med-name-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.med-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.med-sub {
+    font-size: 10px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+/* Custom Row inputs styling properties rules */
+.med-row input[type="text"], .select-frequency {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #334155;
+    outline: none;
+    background-color: #ffffff;
+}
+
+.select-frequency {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 25px;
+}
+
+.input-qty {
+    text-align: center;
+}
+
+/* Dynamic inventory block tags */
+.badge-stock {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.stock-in { background-color: #e0fdf4; color: #00b4a4; }
+.stock-low { background-color: #fffbeb; color: #d97706; }
+.stock-out { background-color: #fee2e2; color: #ef4444; }
+
+.btn-delete {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.btn-delete i {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-delete:hover { color: #ef4444; }
+
+/* Inactive Disabled Out Of Stock Row Visual Effects styling modifier */
+.row-disabled .med-title { color: #94a3b8; }
+.row-disabled input, .row-disabled select {
+    background-color: #f8fafc;
+    color: #94a3b8;
+    border-color: #e2e8f0;
+}
+
+/* Inline alert container structures components layout */
+.alert-inline-banner {
+    background-color: #fff5f5;
+    border: 1px solid #fee2e2;
+    padding: 12px 16px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.alert-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #c53030;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.alert-message i {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-substitute {
+    background: #ffffff;
+    border: 1px solid #fca5a5;
+    color: #c53030;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-add-more {
+    background: none;
+    border: none;
+    color: #00766c;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.btn-add-more i {
+    width: 16px;
+    height: 16px;
+}
+
+/* Dispensing footer logs notes card elements components */
+.notes-card {
+    padding: 14px 20px;
+    background-color: #eef5f6;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #d2e4e6;
+}
+
+.notes-icon {
+    width: 16px;
+    height: 16px;
+    color: #00766c;
+}
+
+.notes-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* Right Side Calculations Invoice Sidebar Widgets Box styling */
+.summary-card {
+    padding: 20px;
+}
+
+.summary-card h3, .image-preview-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 20px;
+}
+
+.summary-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.summary-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.summary-item-sub {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.summary-item-price {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.item-unavailable .summary-item-name { color: #94a3b8; text-decoration: line-through; }
+.item-unavailable .summary-item-sub { color: #94a3b8; }
+.item-unavailable .summary-item-price { color: #94a3b8; }
+
+.summary-calculations {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.calc-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.total-row {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 12px;
+}
+
+/* Warning alert notification item styling fields text rules */
+.warning-box {
+    background-color: #fffbeb;
+    border: 1px solid #fef3c7;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.warning-box i {
+    width: 16px;
+    height: 16px;
+    color: #d97706;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.warning-text {
+    font-size: 11px;
+    color: #b45309;
+    line-height: 1.5;
+}
+
+.btn-process-order {
+    width: 100%;
+    background-color: #00e5ff;
+    color: #0f172a;
+    border: none;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-process-order:hover {
+    background-color: #00cde4;
+}
+
+/* Mini Prescription Document Image Preview Component container layout design styling */
+.image-preview-card {
+    padding: 20px;
+}
+
+.mini-img-wrapper {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mock-prescription-img {
+    width: 100%;
+    max-width: 180px;
+    height: 120px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    padding: 15px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mock-prescription-img .line {
+    height: 4px;
+    background-color: #cbd5e1;
+    border-radius: 2px;
+}
+
+.mock-prescription-img .line.long { width: 90%; }
+.mock-prescription-img .line.medium { width: 65%; }
+.mock-prescription-img .line.short { width: 40%; }
+
+.preview-footer-label {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+    margin-top: 14px;
+}

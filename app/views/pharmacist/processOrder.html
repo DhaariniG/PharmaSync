@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaSync - Process Order</title>
+    <link rel="stylesheet" href="../../../public/assets/css/Pharmacist/processOrder.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>PharmaSync</h1>
+                <p>Pharmacist Portal</p>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="#" class="nav-item active"><i data-lucide="clipboard-list"></i> Prescription Queue</a>
+                <a href="#" class="nav-item"><i data-lucide="package"></i> Medicine Availability</a>
+                <a href="#" class="nav-item"><i data-lucide="shopping-cart"></i> Physical Sale</a>
+                <a href="#" class="nav-item"><i data-lucide="history"></i> Prescription History</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item"><i data-lucide="bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
+                <a href="#" class="nav-item logout"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top App Header Section -->
+            <header class="top-navbar">
+                <div class="header-left">
+                    <a href="#" class="back-arrow-btn"><i data-lucide="arrow-left"></i></a>
+                    <div>
+                        <h2 class="header-title">Process Order — #RX-00234</h2>
+                        <a href="#" class="sub-view-link"><i data-lucide="eye"></i> View Prescription Image</a>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <span class="badge-status-processing"><span class="status-dot">•</span> Approved — Awaiting Processing</span>
+                    <button class="icon-btn"><i data-lucide="bell"></i></button>
+                    <button class="icon-btn"><i data-lucide="settings"></i></button>
+                </div>
+            </header>
+
+            <!-- Main Layout Grid Grid -->
+            <div class="process-grid">
+                
+                <!-- Left Main Content Stack -->
+                <div class="left-stack">
+                    <!-- Form Selection Widget Card -->
+                    <section class="card medicine-form-card">
+                        <div class="form-header">
+                            <h3>Add Medicines from Prescription</h3>
+                            <span class="items-added-text">3 ITEMS ADDED</span>
+                        </div>
+                        
+                        <div class="search-input-wrapper">
+                            <i data-lucide="search" class="search-icon"></i>
+                            <input type="text" placeholder="Search and add medicine...">
+                        </div>
+
+                        <!-- Table-Like Rows Data -->
+                        <div class="med-rows-container">
+                            <div class="med-table-header">
+                                <div>MEDICINE NAME</div>
+                                <div>DOSAGE</div>
+                                <div>FREQUENCY</div>
+                                <div>QUANTITY</div>
+                                <div>AVAILABILITY</div>
+                                <div></div>
+                            </div>
+
+                            <!-- Row 1: Amoxicillin -->
+                            <div class="med-row">
+                                <div class="med-name-cell">
+                                    <span class="med-title">Amoxicillin 500mg</span>
+                                    <span class="med-sub">BM-9021 | Exp: 12/2025</span>
+                                </div>
+                                <div><input type="text" value="500mg" class="input-dosage"></div>
+                                <div>
+                                    <select class="select-frequency">
+                                        <option>Three times daily</option>
+                                    </select>
+                                </div>
+                                <div><input type="text" value="21" class="input-qty"></div>
+                                <div><span class="badge-stock stock-in">In Stock</span></div>
+                                <div><button class="btn-delete"><i data-lucide="trash-2"></i></button></div>
+                            </div>
+
+                            <!-- Row 2: Paracetamol -->
+                            <div class="med-row">
+                                <div class="med-name-cell">
+                                    <span class="med-title">Paracetamol 500mg</span>
+                                    <span class="med-sub">BM-4433 | Exp: 08/2024</span>
+                                </div>
+                                <div><input type="text" value="500mg" class="input-dosage"></div>
+                                <div>
+                                    <div class="select-wrapper-arrow">
+                                        <select class="select-frequency">
+                                            <option>As needed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div><input type="text" value="10" class="input-qty"></div>
+                                <div><span class="badge-stock stock-low">Low Stock</span></div>
+                                <div><button class="btn-delete"><i data-lucide="trash-2"></i></button></div>
+                            </div>
+
+                            <!-- Row 3: Cetirizine -->
+                            <div class="med-row row-disabled">
+                                <div class="med-name-cell">
+                                    <span class="med-title">Cetirizine 10mg</span>
+                                    <span class="med-sub">N/A</span>
+                                </div>
+                                <div><input type="text" value="10mg" class="input-dosage"></div>
+                                <div>
+                                    <select class="select-frequency">
+                                        <option>Once daily</option>
+                                    </select>
+                                </div>
+                                <div><input type="text" value="07" class="input-qty"></div>
+                                <div><span class="badge-stock stock-out">Out of Stock</span></div>
+                                <div><button class="btn-delete"><i data-lucide="trash-2"></i></button></div>
+                            </div>
+                        </div>
+
+                        <!-- Alert Box inside Card -->
+                        <div class="alert-inline-banner">
+                            <div class="alert-message">
+                                <i data-lucide="triangle-alert"></i>
+                                <span>Not available — consider substitute or partial fulfillment</span>
+                            </div>
+                            <button class="btn-substitute">Find Substitute</button>
+                        </div>
+
+                        <button class="btn-add-more"><i data-lucide="plus-circle"></i> Add Another Medicine</button>
+                    </section>
+
+                    <!-- Bottom Notes Box -->
+                    <section class="card notes-card">
+                        <i data-lucide="info" class="notes-icon"></i>
+                        <span class="notes-title">Dispensing Notes</span>
+                    </section>
+                </div>
+
+                <!-- Right Sidebar Sticky Panels Stack -->
+                <div class="right-stack">
+                    <!-- Order Summary Bill Calculator -->
+                    <section class="card summary-card">
+                        <h3>Order Summary</h3>
+                        
+                        <div class="summary-items-list">
+                            <div class="summary-item">
+                                <div>
+                                    <p class="summary-item-name">Amoxicillin 500mg</p>
+                                    <p class="summary-item-sub">Qty: 21</p>
+                                </div>
+                                <span class="summary-item-price">Rs. 315</span>
+                            </div>
+
+                            <div class="summary-item">
+                                <div>
+                                    <p class="summary-item-name">Paracetamol 500mg</p>
+                                    <p class="summary-item-sub">Qty: 10</p>
+                                </div>
+                                <span class="summary-item-price">Rs. --</span>
+                            </div>
+
+                            <div class="summary-item item-unavailable">
+                                <div>
+                                    <p class="summary-item-name">Cetirizine 10mg</p>
+                                    <p class="summary-item-sub">Unavailable</p>
+                                </div>
+                                <span class="summary-item-price">Rs. 0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="summary-calculations">
+                            <div class="calc-row"><span>Subtotal</span><span>Rs. --</span></div>
+                            <div class="calc-row"><span>Dispensing Fee</span><span>Rs. --</span></div>
+                            <div class="calc-row total-row"><span>Total</span><span>Rs. --</span></div>
+                        </div>
+
+                        <!-- Alert Box Inside Summary Section -->
+                        <div class="warning-box">
+                            <i data-lucide="triangle-alert"></i>
+                            <div class="warning-text">
+                                <strong>Warning:</strong> Partial Fulfillment required. One or more items are out of stock.
+                            </div>
+                        </div>
+
+                        <button class="btn-process-order">Process Order</button>
+                    </section>
+
+                    <!-- Mini Prescription Preview Card Box -->
+                    <section class="card image-preview-card">
+                        <h3>Prescription Image</h3>
+                        <div class="mini-img-wrapper">
+                            <div class="mock-prescription-img">
+                                <!-- Simulated prescription document lines pattern -->
+                                <div class="line long"></div>
+                                <div class="line medium"></div>
+                                <div class="line short"></div>
+                                <div class="line long"></div>
+                            </div>
+                        </div>
+                        <div class="preview-footer-label">DIGITAL COPY VERIFIED</div>
+                    </section>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

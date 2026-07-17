@@ -1,0 +1,487 @@
+/* Layout Engine Core Normalizations */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+    background-color: #f3f7f9;
+    color: #333333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Fixed Navigation Layout Module Elements */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
+}
+
+.logo-area {
+    padding: 0 24px 30px 24px;
+}
+
+.logo-area h1 {
+    font-size: 24px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.logo-area p {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.nav-links {
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-item i {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-item.active {
+    background-color: #e0f2fe;
+    color: #0284c7;
+    border-left: 4px solid #0284c7;
+}
+
+.sidebar-footer {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+}
+
+.logout { color: #ef4444; }
+
+/* Main Screen Viewport Frame */
+.main-content {
+    margin-left: 260px;
+    flex-grow: 1;
+    padding: 20px 35px 120px 35px; /* Large bottom padding keeps view clear of fixed bar */
+    position: relative;
+}
+
+/* Top Navigation App Header row tools */
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.back-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #00766c;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.back-link i {
+    width: 16px;
+    height: 16px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.icon-btn i {
+    width: 18px;
+    height: 18px;
+}
+
+.page-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #7f8c9b;
+    margin-bottom: 25px;
+}
+
+/* Card Bases Models Structural Styles */
+.card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    border: 1px solid #e2e8f0;
+}
+
+.summary-card-padding {
+    padding: 24px;
+}
+
+/* Double Columns Grid Split System layout configurations */
+.confirmation-grid {
+    display: grid;
+    grid-template-columns: 2.1fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.left-stack, .right-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Patient Data Card Header Block Info Modules */
+.patient-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 12px;
+}
+
+.patient-card-header h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.rx-id-tag {
+    font-size: 12px;
+    font-weight: 700;
+    color: #008485;
+}
+
+.patient-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 15px;
+}
+
+label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.3px;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* Final Verification Structured Data Lookup Table Grid rules styling */
+.section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 20px;
+}
+
+.confirmation-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.3fr 1fr;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #cbd5e1;
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.3px;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.3fr 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.med-name-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.med-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.title-struck {
+    color: #94a3b8;
+    text-decoration: line-through;
+    font-weight: 600;
+}
+
+.sub-title-text {
+    font-size: 10px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.sub-applied-text {
+    font-size: 12px;
+    color: #008485;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+.sub-applied-text i {
+    width: 12px;
+    height: 12px;
+}
+
+.batch-cell {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    color: #475569;
+}
+
+.exp-date-alert {
+    color: #ef4444;
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.text-right { text-align: right; }
+.subtotal-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+}
+
+/* Right Metric Stack Invoice Calculators widgets card rules styling properties */
+.metrics-card {
+    padding: 20px;
+}
+
+.metrics-card h3, .preview-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 20px;
+}
+
+.metrics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+}
+
+.metric-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.val-bold {
+    font-weight: 700;
+    color: #334155;
+}
+
+.val-neutral {
+    color: #94a3b8;
+    text-decoration: line-through;
+}
+
+.total-highlight-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.total-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.total-amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: #00766c;
+}
+
+/* Delivery Log/Notice Block Context elements rules */
+.delivery-notice {
+    background-color: #f0fdfa;
+    border: 1px solid #ccfbf1;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.delivery-notice i {
+    width: 16px;
+    height: 16px;
+    color: #008485;
+    flex-shrink: 0;
+}
+
+.notice-text {
+    font-size: 11px;
+    color: #004d40;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Digital Copy Mini Image Preview Component rules layout */
+.preview-card {
+    padding: 20px;
+}
+
+.img-wrapper {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mock-document {
+    width: 100%;
+    max-width: 180px;
+    height: 110px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+    padding: 15px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.doc-line {
+    height: 4px;
+    background-color: #e2e8f0;
+    border-radius: 2px;
+}
+
+.doc-line.long { width: 90%; }
+.doc-line.medium { width: 70%; }
+.doc-line.short { width: 45%; }
+
+.preview-footer-label {
+    text-align: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+    margin-top: 14px;
+}
+
+/* Bottom Master Execution Actions Row Sticky Footer */
+.bottom-actions-bar {
+    position: fixed;
+    bottom: 0;
+    left: 260px; /* Offset to align right where main content area begins */
+    right: 0;
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    padding: 16px 35px;
+    display: flex;
+    gap: 15px;
+    z-index: 100;
+}
+
+.btn {
+    padding: 14px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn i {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-back-edit {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    flex-grow: 1;
+    max-width: 220px;
+}
+
+.btn-back-edit:hover {
+    background-color: #f8fafc;
+}
+
+.btn-confirm {
+    background-color: #00e5ff;
+    color: #0f172a;
+    border: none;
+    flex-grow: 2;
+}
+
+.btn-confirm:hover {
+    background-color: #00cde4;
+}

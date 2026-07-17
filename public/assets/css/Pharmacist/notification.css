@@ -1,0 +1,273 @@
+/* Core Document Structural Normalizations */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+    background-color: #f3f7f9;
+    color: #333333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Framework layout modules styles */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
+}
+
+.logo-area {
+    padding: 0 24px 30px 24px;
+}
+
+.logo-area h1 {
+    font-size: 24px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.logo-area p {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.nav-links {
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-item i {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-item.active {
+    background-color: #e0f2fe;
+    color: #0284c7;
+    border-left: 4px solid #0284c7;
+}
+
+.sidebar-footer {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+}
+
+.logout { color: #ef4444; }
+
+/* Main Workspace Framework Panel */
+.main-content {
+    margin-left: 260px;
+    flex-grow: 1;
+    padding: 20px 35px 40px 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Top App Bar Custom Navigation Modules */
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.page-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #334155;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.link-action {
+    font-size: 12px;
+    font-weight: 700;
+    color: #005f6b;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.header-icon-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.header-icon-btn i {
+    width: 18px;
+    height: 18px;
+}
+
+.profile-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #e2e8f0;
+    border-radius: 50%;
+    border: 1px solid #cbd5e1;
+}
+
+/* Card Bases Styles */
+.card {
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+}
+
+/* Master Notification Container blocks definitions */
+.notifications-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.notifications-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.2s;
+}
+
+/* Unread Message modifier state rules variables */
+.notification-row.unread {
+    background-color: #fafdfd;
+}
+
+.row-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Interactive dynamic tracking unread state indicators dots styling options */
+.unread-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #00a494;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.placeholder-dot {
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Status Type Colors Map Indicators circles configurations */
+.badge-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.badge-icon i {
+    width: 16px;
+    height: 16px;
+}
+
+.type-info { background-color: #e6f6f4; color: #00a494; }
+.type-warning { background-color: #fff1f2; color: #f43f5e; }
+.type-danger { background-color: #ffe4e6; color: #ef4444; }
+.type-inventory { background-color: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+.type-system { background-color: #f1f5f9; color: #64748b; }
+.type-success { background-color: #f0fdf4; color: #16a34a; }
+
+/* Text Blocks layouts inside items segments lines */
+.notification-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.notification-body h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.notification-body p {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.timestamp-text {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    white-space: nowrap;
+    padding-left: 15px;
+}
+
+/* Bottom Dropdown control action trigger styling elements */
+.btn-load-older {
+    background-color: #ffffff;
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    width: 100%;
+}
+
+.btn-load-older:hover {
+    background-color: #f8fafc;
+    color: #475569;
+}
+
+.btn-load-older i {
+    width: 14px;
+    height: 14px;
+}

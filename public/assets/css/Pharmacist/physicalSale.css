@@ -1,0 +1,671 @@
+/* Core Layout Resets and Engine Properties */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+    background-color: #f3f7f9;
+    color: #333333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Framework layout modules styles */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
+}
+
+.logo-area {
+    padding: 0 24px 30px 24px;
+}
+
+.logo-area h1 {
+    font-size: 24px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.logo-area p {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.nav-links {
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-item i {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-item.active {
+    background-color: #e0f2fe;
+    color: #0284c7;
+    border-left: 4px solid #0284c7;
+}
+
+.sidebar-footer {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+}
+
+.logout { color: #ef4444; }
+
+/* Main Content Structural Grid Area */
+.main-content {
+    margin-left: 260px;
+    flex-grow: 1;
+    padding: 20px 35px 40px 35px;
+}
+
+/* Top App Header Dashboard Controls block styling rules */
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    background: #ffffff;
+    padding: 14px 24px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.page-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #334155;
+}
+
+.header-right-profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.notification-wrapper {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.header-bell-icon {
+    width: 20px;
+    height: 20px;
+    color: #475569;
+}
+
+.notification-indicator {
+    position: absolute;
+    top: -2px;
+    right: -1px;
+    width: 6px;
+    height: 6px;
+    background-color: #ef4444;
+    border-radius: 50%;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.profile-role {
+    font-size: 9px;
+    font-weight: 700;
+    color: #64748b;
+    margin-top: 1px;
+    letter-spacing: 0.3px;
+}
+
+.profile-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #e2e8f0;
+    border-radius: 50%;
+    border: 1px solid #cbd5e1;
+}
+
+/* Structural Components Panels */
+.card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+    border: 1px solid #e2e8f0;
+}
+
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 2.15fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.left-stack, .right-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.workflow-card {
+    padding: 24px;
+}
+
+.workflow-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 20px;
+}
+
+.workflow-header.border-none {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.workflow-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.workflow-title-group h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.text-weight-normal {
+    font-weight: 400;
+    color: #64748b;
+}
+
+.icon-teal {
+    width: 18px;
+    height: 18px;
+    color: #00a494;
+}
+
+.terminal-id {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    background-color: #f1f5f9;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+/* Compound Input Search Form Segment Row Box */
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.search-inside-icon {
+    position: absolute;
+    left: 14px;
+    width: 16px;
+    height: 16px;
+    color: #94a3b8;
+}
+
+.med-search-field {
+    width: 100%;
+    padding: 14px 80px 14px 42px;
+    font-size: 14px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: #334155;
+    outline: none;
+}
+
+.med-search-field::placeholder { color: #94a3b8; }
+.med-search-field:focus {
+    background-color: #ffffff;
+    border-color: #cbd5e1;
+}
+
+.kbd-shortcuts {
+    position: absolute;
+    right: 14px;
+    display: flex;
+    gap: 4px;
+}
+
+.kbd-shortcuts kbd {
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #64748b;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* Itemized Selection Table list grid structure styles */
+.sales-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1fr 1.4fr 1fr 0.3fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1fr 1.4fr 1fr 0.3fr;
+    gap: 12px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.med-identity {
+    display: flex;
+    flex-direction: column;
+}
+
+.med-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.med-meta {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.batch-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: #b45309;
+    background-color: #fef3c7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.batch-badge.empty {
+    color: #0369a1;
+    background-color: #e0f2fe;
+}
+
+.exp-date {
+    font-size: 10px;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.text-orange { color: #f59e0b; }
+.text-teal { color: #00a494; }
+
+.price-cell, .subtotal-cell {
+    font-size: 13px;
+    font-weight: 700;
+    color: #475569;
+}
+
+/* Quantity Counter Component tools styling configurations */
+.qty-control-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    max-width: 90px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #00a494;
+    cursor: pointer;
+}
+
+.qty-btn:hover { background-color: #f8fafc; }
+
+.qty-number {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1e293b;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.btn-icon-delete {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-icon-delete:hover { color: #ef4444; }
+.btn-icon-delete i { width: 16px; height: 16px; }
+
+.text-center { text-align: center; }
+
+/* Prescription Files Dragzone Panel Framework */
+.file-dropzone {
+    border: 1.5px dashed #cbd5e1;
+    background-color: #ffffff;
+    border-radius: 6px;
+    padding: 30px;
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
+    display: block; /* Essential block configuration for click actions */
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+.dropzone-circle {
+    width: 44px;
+    height: 44px;
+    background-color: #e6f6f4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px auto;
+}
+
+.dropzone-circle i {
+    width: 20px;
+    height: 20px;
+    color: #00a494;
+}
+
+.dropzone-text-main {
+    font-size: 12px;
+    font-weight: 700;
+    color: #334155;
+}
+
+.dropzone-text-sub {
+    font-size: 10px;
+    color: #64748b;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* Right Metric Stack Checkout Invoice Panel styling properties */
+.summary-panel-card {
+    padding: 24px;
+}
+
+.summary-panel-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 24px;
+}
+
+.pricing-ledger {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.ledger-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #475569;
+    font-weight: 600;
+}
+
+.ledger-row.align-center { align-items: center; }
+
+.ledger-unit {
+    font-size: 13px;
+    font-weight: 700;
+    color: #94a3b8;
+}
+
+.discount-input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 4px 10px;
+    background-color: #f8fafc;
+    max-width: 90px;
+}
+
+.input-currency {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 700;
+    margin-right: 4px;
+}
+
+.discount-field {
+    width: 100%;
+    border: none;
+    background: none;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 700;
+    color: #334155;
+    outline: none;
+}
+
+/* Invoice Total highlight container labels styling fields */
+.grand-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 25px;
+}
+
+.total-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.total-amount {
+    font-size: 26px;
+    font-weight: 800;
+    color: #00a494;
+}
+
+/* Secondary Form Block Field Ingestion elements rules layout modules */
+.form-section {
+    border-top: 1px solid #f1f5f9;
+    padding-top: 20px;
+    margin-bottom: 24px;
+}
+
+.form-section h4 {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group:last-child { margin-bottom: 0; }
+
+.form-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 13px;
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    border-radius: 6px;
+    color: #334155;
+    outline: none;
+}
+
+.form-control:focus {
+    background-color: #ffffff;
+    border-color: #cbd5e1;
+}
+
+/* Payment Modality Button Choice Toggles layout blocks elements */
+.payment-toggle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.payment-option {
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    background-color: #ffffff;
+}
+
+.payment-option i {
+    width: 20px;
+    height: 20px;
+    color: #64748b;
+}
+
+.payment-option span {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.hidden-radio {
+    display: none;
+}
+
+/* Selected Payment Option Container State styling */
+.payment-option.selected {
+    border: 1.5px solid #00e5ff;
+    background-color: #e6fafd;
+}
+
+.payment-option.selected i, .payment-option.selected span {
+    color: #007685;
+}
+
+/* Submission Trigger Buttons group elements rows rules properties */
+.summary-actions-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn i { width: 16px; height: 16px; }
+
+.btn-complete-sale {
+    background-color: #00e5ff;
+    color: #0f172a;
+    border: none;
+}
+
+.btn-complete-sale:hover { background-color: #00cde4; }
+
+.btn-print-quotation {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+}
+
+.btn-print-quotation:hover { background-color: #f8fafc; }

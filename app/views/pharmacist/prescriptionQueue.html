@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaSync - Prescription Queue</title>
+    <link rel="stylesheet" href="../../../public/assets/css/Pharmacist/prescriptionQueue.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>PharmaSync</h1>
+                <p>Pharmacist Portal</p>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="#" class="nav-item active"><i data-lucide="clipboard-list"></i> Prescription Queue</a>
+                <a href="#" class="nav-item"><i data-lucide="package"></i> Medicine Availability</a>
+                <a href="#" class="nav-item"><i data-lucide="shopping-cart"></i> Physical Sale</a>
+                <a href="#" class="nav-item"><i data-lucide="history"></i> Prescription History</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item"><i data-lucide="bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
+                <a href="#" class="nav-item logout"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <main class="main-content">
+            <!-- Top Header Navbar -->
+            <header class="top-navbar">
+                <div class="header-title">Prescription Queue</div>
+                <div class="user-profile">
+                    <button class="notification-btn"><i data-lucide="bell"></i></button>
+                    <div class="divider"></div>
+                    <div class="user-info">
+                        <span class="user-name">Hari De Silva</span>
+                        <span class="user-role">SENIOR PHARMACIST</span>
+                    </div>
+                    <div class="avatar"></div>
+                </div>
+            </header>
+
+            <!-- Filter and Control Bar -->
+            <div class="control-bar">
+                <div class="filter-tabs">
+                    <button class="tab active">ALL</button>
+                    <button class="tab">PENDING</button>
+                    <button class="tab">UNDER REVIEW</button>
+                    <button class="tab">FLAGGED</button>
+                </div>
+                <div class="dropdown-filters">
+                    <div class="select-wrapper">
+                        <i data-lucide="calendar" class="select-icon"></i>
+                        <select>
+                            <option>Last 24 Hours</option>
+                        </select>
+                    </div>
+                    <div class="select-wrapper">
+                        <i data-lucide="arrow-up-narrow-wide" class="select-icon"></i>
+                        <select>
+                            <option>Newest first</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Queue Table Container -->
+            <section class="card queue-widget">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>PATIENT NAME</th>
+                                <th>PRESCRIPTION ID</th>
+                                <th>UPLOADED DATE</th>
+                                <th>MEDS</th>
+                                <th>PRIORITY</th>
+                                <th>STATUS</th>
+                                <th class="text-center">ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="patient-cell">
+                                        <div class="patient-avatar av-jd">JD</div>
+                                        <span>John Doe</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted">#RX-882193</td>
+                                <td>Oct 24, 09:12 AM</td>
+                                <td><span class="badge-meds">4 ITEMS</span></td>
+                                <td><i data-lucide="flag" class="flag-icon flag-high"></i></td>
+                                <td><span class="status status-flagged">Flagged</span></td>
+                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="patient-cell">
+                                        <div class="patient-avatar av-sg">SG</div>
+                                        <span>Selena Gomez</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted">#RX-882194</td>
+                                <td>Oct 24, 09:20 AM</td>
+                                <td><span class="badge-meds">2 ITEMS</span></td>
+                                <td><i data-lucide="flag" class="flag-icon"></i></td>
+                                <td><span class="status status-review">Under Review</span></td>
+                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="patient-cell">
+                                        <div class="patient-avatar av-ts">TS</div>
+                                        <span>Taylor Swift</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted">#RX-882195</td>
+                                <td>Oct 24, 09:25 AM</td>
+                                <td><span class="badge-meds">1 ITEM</span></td>
+                                <td><i data-lucide="flag" class="flag-icon"></i></td>
+                                <td><span class="status status-pending">Pending</span></td>
+                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="patient-cell">
+                                        <div class="patient-avatar av-c">C</div>
+                                        <span>Chandrika</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted">#RX-882196</td>
+                                <td>Oct 24, 09:42 AM</td>
+                                <td><span class="badge-meds">5 ITEMS</span></td>
+                                <td><i data-lucide="flag" class="flag-icon"></i></td>
+                                <td><span class="status status-approved">Approved</span></td>
+                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="patient-cell">
+                                        <div class="patient-avatar av-mr">MK</div>
+                                        <span>M. Rajapaksha</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted">#RX-882197</td>
+                                <td>Oct 24, 09:50 AM</td>
+                                <td><span class="badge-meds">3 ITEMS</span></td>
+                                <td><i data-lucide="flag" class="flag-icon"></i></td>
+                                <td><span class="status status-rejected">Rejected</span></td>
+                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="patient-cell">
+                                        <div class="patient-avatar av-ch">LH</div>
+                                        <span>Christopher</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted">#RX-882198</td>
+                                <td>Oct 24, 10:02 AM</td>
+                                <td><span class="badge-meds">6 ITEMS</span></td>
+                                <td><i data-lucide="flag" class="flag-icon flag-high"></i></td>
+                                <td><span class="status status-flagged">Flagged</span></td>
+                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="patient-cell">
+                                        <div class="patient-avatar av-r">PT</div>
+                                        <span>Robbin</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted">#RX-882199</td>
+                                <td>Oct 24, 10:15 AM</td>
+                                <td><span class="badge-meds">2 ITEMS</span></td>
+                                <td><i data-lucide="flag" class="flag-icon"></i></td>
+                                <td><span class="status status-pending">Pending</span></td>
+                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="patient-cell">
+                                        <div class="patient-avatar av-ag">AG</div>
+                                        <span>Alice Graham</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted">#RX-882200</td>
+                                <td>Oct 24, 10:30 AM</td>
+                                <td><span class="badge-meds">3 ITEMS</span></td>
+                                <td><i data-lucide="flag" class="flag-icon"></i></td>
+                                <td><span class="status status-review">Under Review</span></td>
+                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="patient-cell">
+                                        <div class="patient-avatar av-dm">DB</div>
+                                        <span>David Miller</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted">#RX-882201</td>
+                                <td>Oct 24, 10:45 AM</td>
+                                <td><span class="badge-meds">1 ITEM</span></td>
+                                <td><i data-lucide="flag" class="flag-icon"></i></td>
+                                <td><span class="status status-pending">Pending</span></td>
+                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="patient-cell">
+                                        <div class="patient-avatar av-co">CO</div>
+                                        <span>Claire Owens</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted">#RX-882202</td>
+                                <td>Oct 24, 11:00 AM</td>
+                                <td><span class="badge-meds">4 ITEMS</span></td>
+                                <td><i data-lucide="flag" class="flag-icon"></i></td>
+                                <td><span class="status status-review">Under Review</span></td>
+                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination Footer Elements -->
+                <div class="table-footer">
+                    <div class="showing-text">Showing 1-10 of 42</div>
+                    <div class="pagination">
+                        <button class="page-arrow"><i data-lucide="chevron-left"></i></button>
+                        <button class="page-num active">1</button>
+                        <button class="page-num">2</button>
+                        <button class="page-num">3</button>
+                        <button class="page-num">4</button>
+                        <button class="page-num">5</button>
+                        <button class="page-arrow"><i data-lucide="chevron-right"></i></button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

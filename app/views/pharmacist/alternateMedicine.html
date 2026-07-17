@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaSync - Alternative Medicine Review</title>
+    <link rel="stylesheet" href="../../../public/assets/css/Pharmacist/alternateMedicine.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h1>PharmaSync</h1>
+                <p>Pharmacist Portal</p>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                <a href="#" class="nav-item active"><i data-lucide="clipboard-list"></i> Prescription Queue</a>
+                <a href="#" class="nav-item"><i data-lucide="package"></i> Medicine Availability</a>
+                <a href="#" class="nav-item"><i data-lucide="shopping-cart"></i> Physical Sale</a>
+                <a href="#" class="nav-item"><i data-lucide="history"></i> Prescription History</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item"><i data-lucide="bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
+                <a href="#" class="nav-item logout"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Top App Header Section -->
+            <header class="top-navbar">
+                <div class="header-left">
+                    <a href="#" class="back-link"><i data-lucide="arrow-left"></i> Back to Medicine Selection</a>
+                </div>
+                <div class="header-right">
+                    <span class="badge-action-required"><span class="status-dot">•</span> ACTION REQUIRED</span>
+                    <button class="icon-btn"><i data-lucide="bell"></i></button>
+                    <button class="icon-btn"><i data-lucide="settings"></i></button>
+                </div>
+            </header>
+
+            <h2 class="page-title">Alternative Medicine Review</h2>
+
+            <!-- Top Informational Notification Banner -->
+            <div class="info-banner">
+                <i data-lucide="info" class="banner-icon"></i>
+                <p>The selected medicines were checked against current inventory. One or more medicines are unavailable or have insufficient stock. Please review the suggested alternatives before continuing.</p>
+            </div>
+
+            <!-- Two Column Core Split Grid -->
+            <div class="workspace-grid">
+                
+                <!-- Left Column: Alternative Selection Blocks -->
+                <div class="alternatives-stack">
+                    <section class="card master-alternatives-card">
+                        <div class="card-section-header">
+                            <h3>Unavailable Medicines</h3>
+                            <span class="badge-count">2 ITEMS IDENTIFIED</span>
+                        </div>
+
+                        <!-- Medicine Item 1 Block: Panadol -->
+                        <div class="medicine-review-block">
+                            <div class="med-status-row">
+                                <div>
+                                    <h4 class="med-title">Panadol 500mg Tablet</h4>
+                                    <p class="med-qty-label">Requested Qty: 20 Tablets</p>
+                                </div>
+                                <span class="badge-stock stock-out">OUT OF STOCK</span>
+                            </div>
+
+                            <div class="alternatives-section">
+                                <h5>SUGGESTED ALTERNATIVES</h5>
+                                
+                                <!-- Alternative Option 1: Selected Recommended -->
+                                <label class="alt-option-card selected">
+                                    <div class="option-left">
+                                        <input type="radio" name="panadol-alt" checked>
+                                        <span class="alt-name">Paracetamol 500mg</span>
+                                    </div>
+                                    <span class="badge-recommended">RECOMMENDED</span>
+                                </label>
+
+                                <!-- Alternative Option 2 -->
+                                <label class="alt-option-card">
+                                    <div class="option-left">
+                                        <input type="radio" name="panadol-alt">
+                                        <span class="alt-name">Tylenol Extra Strength</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Medicine Item 2 Block: Cetirizine -->
+                        <div class="medicine-review-block no-border">
+                            <div class="med-status-row">
+                                <div>
+                                    <h4 class="med-title">Cetirizine 10mg</h4>
+                                    <p class="med-qty-label">Requested Qty: 30 Capsules</p>
+                                </div>
+                                <span class="badge-stock stock-insufficient">INSUFFICIENT STOCK (5/30)</span>
+                            </div>
+
+                            <!-- Empty Error Fallback Banner -->
+                            <div class="error-inline-banner">
+                                <i data-lucide="triangle-alert"></i>
+                                <span>No suitable alternative medicine found in current system inventory.</span>
+                            </div>
+
+                            <!-- Local Component Control Actions -->
+                            <div class="local-actions-row">
+                                <button class="btn btn-secondary"><i data-lucide="package-open"></i> Continue as Partial Order</button>
+                                <button class="btn btn-danger"><i data-lucide="trash-2"></i> Remove Medicine</button>
+                            </div>
+                            
+                            <button class="btn-cancel-link">Cancel Processing</button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Column: Cost and Order Metrics Sidebar Card -->
+                <div class="metrics-sidebar">
+                    <section class="card impact-card">
+                        <h3>Order Impact</h3>
+                        
+                        <div class="impact-metrics-list">
+                            <div class="metric-row">
+                                <span class="metric-label">Original Total</span>
+                                <span class="metric-val text-dark">Rs. 400</span>
+                            </div>
+                            <div class="metric-row highlight-row">
+                                <span class="metric-label">Updated Total</span>
+                                <span class="metric-val text-teal">Rs. --</span>
+                            </div>
+                        </div>
+
+                        <div class="summary-counters">
+                            <div class="counter-row">
+                                <span>Substitutions Applied</span>
+                                <span class="counter-num">1</span>
+                            </div>
+                            <div class="counter-row">
+                                <span>Pending Resolution</span>
+                                <span class="counter-num color-alert">1</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
