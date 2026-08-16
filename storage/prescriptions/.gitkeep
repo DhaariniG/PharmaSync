@@ -1,0 +1,3 @@
+# Ignore uploaded prescriptions but keep the folder
+*
+!.gitkeep

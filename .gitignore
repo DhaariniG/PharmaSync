@@ -1,0 +1,25 @@
+# Uploaded prescriptions — never commit customer files
+storage/prescriptions/*
+!storage/prescriptions/.gitkeep
+
+# PHPMailer (downloaded separately, see lib/PHPMailer/README.txt)
+lib/PHPMailer/src/
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.sublime-*
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & temp
+*.log
+*.tmp
+*.bak
+*~
+
+# Local config overrides (if you ever add one — never commit DB passwords)
+config/config.local.php
