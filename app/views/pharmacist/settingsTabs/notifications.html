@@ -1,0 +1,88 @@
+<section class="card form-panel-card">
+    <div class="panel-header">
+        <h3>Notifications Settings</h3>
+        <p>Manage how and when you receive automated inventory checks, safety warnings, and system alerts.</p>
+    </div>
+
+    <div class="toggle-options-stack">
+        <!-- Stock & Safety Alerts -->
+        <div class="toggle-row">
+            <div class="toggle-desc">
+                <h4>Immediate Low Stock Notifications</h4>
+                <p>Receive live alerts the moment item stock counts fall beneath safety thresholds.</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="alert_low_stock" value="1" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <div class="toggle-desc">
+                <h4>Automated Cross-Drug Interaction Flagging</h4>
+                <p>Enforce immediate system screening against historical allergy profiles for new scripts.</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="alert_interaction" value="1" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <div class="toggle-desc">
+                <h4>Batch Expiry Warnings</h4>
+                <p>Receive advance notifications for medication batches expiring within 60 days.</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="alert_expiry" value="1" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <!-- Workflow & Order Alerts -->
+        <div class="toggle-row">
+            <div class="toggle-desc">
+                <h4>Digital Prescription Upload Alerts</h4>
+                <p>Trigger instant visual highlights when customers submit new incoming digital scripts.</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="alert_new_upload" value="1" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <div class="toggle-desc">
+                <h4>Queue Delay Escalations</h4>
+                <p>Alert the lead pharmacist if an incoming prescription stays pending in the queue for over 15 minutes.</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="alert_queue_delay" value="1" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <!-- System & Audio Preferences -->
+        <div class="toggle-row">
+            <div class="toggle-desc">
+                <h4>Audio Chimes & Sound Effects</h4>
+                <p>Play sound notifications when critical flags, emergency alerts, or new orders are triggered.</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="enable_sound" value="1" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <div class="toggle-desc">
+                <h4>Daily Shift Summary Email</h4>
+                <p>Receive an automated report of fulfilled orders, sales, and stock adjustments at the end of the day.</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="email_daily_summary" value="1">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+</section>

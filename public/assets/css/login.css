@@ -1,0 +1,361 @@
+/* Core Layout Normalizations */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333333;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Master Desktop Split Grid Viewport */
+.split-viewport {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    min-height: 100vh;
+    width: 100vw;
+}
+
+/* LEFT SIDE: Hero Panel Styles */
+.hero-sidebar {
+    background: linear-gradient(145deg, #024143 0%, #002224 100%);
+    color: #ffffff;
+    padding: 70px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 480px;
+    margin: auto 0;
+}
+
+/* Brand Logo Header */
+.brand-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 40px;
+}
+
+.logo-box {
+    width: 42px;
+    height: 42px;
+    background-color: #00e5ff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-box i {
+    width: 24px;
+    height: 24px;
+    color: #024143;
+    stroke-width: 3;
+}
+
+.brand-name {
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.2px;
+}
+
+/* Main Typography */
+.hero-title {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 14px;
+    color: #a0c4c5;
+    line-height: 1.6;
+    font-weight: 400;
+    margin-bottom: 40px;
+}
+
+/* Bulleted Checkmark List */
+.feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.check-icon {
+    width: 28px;
+    height: 28px;
+    background-color: #095e61;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.check-icon i {
+    width: 16px;
+    height: 16px;
+    color: #095e61;
+    stroke-width: 3;
+}
+
+.feature-list span {
+    font-size: 13px;
+    color: #e0f2f1;
+    font-weight: 500;
+}
+
+.hero-footer p {
+    font-size: 12px;
+    color: #5d8889;
+}
+
+/* RIGHT SIDE: Auth Workspace Styles */
+.auth-workspace {
+    background-color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 440px;
+}
+
+.mobile-logo {
+    display: none;
+}
+
+/* Segmented Tab Controls */
+.auth-tabs {
+    display: flex;
+    background-color: #e2e8f0;
+    padding: 4px;
+    border-radius: 8px;
+    margin-bottom: 32px;
+}
+
+.auth-tab-btn {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: #64748b;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.auth-tab-btn.active {
+    background-color: #ffffff;
+    color: #00a494;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Auth Forms */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.form-header p {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.forgot-link {
+    font-size: 12px;
+    font-weight: 600;
+    color: #00a494;
+    text-decoration: none;
+}
+
+.forgot-link:hover { 
+    text-decoration: underline; 
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 13px;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    border-radius: 8px;
+    color: #1e293b;
+    outline: none;
+    font-weight: 500;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    border-color: #00a494;
+    box-shadow: 0 0 0 3px rgba(0, 164, 148, 0.1);
+}
+
+.input-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    width: 18px;
+    height: 18px;
+    color: #94a3b8;
+}
+
+.padded-input {
+    padding-left: 42px;
+}
+
+.form-row-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-options {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.checkbox-container input {
+    accent-color: #00a494;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Action Buttons */
+.btn {
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    transition: all 0.2s;
+    margin-top: 6px;
+}
+
+.btn i { 
+    width: 18px; 
+    height: 18px; 
+}
+
+.btn-primary {
+    background-color: #00e5ff;
+    color: #0f172a;
+}
+
+.btn-primary:hover {
+    background-color: #00cde4;
+    transform: translateY(-1px);
+}
+
+.security-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 32px;
+    font-weight: 600;
+}
+
+.security-footer i {
+    width: 14px;
+    height: 14px;
+    color: #00a494;
+}
+
+/* Responsive Fallbacks */
+@media (max-width: 900px) {
+    .split-viewport {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-sidebar {
+        display: none;
+    }
+
+    .mobile-logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 24px;
+        color: #0f172a;
+    }
+
+    .mobile-logo i {
+        color: #00a494;
+    }
+}

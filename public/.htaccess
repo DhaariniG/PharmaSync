@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    Options -Indexes
+    RewriteEngine On
+
+    # If the request is a real file or directory (e.g. CSS, JS, images), serve it directly
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Otherwise, pass everything to index.php as the 'url' GET parameter
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>
+

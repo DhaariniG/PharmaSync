@@ -4,33 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PharmaSync - Process Order</title>
-    <link rel="stylesheet" href="../../../public/assets/css/Pharmacist/processOrder.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/Pharmacist/processOrder.css">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="container">
         <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="logo-area">
-                <h1>PharmaSync</h1>
-                <p>Pharmacist Portal</p>
-            </div>
-            
-            <nav class="nav-links">
-                <a href="#" class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-                <a href="#" class="nav-item active"><i data-lucide="clipboard-list"></i> Prescription Queue</a>
-                <a href="#" class="nav-item"><i data-lucide="package"></i> Medicine Availability</a>
-                <a href="#" class="nav-item"><i data-lucide="shopping-cart"></i> Physical Sale</a>
-                <a href="#" class="nav-item"><i data-lucide="history"></i> Prescription History</a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <a href="#" class="nav-item"><i data-lucide="bell"></i> Notifications</a>
-                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
-                <a href="#" class="nav-item logout"><i data-lucide="log-out"></i> Logout</a>
-            </div>
-        </aside>
+        <?php include 'sidebar.php'; ?>
 
         <!-- Main Content Area -->
         <main class="main-content">

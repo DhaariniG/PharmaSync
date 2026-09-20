@@ -1,0 +1,414 @@
+
+:root {
+    /* Palette sampled directly from branding mockup */
+    --bg-dark: #023436;           /* Main Deep Emerald Background */
+    --bg-darker: #002325;         /* Header/Footer Deep Accent */
+    --card-bg: #044345;          /* Elevated Card Surface */
+    --card-border: #0a5659;      /* Subtle Border */
+    
+    --primary-color: #00e5ff;     /* Vibrant Electric Cyan Accent */
+    --primary-hover: #33ebff;
+    --secondary-color: #06b6d4;   /* Muted Cyan Teal */
+    --secondary-hover: #0891b2;
+
+    --text-light: #ffffff;        /* Pure White Headings */
+    --text-muted: #a3e635;        /* Soft Muted Paragraph Text */
+    --text-dim: #94a3b8;          /* Copyright & Secondary Text */
+
+    /* Status Badges */
+    --badge-rx: #f59e0b;
+    --badge-instock: #10b981;
+    --badge-outstock: #ef4444;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ==========================================================================
+   2. NAVBAR
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 5%;
+    background-color: var(--bg-darker);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo .brand {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-light);
+    letter-spacing: -0.5px;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.navbar nav a {
+    font-weight: 500;
+    color: var(--text-light);
+    opacity: 0.85;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.navbar nav a:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* ==========================================================================
+   3. BUTTONS
+   ========================================================================== */
+.btn-primary, .btn-secondary, .btn-outline, .btn-sm {
+    display: inline-block;
+    padding: 0.65rem 1.4rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--bg-darker);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: var(--card-bg);
+    color: var(--text-light);
+    border: 1px solid var(--card-border);
+}
+
+.btn-secondary:hover {
+    background-color: var(--card-border);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1.5px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--bg-darker);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    background-color: var(--primary-color);
+    color: var(--bg-darker);
+    width: 100%;
+}
+
+.btn-sm:hover {
+    background-color: var(--primary-hover);
+}
+
+/* ==========================================================================
+   4. HERO SECTION
+   ========================================================================== */
+.hero {
+    padding: 6rem 5%;
+    background: radial-gradient(circle at top, #044c4f 0%, var(--bg-dark) 70%);
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-light);
+    margin-bottom: 1.25rem;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+}
+
+/* ==========================================================================
+   5. CATALOG & SEARCH SECTION
+   ========================================================================== */
+.catalog-section {
+    padding: 4rem 5%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.catalog-section h2 {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    color: var(--text-light);
+}
+
+.search-bar-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-bar-container input,
+.search-bar-container select {
+    padding: 0.9rem 1.2rem;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    outline: none;
+    background-color: var(--card-bg);
+    color: var(--text-light);
+}
+
+.search-bar-container input::placeholder {
+    color: #94a3b8;
+}
+
+.search-bar-container input {
+    flex: 2;
+}
+
+.search-bar-container select {
+    flex: 1;
+}
+
+.search-bar-container input:focus,
+.search-bar-container select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.2);
+}
+
+/* Medicine Grid Layout */
+.medicine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.75rem;
+}
+
+/* Medicine Card */
+.medicine-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.medicine-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.medicine-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.25rem;
+    background-color: var(--bg-darker);
+    padding: 0.5rem;
+}
+
+.medicine-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: var(--text-light);
+}
+
+.medicine-card .generic {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.card-footer .price {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+/* Badges */
+.badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 4px;
+    color: #ffffff;
+}
+
+.rx-badge {
+    background-color: var(--badge-rx);
+}
+
+.stock-status {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.stock-status.in-stock {
+    color: var(--badge-instock);
+}
+
+.stock-status.out-stock {
+    color: var(--badge-outstock);
+}
+
+/* Auth Switch Links */
+.auth-switch {
+    margin-top: 1.25rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.auth-switch a {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   6. FOOTER
+   ========================================================================== */
+.footer {
+    background-color: var(--bg-darker);
+    color: var(--text-light);
+    padding: 4rem 5% 1.5rem 5%;
+    margin-top: 5rem;
+    border-top: 1px solid var(--card-border);
+}
+
+.footer-info {
+    max-width: 1280px;
+    margin: 0 auto 2.5rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.footer-info h3 {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-info p {
+    color: #94a3b8;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid var(--card-border);
+    padding-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+}
+
+/* ==========================================================================
+   7. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .navbar nav {
+        gap: 1.25rem;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .search-bar-container {
+        flex-direction: column;
+    }
+}

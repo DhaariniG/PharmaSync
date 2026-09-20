@@ -1,4 +1,6 @@
 /* Layout Framework & Core Resets */
+@import url("../Pharmacist/Components/sidebar.css");
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -15,68 +17,6 @@ body {
     display: flex;
     min-height: 100vh;
 }
-
-/* Sidebar Framework styling */
-.sidebar {
-    width: 260px;
-    background-color: #ffffff;
-    border-right: 1px solid #e2e8f0;
-    display: flex;
-    flex-direction: column;
-    padding: 24px 0;
-    position: fixed;
-    height: 100vh;
-    z-index: 10;
-}
-
-.logo-area {
-    padding: 0 24px 30px 24px;
-}
-
-.logo-area h1 {
-    font-size: 24px;
-    color: #0f172a;
-    font-weight: 700;
-}
-
-.logo-area p {
-    font-size: 13px;
-    color: #64748b;
-    margin-top: 2px;
-}
-
-.nav-links {
-    flex-grow: 1;
-}
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 24px;
-    color: #475569;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.nav-item i {
-    width: 18px;
-    height: 18px;
-}
-
-.nav-item.active {
-    background-color: #e0f2fe;
-    color: #0284c7;
-    border-left: 4px solid #0284c7;
-}
-
-.sidebar-footer {
-    border-top: 1px solid #e2e8f0;
-    padding-top: 15px;
-}
-
-.logout { color: #ef4444; }
 
 /* Main Dashboard Panel */
 .main-content {
@@ -374,4 +314,33 @@ tr:has(.status-flagged) td:first-child {
 .page-arrow i {
     width: 14px;
     height: 14px;
+}
+
+.custom-date-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.date-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.date-input-wrapper input[type="date"] {
+    background-color: var(--card-bg, #ffffff);
+    color: #000000;
+    border: 1px solid var(--border-color, #1e3a3a);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.date-input-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
 }

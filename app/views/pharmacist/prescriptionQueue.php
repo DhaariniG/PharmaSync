@@ -4,33 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PharmaSync - Prescription Queue</title>
-    <link rel="stylesheet" href="../../../public/assets/css/Pharmacist/prescriptionQueue.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/Pharmacist/prescriptionQueue.css">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="container">
         <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="logo-area">
-                <h1>PharmaSync</h1>
-                <p>Pharmacist Portal</p>
-            </div>
-            
-            <nav class="nav-links">
-                <a href="#" class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-                <a href="#" class="nav-item active"><i data-lucide="clipboard-list"></i> Prescription Queue</a>
-                <a href="#" class="nav-item"><i data-lucide="package"></i> Medicine Availability</a>
-                <a href="#" class="nav-item"><i data-lucide="shopping-cart"></i> Physical Sale</a>
-                <a href="#" class="nav-item"><i data-lucide="history"></i> Prescription History</a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <a href="#" class="nav-item"><i data-lucide="bell"></i> Notifications</a>
-                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
-                <a href="#" class="nav-item logout"><i data-lucide="log-out"></i> Logout</a>
-            </div>
-        </aside>
+        <?php include 'sidebar.php'; ?>
 
         <!-- Main Dashboard Content -->
         <main class="main-content">
@@ -57,16 +38,35 @@
                     <button class="tab">FLAGGED</button>
                 </div>
                 <div class="dropdown-filters">
+                    <!-- Date Range Dropdown -->
                     <div class="select-wrapper">
                         <i data-lucide="calendar" class="select-icon"></i>
-                        <select>
-                            <option>Last 24 Hours</option>
+                        <select id="date-range-select" onchange="toggleCustomDateInputs(this.value)">
+                            <option value="24h">Last 24 Hours</option>
+                            <option value="1w">Last 1 Week</option>
+                            <option value="1m">Last 1 Month</option>
+                            <option value="custom">Custom Date Range...</option>
                         </select>
                     </div>
+
+                    <!-- Custom Date Range Inputs (Hidden by default, shown when 'custom' is selected) -->
+                    <div id="custom-date-inputs" class="custom-date-group" style="display: none;">
+                        <div class="date-input-wrapper">
+                            <label for="date-from">From:</label>
+                            <input type="date" id="date-from" name="date_from">
+                        </div>
+                        <div class="date-input-wrapper">
+                            <label for="date-to">To:</label>
+                            <input type="date" id="date-to" name="date_to">
+                        </div>
+                    </div>
+
+                    <!-- Sort Filter -->
                     <div class="select-wrapper">
                         <i data-lucide="arrow-up-narrow-wide" class="select-icon"></i>
                         <select>
                             <option>Newest first</option>
+                            <option>Oldest first</option>
                         </select>
                     </div>
                 </div>
@@ -128,20 +128,6 @@
                                 <td><span class="badge-meds">1 ITEM</span></td>
                                 <td><i data-lucide="flag" class="flag-icon"></i></td>
                                 <td><span class="status status-pending">Pending</span></td>
-                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="patient-cell">
-                                        <div class="patient-avatar av-c">C</div>
-                                        <span>Chandrika</span>
-                                    </div>
-                                </td>
-                                <td class="text-muted">#RX-882196</td>
-                                <td>Oct 24, 09:42 AM</td>
-                                <td><span class="badge-meds">5 ITEMS</span></td>
-                                <td><i data-lucide="flag" class="flag-icon"></i></td>
-                                <td><span class="status status-approved">Approved</span></td>
                                 <td class="text-center"><button class="btn-review">REVIEW</button></td>
                             </tr>
                             <tr>
@@ -251,6 +237,16 @@
 
     <script>
         lucide.createIcons();
+
+        // Toggle custom date range pickers
+        function toggleCustomDateInputs(value) {
+            const customGroup = document.getElementById('custom-date-inputs');
+            if (value === 'custom') {
+                customGroup.style.display = 'flex';
+            } else {
+                customGroup.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>

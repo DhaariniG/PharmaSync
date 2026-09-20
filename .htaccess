@@ -1,0 +1,6 @@
+# Anything hitting the project root gets pushed into public/
+# so app/, config/ and database/ are never reachable from a browser.
+RewriteEngine On
+RewriteRule ^$ public/ [L]
+RewriteCond %{REQUEST_URI} !^/?public/
+RewriteRule ^(.*)$ public/$1 [L]
