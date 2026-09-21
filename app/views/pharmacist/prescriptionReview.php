@@ -16,20 +16,11 @@
         <!-- Main Workspace Panels -->
         <main class="main-content">
             <!-- Top Subheader Control Navbar -->
-            <header class="top-navbar">
-                <div class="header-left">
-                    <h2 class="header-title">Prescription Review — #RX-00234</h2>
-                    <span class="badge-status">Pending Review</span>
-                </div>
-                <div class="header-right">
-                    <a href="#" class="btn-back"><i data-lucide="arrow-left"></i> Back to Queue</a>
-                    <div class="divider"></div>
-                    <button class="icon-btn"><i data-lucide="bell"></i></button>
-                    <button class="icon-btn"><i data-lucide="settings"></i></button>
-                </div>
-            </header>
-
-            <!-- Two-Column Grid Setup -->
+            <?php 
+                $pageTitle = "Prescription Review"; 
+                include APP_PATH . '/views/Pharmacist/header.php'; 
+            ?>
+                        <!-- Two-Column Grid Setup -->
             <div class="review-grid">
                 <!-- Left Side: Prescription Document Canvas Box -->
                 <section class="card document-viewer-card">

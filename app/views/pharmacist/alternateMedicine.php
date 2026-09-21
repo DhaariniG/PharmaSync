@@ -16,16 +16,10 @@
         <!-- Main Workspace -->
         <main class="main-content">
             <!-- Top App Header Section -->
-            <header class="top-navbar">
-                <div class="header-left">
-                    <a href="#" class="back-link"><i data-lucide="arrow-left"></i> Back to Medicine Selection</a>
-                </div>
-                <div class="header-right">
-                    <span class="badge-action-required"><span class="status-dot">•</span> ACTION REQUIRED</span>
-                    <button class="icon-btn"><i data-lucide="bell"></i></button>
-                    <button class="icon-btn"><i data-lucide="settings"></i></button>
-                </div>
-            </header>
+            <?php 
+                $pageTitle = "Altenate Medicne"; 
+                include APP_PATH . '/views/Pharmacist/header.php'; 
+            ?>
 
             <h2 class="page-title">Alternative Medicine Review</h2>
 

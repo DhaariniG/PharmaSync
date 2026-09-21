@@ -16,16 +16,10 @@
         <!-- Main Workspace Viewport -->
         <main class="main-content">
             <!-- Top App Header Section -->
-            <header class="top-navbar">
-                <div class="header-left">
-                    <a href="#" class="back-link"><i data-lucide="arrow-left"></i> Back to Medicine Selection</a>
-                </div>
-                <div class="header-right">
-                    <button class="icon-btn"><i data-lucide="bell"></i></button>
-                    <button class="icon-btn"><i data-lucide="settings"></i></button>
-                </div>
-            </header>
-
+           <?php 
+            $pageTitle = "Order Confirmation"; 
+            include APP_PATH . '/views/Pharmacist/header.php'; 
+        ?>
             <h2 class="page-title">Final order confirmation</h2>
 
             <!-- Main Split Layout Configuration -->

@@ -16,16 +16,10 @@
         <!-- Main Workspace Viewport -->
         <main class="main-content">
             <!-- Top Header Navbar Component -->
-            <header class="top-navbar">
-                <div class="header-left">
-                    <h2 class="page-title">Notifications</h2>
-                </div>
-                <div class="header-right">
-                    <a href="#" class="link-action">Mark all as read</a>
-                    <button class="header-icon-btn"><i data-lucide="search"></i></button>
-                    <div class="profile-avatar"></div>
-                </div>
-            </header>
+            <?php 
+                $pageTitle = "Notification"; 
+                include APP_PATH . '/views/Pharmacist/header.php'; 
+            ?>
 
             <!-- Notifications Central List Container -->
             <section class="card notifications-card">

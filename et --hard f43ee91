@@ -1,0 +1,23 @@
+[33m493736f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/Pharmacist[m[33m)[m HEAD@{0}: commit (merge): fix(merge): resolve conflicts in Model.php, .htaccess, and index.php
+[33mf43ee91[m[33m ([m[1;31morigin/feature/Pharmacist[m[33m)[m HEAD@{1}: checkout: moving from feature/Customer to feature/Pharmacist
+[33mc0d0dd9[m[33m ([m[1;32mfeature/Customer[m[33m)[m HEAD@{2}: pull origin feature/Customer: Merge made by the 'ort' strategy.
+[33mc4f0624[m HEAD@{3}: checkout: moving from feature/Pharmacist to feature/Customer
+[33mf43ee91[m[33m ([m[1;31morigin/feature/Pharmacist[m[33m)[m HEAD@{4}: commit: Login routing setup and redirect
+[33mc40dc0a[m HEAD@{5}: pull --rebase origin feature/Pharmacist (finish): returning to refs/heads/feature/Pharmacist
+[33mc40dc0a[m HEAD@{6}: pull --rebase origin feature/Pharmacist (pick): Basic Static UI added
+[33m6799e97[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/feature/InventoryManager[m[33m, [m[1;31morigin/feature/DeliveryPartner[m[33m, [m[1;31morigin/feature/Admin[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{7}: pull --rebase origin feature/Pharmacist (start): checkout 6799e979d46805fb3a4cb1a66d83a6397f46566e
+[33m7bbdde7[m HEAD@{8}: commit: Basic Static UI added
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{9}: checkout: moving from feature/Customer to feature/Pharmacist
+[33mc4f0624[m HEAD@{10}: commit: Added folder structure to css
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{11}: checkout: moving from develop to feature/Customer
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{12}: checkout: moving from feature/InventoryManager to develop
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{13}: checkout: moving from develop to feature/InventoryManager
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{14}: checkout: moving from feature/DeliveryPartner to develop
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{15}: checkout: moving from develop to feature/DeliveryPartner
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{16}: checkout: moving from feature/Admin to develop
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{17}: checkout: moving from develop to feature/Admin
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{18}: checkout: moving from feature/Pharmacist to develop
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{19}: checkout: moving from develop to feature/Pharmacist
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{20}: checkout: moving from main to develop
+[33mb7c637d[m[33m ([m[1;32mmain[m[33m, [m[1;32mfeature/InventoryManager[m[33m, [m[1;32mfeature/DeliveryPartner[m[33m, [m[1;32mfeature/Admin[m[33m, [m[1;32mdevelop[m[33m)[m HEAD@{21}: commit: Initial commit: Folder structure
+[33m12095a2[m HEAD@{22}: clone: from https://github.com/DhaariniG/PharmaSync.git

@@ -16,22 +16,10 @@
         <!-- Main Workspace -->
         <main class="main-content">
             <!-- Top App Header Section -->
-            <header class="top-navbar">
-                <div class="header-left">
-                    <button class="btn-back"><i data-lucide="arrow-left"></i></button>
-                    <h2 class="page-title">Prescription History — <span class="text-weight-normal">#RX-882193</span></h2>
-                </div>
-                <div class="header-right">
-                    <div class="search-wrapper">
-                        <i data-lucide="search" class="search-icon"></i>
-                        <input type="text" placeholder="Search records..." class="toolbar-search">
-                    </div>
-                    <button class="header-action-btn"><i data-lucide="bell"></i></button>
-                    <button class="header-action-btn"><i data-lucide="printer"></i></button>
-                    <button class="header-action-btn"><i data-lucide="share-2"></i></button>
-                </div>
-            </header>
-
+            <?php 
+                $pageTitle = "Order Details"; 
+                include APP_PATH . '/views/Pharmacist/header.php'; 
+            ?>
             <!-- Status Banner Message -->
             <div class="status-banner">
                 <div class="banner-message">

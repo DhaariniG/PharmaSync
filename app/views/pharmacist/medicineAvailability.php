@@ -15,18 +15,10 @@
         <!-- Main Dashboard Content -->
         <main class="main-content">
             <!-- Top Header Navbar -->
-            <header class="top-navbar">
-                <div class="header-title">Medicine Availability</div>
-                <div class="user-profile">
-                    <button class="notification-btn"><i data-lucide="bell"></i></button>
-                    <div class="divider"></div>
-                    <div class="user-info">
-                        <span class="user-name">Hari De Silva</span>
-                        <span class="user-role">SENIOR PHARMACIST</span>
-                    </div>
-                    <div class="avatar"></div>
-                </div>
-            </header>
+            <?php 
+                $pageTitle = "Medicine Availability"; 
+                include APP_PATH . '/views/Pharmacist/header.php'; 
+            ?>
 
             <!-- Search and Filter Panel -->
             <section class="card filter-card">

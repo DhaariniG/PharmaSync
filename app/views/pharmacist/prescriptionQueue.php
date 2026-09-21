@@ -5,231 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PharmaSync - Prescription Queue</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/Pharmacist/prescriptionQueue.css">
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar Navigation -->
-        <?php include 'sidebar.php'; ?>
+    <div class="dashboard-container">
+        <?php include APP_PATH . '/views/Pharmacist/sidebar.php'; ?>
 
-        <!-- Main Dashboard Content -->
         <main class="main-content">
-            <!-- Top Header Navbar -->
-            <header class="top-navbar">
-                <div class="header-title">Prescription Queue</div>
-                <div class="user-profile">
-                    <button class="notification-btn"><i data-lucide="bell"></i></button>
-                    <div class="divider"></div>
-                    <div class="user-info">
-                        <span class="user-name">Hari De Silva</span>
-                        <span class="user-role">SENIOR PHARMACIST</span>
-                    </div>
-                    <div class="avatar"></div>
+            <?php 
+                $pageTitle = "Prescription Queue"; 
+                include APP_PATH . '/views/Pharmacist/header.php'; 
+            ?>
+
+            <section class="queue-card">
+                <div class="card-title-group">
+                    <h3>Online Orders Staging Queue</h3>
                 </div>
-            </header>
 
-            <!-- Filter and Control Bar -->
-            <div class="control-bar">
-                <div class="filter-tabs">
-                    <button class="tab active">ALL</button>
-                    <button class="tab">PENDING</button>
-                    <button class="tab">UNDER REVIEW</button>
-                    <button class="tab">FLAGGED</button>
-                </div>
-                <div class="dropdown-filters">
-                    <!-- Date Range Dropdown -->
-                    <div class="select-wrapper">
-                        <i data-lucide="calendar" class="select-icon"></i>
-                        <select id="date-range-select" onchange="toggleCustomDateInputs(this.value)">
-                            <option value="24h">Last 24 Hours</option>
-                            <option value="1w">Last 1 Week</option>
-                            <option value="1m">Last 1 Month</option>
-                            <option value="custom">Custom Date Range...</option>
-                        </select>
-                    </div>
-
-                    <!-- Custom Date Range Inputs (Hidden by default, shown when 'custom' is selected) -->
-                    <div id="custom-date-inputs" class="custom-date-group" style="display: none;">
-                        <div class="date-input-wrapper">
-                            <label for="date-from">From:</label>
-                            <input type="date" id="date-from" name="date_from">
-                        </div>
-                        <div class="date-input-wrapper">
-                            <label for="date-to">To:</label>
-                            <input type="date" id="date-to" name="date_to">
-                        </div>
-                    </div>
-
-                    <!-- Sort Filter -->
-                    <div class="select-wrapper">
-                        <i data-lucide="arrow-up-narrow-wide" class="select-icon"></i>
-                        <select>
-                            <option>Newest first</option>
-                            <option>Oldest first</option>
-                        </select>
+                <div class="queue-filter-bar">
+                    <div class="search-field-wrapper">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="queueSearch" placeholder="Search queue by patient or RX ID..." onkeyup="filterQueueTable()">
                     </div>
                 </div>
-            </div>
 
-            <!-- Main Queue Table Container -->
-            <section class="card queue-widget">
-                <div class="table-wrapper">
-                    <table>
+                <div class="table-responsive">
+                    <table class="custom-table" id="queueTable">
                         <thead>
                             <tr>
-                                <th>PATIENT NAME</th>
-                                <th>PRESCRIPTION ID</th>
-                                <th>UPLOADED DATE</th>
-                                <th>MEDS</th>
-                                <th>PRIORITY</th>
-                                <th>STATUS</th>
-                                <th class="text-center">ACTIONS</th>
+                                <th>Patient Name</th>
+                                <th>Prescription ID</th>
+                                <th>Uploaded Date</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="patient-cell">
-                                        <div class="patient-avatar av-jd">JD</div>
-                                        <span>John Doe</span>
-                                    </div>
-                                </td>
-                                <td class="text-muted">#RX-882193</td>
-                                <td>Oct 24, 09:12 AM</td>
-                                <td><span class="badge-meds">4 ITEMS</span></td>
-                                <td><i data-lucide="flag" class="flag-icon flag-high"></i></td>
-                                <td><span class="status status-flagged">Flagged</span></td>
-                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="patient-cell">
-                                        <div class="patient-avatar av-sg">SG</div>
-                                        <span>Selena Gomez</span>
-                                    </div>
-                                </td>
-                                <td class="text-muted">#RX-882194</td>
-                                <td>Oct 24, 09:20 AM</td>
-                                <td><span class="badge-meds">2 ITEMS</span></td>
-                                <td><i data-lucide="flag" class="flag-icon"></i></td>
-                                <td><span class="status status-review">Under Review</span></td>
-                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="patient-cell">
-                                        <div class="patient-avatar av-ts">TS</div>
-                                        <span>Taylor Swift</span>
-                                    </div>
-                                </td>
-                                <td class="text-muted">#RX-882195</td>
-                                <td>Oct 24, 09:25 AM</td>
-                                <td><span class="badge-meds">1 ITEM</span></td>
-                                <td><i data-lucide="flag" class="flag-icon"></i></td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="patient-cell">
-                                        <div class="patient-avatar av-mr">MK</div>
-                                        <span>M. Rajapaksha</span>
-                                    </div>
-                                </td>
-                                <td class="text-muted">#RX-882197</td>
-                                <td>Oct 24, 09:50 AM</td>
-                                <td><span class="badge-meds">3 ITEMS</span></td>
-                                <td><i data-lucide="flag" class="flag-icon"></i></td>
-                                <td><span class="status status-rejected">Rejected</span></td>
-                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="patient-cell">
-                                        <div class="patient-avatar av-ch">LH</div>
-                                        <span>Christopher</span>
-                                    </div>
-                                </td>
-                                <td class="text-muted">#RX-882198</td>
-                                <td>Oct 24, 10:02 AM</td>
-                                <td><span class="badge-meds">6 ITEMS</span></td>
-                                <td><i data-lucide="flag" class="flag-icon flag-high"></i></td>
-                                <td><span class="status status-flagged">Flagged</span></td>
-                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="patient-cell">
-                                        <div class="patient-avatar av-r">PT</div>
-                                        <span>Robbin</span>
-                                    </div>
-                                </td>
-                                <td class="text-muted">#RX-882199</td>
-                                <td>Oct 24, 10:15 AM</td>
-                                <td><span class="badge-meds">2 ITEMS</span></td>
-                                <td><i data-lucide="flag" class="flag-icon"></i></td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="patient-cell">
-                                        <div class="patient-avatar av-ag">AG</div>
-                                        <span>Alice Graham</span>
-                                    </div>
-                                </td>
-                                <td class="text-muted">#RX-882200</td>
-                                <td>Oct 24, 10:30 AM</td>
-                                <td><span class="badge-meds">3 ITEMS</span></td>
-                                <td><i data-lucide="flag" class="flag-icon"></i></td>
-                                <td><span class="status status-review">Under Review</span></td>
-                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="patient-cell">
-                                        <div class="patient-avatar av-dm">DB</div>
-                                        <span>David Miller</span>
-                                    </div>
-                                </td>
-                                <td class="text-muted">#RX-882201</td>
-                                <td>Oct 24, 10:45 AM</td>
-                                <td><span class="badge-meds">1 ITEM</span></td>
-                                <td><i data-lucide="flag" class="flag-icon"></i></td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="patient-cell">
-                                        <div class="patient-avatar av-co">CO</div>
-                                        <span>Claire Owens</span>
-                                    </div>
-                                </td>
-                                <td class="text-muted">#RX-882202</td>
-                                <td>Oct 24, 11:00 AM</td>
-                                <td><span class="badge-meds">4 ITEMS</span></td>
-                                <td><i data-lucide="flag" class="flag-icon"></i></td>
-                                <td><span class="status status-review">Under Review</span></td>
-                                <td class="text-center"><button class="btn-review">REVIEW</button></td>
-                            </tr>
+                            <?php if (!empty($queue)): ?>
+                                <?php foreach ($queue as $item): ?>
+                                    <tr>
+                                        <td style="font-weight: 600; color: #1e293b;"><?= htmlspecialchars($item['patient_name']) ?></td>
+                                        <td class="rx-code">#RX-<?= $item['prescription_id'] ?></td>
+                                        <td><?= date('M d, Y h:i A', strtotime($item['uploaded_date'])) ?></td>
+                                        <td>
+                                            <?php $isHigh = ($item['priority'] ?? '') === 'High'; ?>
+                                            <span class="priority-tag <?= $isHigh ? 'high' : 'normal' ?>">
+                                                <?= htmlspecialchars($item['priority'] ?? 'Normal') ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="status-tag review">
+                                                <?= htmlspecialchars($item['status']) ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button class="btn-action-review" onclick="alert('Reviewing Prescription #RX-<?= $item['prescription_id'] ?>')">
+                                                <i data-lucide="eye" style="width: 13px; height: 13px;"></i> Review
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: #94a3b8; padding: 35px 20px;">
+                                        No pending online prescriptions in queue.
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
-                </div>
-
-                <!-- Pagination Footer Elements -->
-                <div class="table-footer">
-                    <div class="showing-text">Showing 1-10 of 42</div>
-                    <div class="pagination">
-                        <button class="page-arrow"><i data-lucide="chevron-left"></i></button>
-                        <button class="page-num active">1</button>
-                        <button class="page-num">2</button>
-                        <button class="page-num">3</button>
-                        <button class="page-num">4</button>
-                        <button class="page-num">5</button>
-                        <button class="page-arrow"><i data-lucide="chevron-right"></i></button>
-                    </div>
                 </div>
             </section>
         </main>
@@ -238,13 +83,19 @@
     <script>
         lucide.createIcons();
 
-        // Toggle custom date range pickers
-        function toggleCustomDateInputs(value) {
-            const customGroup = document.getElementById('custom-date-inputs');
-            if (value === 'custom') {
-                customGroup.style.display = 'flex';
-            } else {
-                customGroup.style.display = 'none';
+        function filterQueueTable() {
+            const input = document.getElementById('queueSearch');
+            const filter = input.value.toLowerCase();
+            const tr = document.getElementById('queueTable').getElementsByTagName('tr');
+
+            for (let i = 1; i < tr.length; i++) {
+                const tdPatient = tr[i].getElementsByTagName('td')[0];
+                const tdRx = tr[i].getElementsByTagName('td')[1];
+                if (tdPatient || tdRx) {
+                    const txtPatient = tdPatient.textContent || tdPatient.innerText;
+                    const txtRx = tdRx.textContent || tdRx.innerText;
+                    tr[i].style.display = (txtPatient.toLowerCase().includes(filter) || txtRx.toLowerCase().includes(filter)) ? "" : "none";
+                }
             }
         }
     </script>

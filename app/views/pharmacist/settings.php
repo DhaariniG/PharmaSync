@@ -22,22 +22,10 @@
         <!-- Main Workspace Viewport -->
         <main class="main-content">
             <!-- Top App Header Section -->
-            <header class="top-navbar">
-                <div class="header-left">
-                    <h2 class="page-title">Settings</h2>
-                </div>
-                <div class="header-right-profile">
-                    <div class="notification-wrapper">
-                        <i data-lucide="bell" class="header-bell-icon"></i>
-                        <span class="notification-indicator"></span>
-                    </div>
-                    <div class="profile-details">
-                        <span class="profile-name">Hari De Silva</span>
-                        <span class="profile-role">SENIOR PHARMACIST</span>
-                    </div>
-                    <div class="profile-avatar"></div>
-                </div>
-            </header>
+            <?php 
+                $pageTitle = "Settings"; 
+                include APP_PATH . '/views/Pharmacist/header.php'; 
+            ?>
 
             <!-- Settings Layout Container Split Grid -->
             <div class="settings-grid">
