@@ -1,0 +1,118 @@
+
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--color-white);
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 50;
+}
+
+/* Logo area at the top */
+.sidebar-brand {
+    padding: var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.sidebar-brand .material-symbols-outlined {
+    color: var(--color-secondary);
+    font-size: 24px;
+}
+
+.sidebar-brand-text {
+    color: var(--color-secondary);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+}
+
+/* Scrollable nav link list */
+.sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+/* Section labels like "ALERTS" / "ACTIVITY" */
+.sidebar-section-label {
+    padding: var(--space-md) var(--space-md) var(--space-xs);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.sidebar-section-label.with-border {
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--space-xs);
+}
+
+/* Every nav link */
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-xl);
+    color: var(--color-text-muted);
+    font-size: var(--text-body);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(0, 139, 139, 0.08);
+    color: var(--color-secondary);
+}
+
+/* The CURRENT page's link - teal pill, matches the "active" state pattern
+   from the original design, just inverted (teal-on-white instead of white-on-teal) */
+.nav-link.active {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    font-weight: 700;
+}
+
+.nav-link .material-symbols-outlined {
+    font-size: 20px;
+}
+
+/* Logout link gets a red hover instead of teal */
+.nav-link.logout:hover {
+    background-color: var(--color-error-bg);
+    color: var(--color-error);
+}
+
+/* Logout is a <button> inside a POST form: strip the browser's button styling
+   so it looks identical to the <a> links above it */
+.sidebar-logout-form {
+    margin: 0;
+}
+
+button.nav-link {
+    width: 100%;
+    border: none;
+    background: none;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* Bottom section (Profile / Logout), pinned to the bottom */
+.sidebar-footer {
+    margin-top: auto;
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}

@@ -1,0 +1,327 @@
+/*
+  medicines_add.css
+  ---------------------------------------------------
+  Styling ONLY for the Add Medicine form screen.
+*/
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    min-height: 100vh;
+}
+
+/* --- Top header bar (this screen has no menu button, just title) --- */
+
+
+/* --- Page content --- */
+.content-area {
+    margin-top: 64px; /* pushes content below the fixed topbar */
+    padding: var(--space-xl);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 14px;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    margin-bottom: var(--space-lg);
+}
+.btn-back:hover { background-color: #F7FAFC; }
+
+.page-title {
+    font-size: var(--text-h1);
+    font-weight: 700;
+}
+
+.page-subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--text-body);
+    margin-top: var(--space-xs);
+}
+
+/* --- Form card --- */
+.form-card {
+    background-color: var(--color-white);
+    border-radius: 12px;
+    padding: var(--space-xl);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-top: var(--space-xl);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 800px) {
+    .form-grid { grid-template-columns: 1fr; }
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.form-field label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text-main);
+}
+
+.field-hint {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    margin-top: -4px;
+}
+
+.form-field input[type="text"],
+.form-field input[type="number"],
+.form-field select,
+.form-field textarea {
+    height: 48px;
+    border: 1px solid #D1D5DB;
+    padding: 0 var(--space-md);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 2px rgba(0, 139, 139, 0.2);
+}
+
+.form-field textarea {
+    height: 140px;
+    padding: var(--space-md);
+    resize: none;
+}
+
+.form-field select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236B7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22m6%208%204%204%204-4%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+}
+
+/* Price field with "Rs." prefix */
+.input-group {
+    display: flex;
+    height: 48px;
+}
+
+.input-group-prefix {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-md);
+    border: 1px solid #D1D5DB;
+    border-right: none;
+    background-color: #F0F3FF;
+    color: var(--color-text-muted);
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    font-size: 14px;
+}
+
+.input-group input {
+    flex: 1;
+    border: 1px solid #D1D5DB;
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: 0 var(--space-md);
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+}
+.input-group input:focus {
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 2px rgba(0, 139, 139, 0.2);
+}
+
+/* --- Two-option selector (Requires Prescription / Status) ---
+   Clicking a label toggles a "selected" class via a small JS snippet
+   (see bottom of the HTML file) - no library, just one class swap. */
+.option-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.option-radio {
+    cursor: pointer;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.option-radio .option-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    color: var(--color-text-muted);
+}
+
+.option-radio input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--color-secondary);
+}
+
+/* Selected state - JS adds this class */
+.option-radio.selected {
+    border: 2px solid var(--color-primary);
+    background-color: #E6FFF9;
+}
+.option-radio.selected .option-left {
+    color: var(--color-text-main);
+}
+.option-radio.selected .option-left .material-symbols-outlined {
+    color: var(--color-secondary);
+}
+
+/* --- Footer buttons --- */
+.form-footer {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid #F3F4F6;
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-md);
+}
+
+.btn-cancel {
+    padding: 0 var(--space-xl);
+    height: 48px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    border-radius: var(--radius-lg);
+    font-size: 14px;
+    cursor: pointer;
+}
+.btn-cancel:hover { background-color: #F7FAFC; }
+
+.btn-save {
+    padding: 0 var(--space-xl);
+    height: 48px;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+.btn-save:hover { filter: brightness(0.9); }
+
+/* --- Bottom info strip --- */
+.info-strip {
+    margin-top: var(--space-xl);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-lg);
+}
+
+@media (max-width: 800px) {
+    .info-strip { grid-template-columns: 1fr; }
+}
+
+.recent-card {
+    background-color: #F0F3FF;
+    border-radius: var(--radius-xl);
+    padding: var(--space-lg);
+    border: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.recent-card h4 {
+    font-size: var(--text-h2);
+    font-weight: 600;
+}
+
+.recent-card p {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.avatar-stack {
+    display: flex;
+}
+
+.avatar-stack .mini-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--color-white);
+    background-color: rgba(0, 139, 139, 0.15);
+    color: var(--color-secondary);
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -8px;
+}
+.avatar-stack .mini-avatar:first-child { margin-left: 0; }
+
+.help-card {
+    background-color: rgba(23, 233, 225, 0.1);
+    border: 2px dashed var(--color-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.help-card .material-symbols-outlined {
+    color: var(--color-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+.help-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-secondary);
+}
+
+.help-card-note {
+    font-size: 11px;
+    color: var(--color-text-muted);
+}
+/* Validation message under a field (added when the form got real validation) */
+.field-error {
+    font-size: 12px;
+    color: var(--color-error);
+}

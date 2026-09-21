@@ -1,0 +1,359 @@
+.main-content {
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 1200px;
+}
+
+
+
+/* --- Scrollable content area --- */
+.content-area {
+    padding: var(--space-xl);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--text-body);
+}
+
+/* --- Shared "card" look used everywhere on this page --- */
+.card {
+    background-color: var(--color-white);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Row 1: 4 stat cards --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+}
+
+@media (max-width: 1024px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+    .stats-grid { grid-template-columns: 1fr; }
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon.primary { background-color: rgba(0, 139, 139, 0.1); color: var(--color-secondary); }
+.stat-icon.error { background-color: rgba(186, 26, 26, 0.1); color: var(--color-error); }
+.stat-icon.warning { background-color: rgba(245, 158, 11, 0.1); color: var(--color-warning); }
+
+.stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* --- Row 2: chart + alerts list (10-column grid) --- */
+.row-10col {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: var(--space-lg);
+}
+
+.col-span-6 { grid-column: span 6; }
+.col-span-4 { grid-column: span 4; }
+
+@media (max-width: 1024px) {
+    .row-10col { grid-template-columns: 1fr; }
+    .col-span-6, .col-span-4 { grid-column: span 1; }
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+}
+
+.card-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.view-all-link {
+    color: var(--color-secondary);
+    font-size: 12px;
+    font-weight: 700;
+}
+.view-all-link:hover { text-decoration: underline; }
+
+/* Chart day labels under the SVG line chart */
+.chart-days {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-md);
+    padding: 0 var(--space-sm);
+}
+.chart-days span {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+/* --- Low stock alert list items --- */
+.alert-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--space-md);
+}
+.alert-item:last-child { margin-bottom: 0; }
+
+.alert-item-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.alert-item-left .material-symbols-outlined {
+    color: var(--color-error);
+}
+
+.alert-med-name {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.alert-med-detail {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.alert-qty {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-error);
+    text-align: right;
+}
+
+.alert-min {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: right;
+}
+
+/* --- Row 3: expiry table + predictive card --- */
+.table-card {
+    padding: 0; /* table has its own internal padding */
+    display: flex;
+    flex-direction: column;
+}
+
+.table-card-header {
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-card-header .btn-outline {
+    margin-right: var(--space-sm);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.data-table thead tr {
+    background-color: #F7FAFC;
+}
+
+.data-table th {
+    padding: var(--space-md) var(--space-lg);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+}
+
+.data-table th.align-right { text-align: right; }
+
+.data-table td {
+    padding: var(--space-md) var(--space-lg);
+    font-size: 14px;
+    border-top: 1px solid var(--color-border);
+}
+
+.data-table tbody tr:hover {
+    background-color: #F7FAFC;
+}
+
+.status-badge {
+    display: inline-flex;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-default);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-badge.critical {
+    background-color: var(--color-error-bg);
+    color: var(--color-error);
+}
+
+.status-badge.expiring-soon {
+    background-color: var(--color-warning-bg);
+    color: #B45309;
+}
+
+/* --- Predictive inventory card --- */
+.predictive-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-md);
+}
+
+.predictive-card-header .material-symbols-outlined {
+    color: var(--color-secondary);
+}
+
+.predictive-subtitle {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.predictive-item {
+    padding: var(--space-md);
+    background-color: #F7FAFC;
+    border-radius: var(--radius-xl);
+    border-left: 4px solid var(--color-secondary);
+    margin-bottom: var(--space-md);
+}
+.predictive-item:last-child { margin-bottom: 0; }
+
+.predictive-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-xs);
+}
+
+.predictive-med-name {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.predictive-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-secondary);
+    background-color: rgba(0, 139, 139, 0.1);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.predictive-note {
+    font-size: 12px;
+    color: var(--color-text-main);
+}
+
+/* --- Buttons --- */
+.btn-outline {
+    padding: var(--space-xs) var(--space-md);
+    font-size: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background-color: var(--color-white);
+    cursor: pointer;
+}
+.btn-outline:hover { background-color: #F7FAFC; }
+
+.btn-primary {
+    padding: var(--space-xs) var(--space-md);
+    font-size: 12px;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+}
+.btn-primary:hover { filter: brightness(0.9); }
+
+.btn-generate-po {
+    width: 100%;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    padding: var(--space-md);
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+}
+.btn-generate-po:hover { filter: brightness(0.95); }
+
+/* --- Floating action button (bottom-right +) --- */
+.fab {
+    position: fixed;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    width: 56px;
+    height: 56px;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 50;
+}
+.fab:hover { transform: scale(1.1); }
