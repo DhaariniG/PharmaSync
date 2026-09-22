@@ -5,7 +5,7 @@
  * All SQL for medicines lives here. Values always go in as ? or :name
  * parameters, never glued into the SQL string.
  */
-class Medicine extends Model
+class InventoryMedicine extends Model
 {
     protected string $table = 'medicines';
 

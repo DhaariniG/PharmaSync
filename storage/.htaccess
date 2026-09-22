@@ -1,0 +1,3 @@
+# Belt and braces: even if storage/ ends up inside the web root on someone's
+# machine, Apache refuses to serve anything from it.
+Require all denied

@@ -23,7 +23,7 @@ class InventoryManagerMedicineController extends Controller
     {
         $this->requireRole('Inventory_Manager');
 
-        $model   = new Medicine();
+        $model   = new InventoryMedicine();
         $perPage = 10;
         $total   = $model->countAll();
         $pages   = max(1, (int) ceil($total / $perPage));
@@ -56,7 +56,7 @@ class InventoryManagerMedicineController extends Controller
         $this->verifyCsrf();
         $this->requireRole('Inventory_Manager');
 
-        $model = new Medicine();
+        $model = new InventoryMedicine();
         [$data, $errors] = $this->readForm($model);
 
         // Something was wrong: show the form again with the messages,
@@ -76,7 +76,7 @@ class InventoryManagerMedicineController extends Controller
     {
         $this->requireRole('Inventory_Manager');
 
-        $medicine = (new Medicine())->find((int) $id);
+        $medicine = (new InventoryMedicine())->find((int) $id);
         if (!$medicine) {
             $this->notFound();
         }
@@ -91,7 +91,7 @@ class InventoryManagerMedicineController extends Controller
         $this->requireRole('Inventory_Manager');
 
         $id    = (int) $id;
-        $model = new Medicine();
+        $model = new InventoryMedicine();
 
         $existing = $model->find($id);
         if (!$existing) {
@@ -117,7 +117,7 @@ class InventoryManagerMedicineController extends Controller
         $this->verifyCsrf();
         $this->requireRole('Inventory_Manager');
 
-        $model    = new Medicine();
+        $model    = new InventoryMedicine();
         $medicine = $model->find((int) $id);
         if (!$medicine) {
             $this->notFound();
@@ -146,7 +146,7 @@ class InventoryManagerMedicineController extends Controller
         $this->render('medicine/' . $mode, [
             'medicine'    => $medicine,
             'errors'      => $errors,
-            'categories'  => (new Medicine())->categories(),
+            'categories'  => (new InventoryMedicine())->categories(),
             'page_title'  => $mode === 'create' ? 'Add Medicine' : 'Edit Medicine',
             'active_page' => 'medicines',
             'page_css'    => 'medicines_add.css',
@@ -158,7 +158,7 @@ class InventoryManagerMedicineController extends Controller
      * Returns [$data, $errors]: $data has real column names ready for the
      * model, $errors is empty when everything is valid.
      */
-    private function readForm(Medicine $model): array
+    private function readForm(InventoryMedicine $model): array
     {
         // Base rules from Controller::validate() (required / int / numeric / max)
         $errors = $this->validate($_POST, [
