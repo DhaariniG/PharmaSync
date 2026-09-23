@@ -17,9 +17,48 @@ The project runs immediately on sample data - `DB_ENABLED` is `false`, so no
 database import is needed yet. You land on the login page; sign in with one
 of the demo accounts below.
 
-When the group is ready for MySQL, import the files in `database/` in name
-order (`001_schema.sql`, `001a_seed_demo_users.sql`, `002_...`, `003_...`) in
-phpMyAdmin and flip `DB_ENABLED` to `true`. The demo logins stay the same.
+When the group is ready for MySQL, see "Database setup" below, then flip
+`DB_ENABLED` to `true`. The demo logins stay the same.
+
+### Database setup
+
+Import every file in `database/` in this exact order - each one depends on
+what the last one created:
+
+1. `001_schema.sql` - creates the `pharmasync` database and every core table.
+2. `001a_seed_demo_users.sql` - the five demo accounts (`Demo@1234`).
+3. `002_add_cart_tables.sql` - the shopping cart.
+4. `003_add_customer_profile_tables.sql` - family members, their allergies /
+   conditions, and saved addresses.
+5. `004_link_prescriptions_to_family_members.sql` - links a prescription to
+   the family member it is for (nullable - `NULL` means the account holder).
+6. `005_demo_data.sql` - the 6 medicine categories (added only if missing),
+   plus demo medicines, suppliers and stock batches.
+7. `006_add_password_resets_table.sql` - the forgot-password token table.
+
+`database/schema-reference-customer.sql` is documentation only, not part of
+the import - see "Open group decisions" below.
+
+Using the MySQL command-line client instead of phpMyAdmin, from the
+`database/` folder:
+
+```
+"C:\xampp\mysql\bin\mysql.exe" -u root < 001_schema.sql
+"C:\xampp\mysql\bin\mysql.exe" -u root < 001a_seed_demo_users.sql
+"C:\xampp\mysql\bin\mysql.exe" -u root < 002_add_cart_tables.sql
+"C:\xampp\mysql\bin\mysql.exe" -u root < 003_add_customer_profile_tables.sql
+"C:\xampp\mysql\bin\mysql.exe" -u root < 004_link_prescriptions_to_family_members.sql
+"C:\xampp\mysql\bin\mysql.exe" -u root < 005_demo_data.sql
+"C:\xampp\mysql\bin\mysql.exe" -u root < 006_add_password_resets_table.sql
+```
+
+Every file after `001_schema.sql` is safe to import again - each one either
+checks a name exists first or deletes only its own rows before re-inserting.
+
+**Email (forgot password).** Copy `config/local.example.php` to
+`config/local.php` and fill in your own Mailtrap sandbox SMTP credentials.
+`config/local.php` is git-ignored, so everyone keeps their own credentials
+without ever committing one.
 
 ### Customer CRUD on MySQL (interim)
 

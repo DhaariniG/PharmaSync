@@ -9,9 +9,12 @@
 -- have something real to show instead of an empty table.
 --
 -- The mix is deliberate, not random:
---   - 8 medicines across every existing medicine_categories row
---     (looked up by category_name below, never hardcoded, so this
---     still works if categories are renumbered)
+--   - the 6 medicine categories the group has been using (Pain Relief,
+--     Antibiotic, Supplements, Antihistamine, Diabetes, Respiratory),
+--     added only if a category with that name does not already exist
+--   - 8 medicines across those categories (looked up by category_name
+--     below, never hardcoded, so this still works if categories are
+--     renumbered)
 --   - a mix of prescription and non-prescription medicines
 --   - 3 suppliers
 --   - stock_batches mostly healthy, but Amoxicillin and Cetirizine
@@ -19,16 +22,31 @@
 --     Amoxicillin and Metformin batches expire within 30 days of
 --     today (CURDATE()) - both alert screens have something to show.
 --
--- Resets demo data, safe to re-run: it only ever touches medicines,
--- suppliers and stock_batches (never users, family_members,
--- addresses, prescriptions or anything else), and it deletes its own
--- previous rows in those three tables before re-inserting them.
+-- Resets demo data, safe to re-run: medicines, suppliers and
+-- stock_batches are deleted and re-inserted every time. Categories
+-- are additive only (INSERT IGNORE by name) - they are never deleted,
+-- so this never disturbs a category real orders already point at.
+-- Nothing outside these four tables is touched (never users,
+-- family_members, addresses, prescriptions or anything else).
 -- physical_order_items, prescription_items, purchase_order_items and
 -- stock_changes must be empty for this to run - a real sale, order
 -- or prescription against this demo stock would block the delete.
 -- ============================================================
 
 USE pharmasync;
+
+-- ------------------------------------------------------------
+-- MEDICINE_CATEGORIES
+-- Added by name, only if missing. These 6 were created by hand in
+-- the group's database and were never in a migration file before.
+-- ------------------------------------------------------------
+INSERT IGNORE INTO medicine_categories (category_name, description) VALUES
+    ('Pain Relief',    'Analgesics and pain management medicines'),
+    ('Antibiotic',     'Medicines that treat bacterial infections'),
+    ('Supplements',    'Vitamins and nutritional supplements'),
+    ('Antihistamine',  'Allergy and antihistamine medicines'),
+    ('Diabetes',       'Medicines for diabetes management'),
+    ('Respiratory',    'Medicines for respiratory conditions');
 
 DELETE FROM stock_batches;
 DELETE FROM medicines;
