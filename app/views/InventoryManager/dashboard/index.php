@@ -1,8 +1,6 @@
 <!-- ============ MAIN CONTENT ============ -->
 <main class="main-content">
 
-   
-
     <div class="content-area">
 
         <div>
@@ -18,7 +16,7 @@
                 </div>
                 <div>
                     <p class="stat-label">Total Medicines</p>
-                    <p class="stat-value">452</p>
+                    <p class="stat-value">8</p>
                 </div>
             </div>
             <div class="card stat-card">
@@ -27,7 +25,7 @@
                 </div>
                 <div>
                     <p class="stat-label">Low Stock</p>
-                    <p class="stat-value">23</p>
+                    <p class="stat-value">2</p>
                 </div>
             </div>
             <div class="card stat-card">
@@ -36,7 +34,7 @@
                 </div>
                 <div>
                     <p class="stat-label">Near Expiry</p>
-                    <p class="stat-value">17</p>
+                    <p class="stat-value">2</p>
                 </div>
             </div>
             <div class="card stat-card">
@@ -45,34 +43,13 @@
                 </div>
                 <div>
                     <p class="stat-label">Total Suppliers</p>
-                    <p class="stat-value">12</p>
+                    <p class="stat-value">3</p>
                 </div>
             </div>
         </div>
 
-        <!-- Row 2: chart + low stock list -->
+        <!-- Row 2: Low Stock Alerts + Expiry Alerts -->
         <div class="row-10col">
-            <div class="card col-span-6">
-                <div class="card-header">
-                    <h3>Stock Overview</h3>
-                    <span class="page-subtitle">Last 7 Days</span>
-                </div>
-                <svg viewBox="0 0 700 200" style="width:100%; height:200px;">
-                    <path d="M0,160 Q100,120 150,140 T300,80 T450,110 T600,60 T700,90"
-                          fill="none" stroke="#008B8B" stroke-width="3" stroke-linejoin="round"/>
-                    <path d="M0,160 Q100,120 150,140 T300,80 T450,110 T600,60 T700,90 L700,200 L0,200 Z"
-                          fill="#008B8B" fill-opacity="0.1"/>
-                    <circle cx="150" cy="140" r="4" fill="#008B8B"/>
-                    <circle cx="300" cy="80" r="4" fill="#008B8B"/>
-                    <circle cx="450" cy="110" r="4" fill="#008B8B"/>
-                    <circle cx="600" cy="60" r="4" fill="#008B8B"/>
-                </svg>
-                <div class="chart-days">
-                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span>
-                    <span>Fri</span><span>Sat</span><span>Sun</span>
-                </div>
-            </div>
-
             <div class="card col-span-4">
                 <div class="card-header">
                     <h3>Low Stock Alerts</h3>
@@ -83,66 +60,34 @@
                     <div class="alert-item-left">
                         <?= icon('triangle-alert', 'material-symbols-outlined') ?>
                         <div>
-                            <p class="alert-med-name">Paracetamol</p>
-                            <p class="alert-med-detail">500mg Tablet</p>
+                            <p class="alert-med-name">Amoxicillin 500mg</p>
+                            <p class="alert-med-detail">Antibiotic</p>
                         </div>
                     </div>
                     <div>
-                        <p class="alert-qty">120 Units</p>
-                        <p class="alert-min">Min: 500</p>
+                        <p class="alert-qty">12 Units</p>
+                        <p class="alert-min">Min: 30</p>
                     </div>
                 </div>
                 <div class="alert-item">
                     <div class="alert-item-left">
                         <?= icon('triangle-alert', 'material-symbols-outlined') ?>
                         <div>
-                            <p class="alert-med-name">Amoxicillin</p>
-                            <p class="alert-med-detail">250mg Capsule</p>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="alert-qty">45 Units</p>
-                        <p class="alert-min">Min: 200</p>
-                    </div>
-                </div>
-                <div class="alert-item">
-                    <div class="alert-item-left">
-                        <?= icon('triangle-alert', 'material-symbols-outlined') ?>
-                        <div>
-                            <p class="alert-med-name">Cetirizine</p>
-                            <p class="alert-med-detail">10mg Syrup</p>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="alert-qty">15 Units</p>
-                        <p class="alert-min">Min: 50</p>
-                    </div>
-                </div>
-                <div class="alert-item">
-                    <div class="alert-item-left">
-                        <?= icon('triangle-alert', 'material-symbols-outlined') ?>
-                        <div>
-                            <p class="alert-med-name">Salbutamol</p>
-                            <p class="alert-med-detail">Inhaler 100mcg</p>
+                            <p class="alert-med-name">Cetirizine 10mg</p>
+                            <p class="alert-med-detail">Antihistamine</p>
                         </div>
                     </div>
                     <div>
                         <p class="alert-qty">8 Units</p>
-                        <p class="alert-min">Min: 30</p>
+                        <p class="alert-min">Min: 25</p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Row 3: expiry table + predictive card -->
-        <div class="row-10col">
             <div class="card table-card col-span-6">
                 <div class="table-card-header">
                     <h3>Expiry Alerts</h3>
-                    <div>
-                        <button class="btn-outline">Download CSV</button>
-                        <button class="btn-primary">Filter</button>
-                    </div>
+                    <a href="<?= url('/InventoryManager/expiry-alerts') ?>" class="view-all-link">View All</a>
                 </div>
                 <table class="data-table">
                     <thead>
@@ -156,67 +101,27 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Insulin Glargine</td>
-                            <td>BATCH-8921</td>
-                            <td>Oct 24, 2024</td>
-                            <td>150</td>
+                            <td>Metformin 500mg</td>
+                            <td>MET-2026-01</td>
+                            <td>Oct 04, 2026</td>
+                            <td>200</td>
                             <td class="align-right"><span class="status-badge critical">Critical</span></td>
                         </tr>
                         <tr>
-                            <td>Metformin HCL</td>
-                            <td>BATCH-7742</td>
-                            <td>Nov 12, 2024</td>
-                            <td>2,400</td>
-                            <td class="align-right"><span class="status-badge expiring-soon">Expiring Soon</span></td>
-                        </tr>
-                        <tr>
-                            <td>Atorvastatin</td>
-                            <td>BATCH-4410</td>
-                            <td>Dec 05, 2024</td>
-                            <td>850</td>
+                            <td>Amoxicillin 500mg</td>
+                            <td>AMX-2026-01</td>
+                            <td>Oct 14, 2026</td>
+                            <td>12</td>
                             <td class="align-right"><span class="status-badge expiring-soon">Expiring Soon</span></td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-
-            <div class="card col-span-4">
-                <div class="predictive-card-header">
-                    <div>
-                        <h3>Predictive Inventory</h3>
-                        <p class="predictive-subtitle">AI-driven restocking insights</p>
-                    </div>
-                    <?= icon('flask-conical', 'material-symbols-outlined') ?>
-                </div>
-
-                <div class="predictive-item">
-                    <div class="predictive-item-top">
-                        <p class="predictive-med-name">Lisinopril 10mg</p>
-                        <span class="predictive-tag">
-                            <?= icon('activity', 'material-symbols-outlined', 'font-size:14px;') ?>
-                            Recommended
-                        </span>
-                    </div>
-                    <p class="predictive-note">Usage increased by 14% this month. Order 500 units to avoid shortfall by week 3.</p>
-                </div>
-                <div class="predictive-item">
-                    <div class="predictive-item-top">
-                        <p class="predictive-med-name">Amlodipine 5mg</p>
-                        <span class="predictive-tag">
-                            <?= icon('activity', 'material-symbols-outlined', 'font-size:14px;') ?>
-                            Recommended
-                        </span>
-                    </div>
-                    <p class="predictive-note">Lead time for Supplier X has increased. Suggest ordering 2 weeks earlier than scheduled.</p>
-                </div>
-
-                
             </div>
         </div>
 
     </div>
 </main>
 
-<button class="fab">
+<a class="fab" href="<?= url('/InventoryManager/medicines/create') ?>" title="Add Medicine" aria-label="Add Medicine">
     <?= icon('plus', 'material-symbols-outlined', 'font-size:28px;') ?>
-</button>
+</a>

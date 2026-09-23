@@ -50,6 +50,13 @@ class InventoryManagerNotificationController extends Controller
                 'link'    => '/InventoryManager/expiry-alerts',
             ],
             [
+                'icon'    => 'calendar',
+                'type'    => 'error',
+                'title'   => 'Expiring soon: Amoxicillin 500mg batch expires in 20 days',
+                'time'    => '3 hours ago',
+                'link'    => '/InventoryManager/expiry-alerts',
+            ],
+            [
                 'icon'    => 'circle-check',
                 'type'    => 'success',
                 'title'   => 'Purchase order approved',
