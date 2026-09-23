@@ -16,30 +16,30 @@
 
         <div class="summary-cards">
             <div class="summary-card">
-                <div class="summary-icon total">
-                    <?= icon('package', 'material-symbols-outlined') ?>
-                </div>
                 <div>
                     <p class="summary-label">Total Batches</p>
                     <h3 class="summary-value">124</h3>
                 </div>
+                <div class="summary-icon total">
+                    <?= icon('package', 'material-symbols-outlined') ?>
+                </div>
             </div>
             <div class="summary-card">
-                <div class="summary-icon warning">
-                    <?= icon('triangle-alert', 'material-symbols-outlined') ?>
-                </div>
                 <div>
                     <p class="summary-label">Expiring Soon</p>
                     <h3 class="summary-value">17</h3>
                 </div>
+                <div class="summary-icon warning">
+                    <?= icon('triangle-alert', 'material-symbols-outlined') ?>
+                </div>
             </div>
             <div class="summary-card">
-                <div class="summary-icon danger">
-                    <?= icon('circle-alert', 'material-symbols-outlined') ?>
-                </div>
                 <div>
                     <p class="summary-label">Expired Batches</p>
                     <h3 class="summary-value">5</h3>
+                </div>
+                <div class="summary-icon danger">
+                    <?= icon('circle-alert', 'material-symbols-outlined') ?>
                 </div>
             </div>
         </div>
@@ -81,7 +81,12 @@
                         <td class="td-muted">11/10/2025</td>
                         <td class="td-center">450</td>
                         <td><span class="badge badge-green">Active</span></td>
-                        <td class="align-right"><button class="icon-btn"><?= icon('ellipsis-vertical', 'material-symbols-outlined') ?></button></td>
+                        <td class="align-right">
+                            <div class="row-actions">
+                                <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn"><?= icon('pencil', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="td-name">Amoxicillin 250mg</td>
@@ -90,7 +95,12 @@
                         <td class="td-warning">15/05/2024</td>
                         <td class="td-center td-danger">30</td>
                         <td><span class="badge badge-amber">Expiring Soon</span></td>
-                        <td class="align-right"><button class="icon-btn"><?= icon('ellipsis-vertical', 'material-symbols-outlined') ?></button></td>
+                        <td class="align-right">
+                            <div class="row-actions">
+                                <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn"><?= icon('pencil', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="td-name">Vitamin D3</td>
@@ -99,7 +109,12 @@
                         <td class="td-muted">14/08/2026</td>
                         <td class="td-center">1,200</td>
                         <td><span class="badge badge-green">Active</span></td>
-                        <td class="align-right"><button class="icon-btn"><?= icon('ellipsis-vertical', 'material-symbols-outlined') ?></button></td>
+                        <td class="align-right">
+                            <div class="row-actions">
+                                <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn"><?= icon('pencil', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="td-name">Cetirizine 10mg</td>
@@ -108,7 +123,12 @@
                         <td class="td-danger">01/03/2024</td>
                         <td class="td-center">215</td>
                         <td><span class="badge badge-red">Expired</span></td>
-                        <td class="align-right"><button class="icon-btn"><?= icon('ellipsis-vertical', 'material-symbols-outlined') ?></button></td>
+                        <td class="align-right">
+                            <div class="row-actions">
+                                <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn"><?= icon('pencil', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="td-name">Metformin 500mg</td>
@@ -117,7 +137,12 @@
                         <td class="td-muted">09/01/2027</td>
                         <td class="td-center">800</td>
                         <td><span class="badge badge-green">Active</span></td>
-                        <td class="align-right"><button class="icon-btn"><?= icon('ellipsis-vertical', 'material-symbols-outlined') ?></button></td>
+                        <td class="align-right">
+                            <div class="row-actions">
+                                <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn"><?= icon('pencil', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="td-name">Salbutamol Inhaler</td>
@@ -126,7 +151,12 @@
                         <td class="td-warning">10/06/2024</td>
                         <td class="td-center td-danger">8</td>
                         <td><span class="badge badge-amber">Expiring Soon</span></td>
-                        <td class="align-right"><button class="icon-btn"><?= icon('ellipsis-vertical', 'material-symbols-outlined') ?></button></td>
+                        <td class="align-right">
+                            <div class="row-actions">
+                                <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn"><?= icon('pencil', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>

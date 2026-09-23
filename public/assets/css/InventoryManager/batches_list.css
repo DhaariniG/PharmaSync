@@ -2,6 +2,9 @@
   batches_list.css
   ---------------------------------------------------
   Styling ONLY for the Stock & Batches list screen.
+  Deliberately matches purchase_orders_list.css's shapes, spacing and
+  colours (page header, summary cards, search/filter bar, table, row
+  action icons) so the two screens read as one consistent module.
 */
 
 .main-content {
@@ -14,51 +17,51 @@
 
 /* --- Page content --- */
 .content-area {
-    margin-top: 64px;
     padding: var(--space-lg);
     max-width: 1200px;
+    margin: 0 auto;
 }
 
 .page-header-row {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: var(--space-xl);
+    align-items: center;
+    margin-bottom: var(--space-lg);
 }
 
 .page-title {
     font-size: var(--text-h1);
     font-weight: 700;
-    margin-bottom: var(--space-xs);
 }
 
 .page-subtitle {
     color: var(--color-text-muted);
     font-size: var(--text-body);
+    margin-top: var(--space-xs);
 }
 
 .btn-add {
     background-color: var(--color-secondary);
     color: var(--color-white);
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-sm) var(--space-lg);
     border-radius: var(--radius-lg);
     border: none;
     display: flex;
     align-items: center;
+    gap: var(--space-xs);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
-.btn-add .material-symbols-outlined { margin-right: var(--space-sm); }
-.btn-add:hover { background-color: #007070; }
+.btn-add:hover { filter: brightness(0.95); }
 
 /* --- Summary cards --- */
 .summary-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
 }
 
 @media (max-width: 800px) {
@@ -70,9 +73,20 @@
     padding: var(--space-lg);
     border-radius: var(--radius-xl);
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border: 1px solid var(--color-border);
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.summary-label {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.summary-value {
+    font-size: var(--text-h1);
+    font-weight: 700;
 }
 
 .summary-icon {
@@ -82,28 +96,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: var(--space-md);
 }
-.summary-icon.total { background-color: #F0F3FF; color: var(--color-secondary); }
-.summary-icon.warning { background-color: #FEF3C7; color: #D97706; }
+.summary-icon.total { background-color: rgba(0, 139, 139, 0.12); color: var(--color-secondary); }
+.summary-icon.warning { background-color: #FEF3C7; color: #F59E0B; }
 .summary-icon.danger { background-color: var(--color-error-bg); color: var(--color-error); }
-
-.summary-label {
-    font-size: 12px;
-    color: var(--color-text-muted);
-}
-
-.summary-value {
-    font-size: var(--text-h1);
-    font-weight: 700;
-}
 
 /* --- Action bar: search + status filter --- */
 .action-bar {
     display: flex;
     align-items: center;
     gap: var(--space-md);
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
 }
 
 .search-box {
@@ -113,7 +116,7 @@
 
 .search-box .material-symbols-outlined {
     position: absolute;
-    left: 12px;
+    left: var(--space-md);
     top: 50%;
     transform: translateY(-50%);
     color: var(--color-text-muted);
@@ -122,11 +125,11 @@
 .search-box input {
     width: 100%;
     padding: var(--space-sm) var(--space-md) var(--space-sm) 40px;
-    border-radius: var(--radius-lg);
     border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-white);
     font-family: var(--font-body);
     font-size: 14px;
-    background-color: var(--color-white);
     outline: none;
 }
 .search-box input:focus { border-color: var(--color-secondary); }
@@ -164,7 +167,7 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     border: 1px solid var(--color-border);
     overflow: hidden;
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
 }
 
 .data-table {
@@ -174,12 +177,12 @@
 }
 
 .data-table thead tr {
-    background-color: #F0F3FF;
+    background-color: #F9FAFB;
     border-bottom: 1px solid var(--color-border);
 }
 
 .data-table th {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-md) var(--space-lg);
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
@@ -191,13 +194,15 @@
 .data-table th.align-right { text-align: right; }
 
 .data-table tbody tr {
+    height: 64px;
     border-bottom: 1px solid var(--color-border);
 }
-.data-table tbody tr:hover { background-color: #FAFCFF; cursor: pointer; }
+.data-table tbody tr:nth-child(even) { background-color: #F9FAFB; }
+.data-table tbody tr:hover { background-color: #F0F3FF; }
 .data-table tbody tr:last-child { border-bottom: none; }
 
 .data-table td {
-    padding: var(--space-sm) var(--space-md);
+    padding: 0 var(--space-lg);
     font-size: 14px;
 }
 
@@ -220,15 +225,23 @@
 .badge.badge-amber { background-color: #FEF3C7; color: #D97706; }
 .badge.badge-red { background-color: var(--color-error-bg); color: var(--color-error); }
 
+.row-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-xs);
+}
+
 .icon-btn {
     background: none;
     border: none;
-    color: var(--color-text-muted);
+    padding: var(--space-sm);
+    border-radius: var(--radius-lg);
     cursor: pointer;
     display: flex;
-    margin-left: auto;
+    color: var(--color-text-muted);
 }
-.icon-btn:hover { color: var(--color-secondary); }
+.icon-btn:hover { background-color: #F0F3FF; }
 
 /* --- Pagination --- */
 .pagination-row {
