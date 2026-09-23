@@ -131,53 +131,31 @@
 }
 .search-box input:focus { border-color: var(--color-secondary); }
 
-.filter-dropdown {
+.status-select-wrap {
     position: relative;
+    width: 160px;
 }
 
-.filter-btn {
-    background-color: var(--color-white);
-    border: 1px solid var(--color-border);
-    padding: var(--space-sm) var(--space-md);
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    cursor: pointer;
-    font-size: 14px;
-}
-.filter-btn:hover { background-color: #F7FAFC; }
-
-.filter-menu {
-    display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    min-width: 100%;
-    background-color: var(--color-white);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: var(--space-xs) 0;
-    z-index: 20;
-}
-.filter-dropdown.open .filter-menu { display: block; }
-
-.filter-option {
-    display: block;
+.status-select-wrap select {
     width: 100%;
-    text-align: left;
-    background: none;
-    border: none;
-    padding: var(--space-sm) var(--space-md);
-    font-size: 14px;
+    padding: var(--space-sm) 36px var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-white);
     font-family: var(--font-body);
-    color: var(--color-text-main);
-    cursor: pointer;
-    white-space: nowrap;
+    font-size: 14px;
+    appearance: none;
+    outline: none;
 }
-.filter-option:hover { background-color: #F7FAFC; }
-.filter-option.active { color: var(--color-secondary); font-weight: 600; }
+
+.status-select-wrap .material-symbols-outlined {
+    position: absolute;
+    right: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
 
 /* --- Batches table --- */
 .table-card {
