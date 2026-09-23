@@ -1,1 +1,16 @@
-﻿storage/users.json
+# Uploaded files - do not commit user data
+storage/prescriptions/*
+!storage/prescriptions/.gitkeep
+
+# Local accounts file (used while DB_ENABLED is false)
+storage/users.json
+
+# Editor and OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Local database dumps
+*.sql.bak

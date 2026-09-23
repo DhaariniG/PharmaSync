@@ -2,8 +2,9 @@
 /**
  * HomeController - the site root.
  *
- * It does not have a page of its own: it sends a signed-in user to their own
- * dashboard, and everyone else to the login page.
+ * Signed-in users go to their own dashboard. Everyone else sees the public
+ * landing page, which belongs to the customer module (guests are potential
+ * customers). Staff log in from the link in the landing page footer.
  */
 class HomeController extends Controller
 {
@@ -13,6 +14,6 @@ class HomeController extends Controller
             $this->redirectToDashboard();
         }
 
-        $this->redirect('/' . AUTH_SLUG . '/login');
+        (new CustomerHomeController())->index();
     }
 }

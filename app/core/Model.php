@@ -39,9 +39,10 @@ class Model
     /*
      * These are deliberately named fetchAll / fetchOne / insertRow / ... and
      * not all / one / insert / update. Models in this project already use the
-     * short names for their own business methods (Medicine::all(),
-     * Prescription::update()), and PHP refuses to let a child class redeclare
-     * a parent method with a different signature. Do not rename them back.
+     * short names for their own business methods (InventoryMedicine::all(),
+     * CustomerMedicine::all(), Prescription::update()), and PHP refuses to
+     * let a child class redeclare a parent method with a different
+     * signature. Do not rename them back.
      */
 
     /** Run a query and return every row. */

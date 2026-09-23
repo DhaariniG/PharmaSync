@@ -45,8 +45,6 @@ if (($_SESSION['seed_version'] ?? null) !== SEED_VERSION) {
 
 $router = new Router(require CONFIG_PATH . '/routes.php');
 
-
-
 $router->dispatch(
     $_SERVER['REQUEST_METHOD'] ?? 'GET',
     $_SERVER['REQUEST_URI'] ?? '/'
