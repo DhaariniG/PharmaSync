@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Order #POS-<?= e($order['order_id']) ?></title>
     <link rel="stylesheet" href="<?= role_css('Pharmacist', 'editSale.css') ?>">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="<?= asset('assets/js/lucide.min.js') ?>"></script>
 </head>
 <body>
     <div class="edit-card">

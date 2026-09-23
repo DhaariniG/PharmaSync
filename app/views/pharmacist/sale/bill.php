@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bill Receipt - #POS-<?= (int) ($order['order_id'] ?? 4) ?></title>
     <link rel="stylesheet" href="<?= role_css('Pharmacist', 'viewBill.css') ?>">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="<?= asset('assets/js/lucide.min.js') ?>"></script>
 
     <style>
         /* CSS to hide non-receipt elements during print */

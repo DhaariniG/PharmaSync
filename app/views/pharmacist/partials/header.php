@@ -28,8 +28,8 @@ $show_topbar     = $show_topbar ?? true;
 <?php if (!empty($page_css)): ?>
     <link rel="stylesheet" href="<?= url('/css/' . e($page_css)) ?>">
 <?php endif; ?>
-    <!-- Lucide icons (external CDN - see HANDOFF.md) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Lucide icons, served locally: public/assets/js/lucide.min.js -->
+    <script src="<?= asset('assets/js/lucide.min.js') ?>"></script>
 </head>
 <body>
     <div class="<?= e($container_class) ?>">
