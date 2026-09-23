@@ -20,6 +20,8 @@
  */
 class User extends Model
 {
+    use UsesCustomerDatabase;   // MySQL when CUSTOMER_DB_ENABLED is on
+
     protected string $table = 'users';
 
     /** Password for every demo account, in both the file and the SQL seed. */
@@ -265,5 +267,45 @@ class User extends Model
             ['user_id' => 4, 'full_name' => 'Tharindu Jayasuriya', 'email' => 'inventory@pharmasync.com',  'phone' => '0772223344', 'address' => null,                        'role' => 'Inventory_Manager'] + $base,
             ['user_id' => 5, 'full_name' => 'Kasun Bandara',       'email' => 'delivery@pharmasync.com',   'phone' => '0773334455', 'address' => null,                        'role' => 'Delivery_Partner'] + $base,
         ];
+    }
+   /* ==================================================================
+     * Password Resets
+     * ================================================================== */
+
+    public function createPasswordResetToken(string $email, string $token, string $expiresAt): bool
+    {
+        // 1. Delete previous tokens for this email first
+        $this->exec("DELETE FROM password_resets WHERE email = :email", ['email' => $email]);
+
+        // 2. Insert new token using Model's insertRow helper
+        $id = $this->insertRow([
+            'email'      => $email,
+            'token'      => $token,
+            'expires_at' => $expiresAt,
+        ], 'password_resets');
+
+        return $id > 0;
+    }
+
+    public function findPasswordResetToken(string $token): ?array
+    {
+        return $this->fetchOne(
+            "SELECT * FROM password_resets WHERE token = :token AND expires_at > NOW() LIMIT 1",
+            ['token' => $token]
+        );
+    }
+
+    public function updatePasswordByEmail(string $email, string $newPasswordHash): bool
+    {
+        // Update user's password hash
+        $this->exec(
+            "UPDATE users SET password_hash = :hash WHERE email = :email",
+            ['hash' => $newPasswordHash, 'email' => $email]
+        );
+
+        // Clear used reset tokens
+        $this->exec("DELETE FROM password_resets WHERE email = :email", ['email' => $email]);
+
+        return true;
     }
 }

@@ -110,6 +110,7 @@ define('DB_USER',    'root');
 define('DB_PASS',    '');            // default XAMPP root has no password
 define('DB_CHARSET', 'utf8mb4');
 define('DB_ENABLED', false);
+define('CUSTOMER_DB_ENABLED', false);
 
 /*
  * Sample data lives in the session until DB_ENABLED is true, and each model
