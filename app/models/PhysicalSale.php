@@ -16,6 +16,16 @@
  */
 class PhysicalSale extends Model
 {
+    /**
+     * This module already has a real, populated database, so it always uses
+     * MySQL. The base class returns null while DB_ENABLED is false (that flag
+     * is shared by the whole team), so we skip that check for this model only.
+     */
+    protected function db(): ?PDO
+    {
+        return Database::getConnection();
+    }
+
     /** Why the last call failed. */
     public string $error = '';
 
