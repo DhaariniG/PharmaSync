@@ -165,6 +165,7 @@
   max-width: 17ch;
   text-wrap: balance;
 }
+.lp-hero h1 span { color: var(--lp-teal); }
 
 .lp-lead {
   font-size: 1.1rem;
@@ -383,6 +384,42 @@
 }
 .lp-section-head .lp-h2 { margin-bottom: 0; }
 
+/* ---------- Services ---------- */
+.lp-services { padding: 56px 0 8px; }
+
+.lp-service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.lp-service-card {
+  background: var(--lp-paper);
+  border: 1px solid var(--lp-line);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.lp-service-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--lp-teal-soft);
+  color: var(--lp-teal);
+  margin-bottom: 14px;
+}
+.lp-service-icon svg { width: 22px; height: 22px; }
+
+.lp-service-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
+.lp-service-card p { color: var(--lp-muted); line-height: 1.6; margin: 0; }
+
+@media (max-width: 800px) {
+  .lp-service-grid { grid-template-columns: 1fr; }
+}
+
 /* ---------- Categories ---------- */
 .lp-cats { padding: 56px 0 8px; }
 
@@ -531,6 +568,17 @@
   font-size: .88rem;
   padding: 20px 0;
 }
+.lp-footer-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  align-items: center;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #0e3c3d;
+}
+.lp-footer-contact span { display: inline-flex; align-items: center; gap: 8px; }
+.lp-footer-contact svg { width: 16px; height: 16px; color: #17e9e1; }
 .lp-footer-inner {
   display: flex;
   flex-wrap: wrap;

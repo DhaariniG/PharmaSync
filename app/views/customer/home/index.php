@@ -76,11 +76,10 @@ $categoryIcons = [
     <section class="lp-hero">
         <div class="lp-wrap lp-hero-grid">
             <div class="lp-hero-copy">
-                <h1>Order your medicines online. A&nbsp;pharmacist checks every prescription.</h1>
+                <h1>Care Made Simple, <span>Medicines Made Fast.</span></h1>
                 <p class="lp-lead">
-                    Browse and fill your cart without an account. Send us your prescription
-                    and a pharmacist reviews it before anything is packed. Have it delivered,
-                    or collect it from <?= e(STORE_ADDRESS) ?>.
+                    Check live stock availability, upload prescriptions for instant verification,
+                    and enjoy friendly doorstep delivery from licensed pharmacists.
                 </p>
 
                 <form class="lp-search" action="<?= url('/customer/search') ?>" method="get" role="search">
@@ -91,9 +90,8 @@ $categoryIcons = [
                 </form>
 
                 <div class="lp-hero-actions">
-                    <a href="<?= url('/customer/catalog') ?>" class="lp-link-strong">Browse all medicines</a>
-                    <span class="lp-or">or</span>
-                    <a href="<?= url('/customer/prescription/upload') ?>" class="lp-link-strong"><?= icon('file-up') ?>Upload a prescription</a>
+                    <a href="<?= url('/customer/prescription/upload') ?>" class="btn btn-ps-primary"><?= icon('file-up', 'me-2') ?>Upload Prescription</a>
+                    <a href="#services" class="btn btn-ps-outline"><?= icon('shield-check', 'me-2') ?>Explore Services</a>
                 </div>
             </div>
 
@@ -130,6 +128,30 @@ $categoryIcons = [
                     Out of stock? The pharmacist suggests an approved alternative and you decide.
                 </figcaption>
             </figure>
+        </div>
+    </section>
+
+    <!-- ============ Services ============ -->
+    <section id="services" class="lp-services" aria-labelledby="lp-services-title">
+        <div class="lp-wrap">
+            <h2 id="lp-services-title" class="lp-h2">Healthcare built around you</h2>
+            <div class="lp-service-grid">
+                <div class="lp-service-card">
+                    <span class="lp-service-icon"><?= icon('scroll-text') ?></span>
+                    <h3>Prescription Verification</h3>
+                    <p>Upload doctor slips or digital prescriptions. Our qualified pharmacists review and prepare your order promptly.</p>
+                </div>
+                <div class="lp-service-card">
+                    <span class="lp-service-icon"><?= icon('search') ?></span>
+                    <h3>Live Inventory Check</h3>
+                    <p>Never worry about availability. Check live stock levels and alternative medicine options before placing an order.</p>
+                </div>
+                <div class="lp-service-card">
+                    <span class="lp-service-icon"><?= icon('truck') ?></span>
+                    <h3>Safe Doorstep Delivery</h3>
+                    <p>Temperature-managed packaging and verified delivery partners ensure your health orders arrive in perfect condition.</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -214,10 +236,14 @@ $categoryIcons = [
 </main>
 
 <footer class="lp-footer">
+    <div class="lp-wrap lp-footer-contact">
+        <span><?= icon('phone') ?> <a href="tel:<?= e(preg_replace('/[^0-9+]/', '', STORE_PHONE)) ?>"><?= e(STORE_PHONE) ?></a></span>
+        <span><?= icon('mail') ?> <a href="mailto:support@pharmasync.test">support@pharmasync.test</a></span>
+        <span><?= icon('map-pin') ?> <?= e(STORE_ADDRESS) ?></span>
+    </div>
     <div class="lp-wrap lp-footer-inner">
         <span>&copy; <?= date('Y') ?> PharmaSync. All rights reserved.</span>
-        <span>Help: <a href="mailto:support@pharmasync.test">support@pharmasync.test</a></span>
-        <a href="<?= url($auth . '/login') ?>" class="lp-staff">Staff login</a>
+        <a href="<?= url($auth . '/login') ?>" class="lp-staff">Sign In</a>
     </div>
 </footer>
 
