@@ -1,6 +1,8 @@
 # Uploaded files - do not commit user data
 storage/prescriptions/*
 !storage/prescriptions/.gitkeep
+public/uploads/prescriptions/*
+!public/uploads/prescriptions/.gitkeep
 
 # Local accounts file (used while DB_ENABLED is false)
 storage/users.json

@@ -1,0 +1,159 @@
+            <!-- Status Banner Message -->
+            <div class="status-banner">
+                <div class="banner-message">
+                    <i data-lucide="check-circle-2" class="icon-success"></i>
+                    <span>This prescription was Approved on Oct 24, 2024 by Dr. Sarah Jenkins</span>
+                </div>
+            </div>
+
+            <!-- Two-Column Workspace Split Layout -->
+            <div class="workspace-grid">
+                
+                <!-- Left Stack: Prescription Viewer & Patient Details -->
+                <div class="left-stack">
+                    <!-- Original Prescription View Document Frame -->
+                    <div class="card document-viewer-card">
+                        <div class="document-header">
+                            <div class="doc-title-group">
+                                <i data-lucide="file-text"></i>
+                                <span>ORIGINAL DIGITAL PRESCRIPTION</span>
+                            </div>
+                            <span class="page-counter">Page 1 of 1</span>
+                        </div>
+                        <div class="document-body-canvas">
+                            <!-- Digital scanned prescription PDF or image content placeholder goes here -->
+                        </div>
+                    </div>
+
+                    <!-- Side-by-Side Metadata Cards -->
+                    <div class="meta-row-grid">
+                        <!-- Patient Profile Card -->
+                        <div class="card meta-card">
+                            <div class="meta-header">
+                                <i data-lucide="user" class="icon-teal"></i>
+                                <h3>Patient Profile</h3>
+                            </div>
+                            <div class="profile-ledger">
+                                <div class="ledger-row">
+                                    <span class="label">Full Name</span>
+                                    <span class="value font-bold">Robert Chen</span>
+                                </div>
+                                <div class="ledger-row">
+                                    <span class="label">Age / Gender</span>
+                                    <span class="value font-bold">46y / Male</span>
+                                </div>
+                                <div class="ledger-row">
+                                    <span class="label">Weight</span>
+                                    <span class="value font-bold">82.5 kg</span>
+                                </div>
+                                <div class="allergy-section">
+                                    <span class="label">Allergies</span>
+                                    <div class="allergy-badge-group">
+                                        <span class="allergy-badge">PENICILLIN</span>
+                                        <span class="allergy-badge">LATEX</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Clinical Notes Card -->
+                        <div class="card meta-card">
+                            <div class="meta-header">
+                                <i data-lucide="file-edit" class="icon-teal"></i>
+                                <h3>Clinical Notes</h3>
+                            </div>
+                            <div class="clinical-notes-content">
+                                <blockquote>
+                                    "Patient reports consistent elevated BP (155/95) over the last 3 months despite lifestyle adjustments. Advised monitoring diet. Lisinopril initiated. Checked for contraindications with current meds."
+                                </blockquote>
+                                <span class="notes-author">— Dr. Sarah Jenkins</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Stack: Verified Med List & Safety Analysis -->
+                <div class="right-stack">
+                    <!-- Verified Med List Table -->
+                    <div class="card medical-list-card">
+                        <div class="panel-header">
+                            <h3>Verified Medication List</h3>
+                            <span class="badge badge-verified">VERIFIED</span>
+                        </div>
+                        
+                        <div class="med-table">
+                            <div class="table-header">
+                                <div>MEDICATION</div>
+                                <div>DOSAGE</div>
+                                <div>QUANTITY</div>
+                            </div>
+
+                            <div class="table-row">
+                                <div class="med-identity">
+                                    <span class="med-title">Lisinopril 20mg</span>
+                                    <span class="med-sub">Tablets</span>
+                                </div>
+                                <div class="dosage-text">1 daily</div>
+                                <div class="qty-text">30 Units</div>
+                            </div>
+
+                            <div class="table-row">
+                                <div class="med-identity">
+                                    <span class="med-title">Atorvastatin 40mg</span>
+                                    <span class="med-sub">Tablets</span>
+                                </div>
+                                <div class="dosage-text">1 qhs</div>
+                                <div class="qty-text">90 Units</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Interaction Analysis Card -->
+                    <div class="card interaction-card">
+                        <div class="panel-header">
+                            <div class="title-with-icon">
+                                <i data-lucide="zap" class="icon-teal"></i>
+                                <h3>Interaction Analysis</h3>
+                            </div>
+                            <span class="badge badge-safe"><i data-lucide="check"></i> SAFE</span>
+                        </div>
+
+                        <div class="analysis-stack">
+                            <!-- Analysis Node 1 -->
+                            <div class="analysis-node">
+                                <div class="node-icon-wrapper">
+                                    <i data-lucide="check-circle-2"></i>
+                                </div>
+                                <div class="node-content">
+                                    <h4>Drug-Drug Interactions</h4>
+                                    <p>No significant clinical interactions found between Lisinopril and Atorvastatin.</p>
+                                </div>
+                            </div>
+
+                            <!-- Analysis Node 2 -->
+                            <div class="analysis-node">
+                                <div class="node-icon-wrapper">
+                                    <i data-lucide="check-circle-2"></i>
+                                </div>
+                                <div class="node-content">
+                                    <h4>Drug-Allergy Check</h4>
+                                    <p>Patient penicillin allergy verified. Medications are non-cross-reactive.</p>
+                                </div>
+                            </div>
+
+                            <!-- Analysis Node 3 -->
+                            <div class="analysis-node">
+                                <div class="node-icon-wrapper">
+                                    <i data-lucide="check-circle-2"></i>
+                                </div>
+                                <div class="node-content">
+                                    <h4>Food-Drug Interaction</h4>
+                                    <p>No specific restrictions noted for this combination.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        

@@ -1,0 +1,84 @@
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    position: fixed;
+    height: 100vh;
+}
+
+.logo-area {
+    padding: 0 24px 30px 24px;
+}
+
+.logo-area h1 {
+    font-size: 24px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.logo-area p {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.nav-links {
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.nav-item i {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-item:hover {
+    background-color: #f8fafc;
+    color: #0284c7;
+}
+
+.nav-item.active {
+    background-color: #e0f2fe;
+    color: #0284c7;
+    border-right: 3px solid #0284c7;
+}
+
+.sidebar-footer {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+}
+
+.logout {
+    color: #ef4444;
+}
+.logout:hover {
+    background-color: #fef2f2;
+    color: #ef4444;
+}
+
+/* Logout is a <button> inside a POST form, so make it look like the other links. */
+.sidebar-logout-form {
+    margin: 0;
+}
+button.nav-item {
+    width: 100%;
+    background: none;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+}

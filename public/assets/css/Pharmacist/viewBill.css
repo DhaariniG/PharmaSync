@@ -1,0 +1,182 @@
+@import url("../Pharmacist/Components/sidebar.css");
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+    background-color: #f3f7f9;
+    color: #333333;
+}
+
+.receipt-card {
+    max-width: 650px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.bill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #00a494;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.pharmacy-title {
+    color: #1e293b;
+    margin: 0;
+    font-size: 20px;
+}
+
+.pharmacy-subtitle {
+    color: #64748b;
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.bill-meta-right {
+    text-align: right;
+}
+
+.order-id-label {
+    color: #00a494;
+    margin: 0;
+    font-size: 18px;
+}
+
+.order-date-label {
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.order-info-block {
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #334155;
+}
+
+.status-badge-active {
+    font-weight: 700;
+    color: #059669;
+}
+
+.receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.receipt-table th {
+    background-color: #f8fafc;
+    padding: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    font-size: 12px;
+    color: #475569;
+}
+
+.receipt-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    font-size: 13px;
+}
+
+.med-name-cell {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.subtotal-cell {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.badge-batch {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.total-summary-row {
+    text-align: right;
+    margin-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+}
+
+.grand-total-label {
+    color: #0f172a;
+    font-size: 18px;
+}
+
+.receipt-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-link {
+    color: #64748b;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-print {
+    padding: 9px 18px;
+    background-color: #00a494;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.action-icon {
+    width: 14px;
+    height: 14px;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .receipt-card, .receipt-card * {
+        visibility: visible;
+    }
+    .receipt-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: none;
+        box-shadow: none;
+    }
+    .no-print {
+        display: none !important;
+    }
+}

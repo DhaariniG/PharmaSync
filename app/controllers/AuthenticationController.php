@@ -137,8 +137,8 @@ class AuthenticationController extends Controller
         $this->redirect('/' . AUTH_SLUG . '/login');
     }
 
-    /* ==================================================================
-     * Forgot password - UI only for now
+   /* ==================================================================
+     * Forgot & Reset Password
      * ================================================================== */
 
     public function forgotForm(): void
@@ -160,10 +160,77 @@ class AuthenticationController extends Controller
             $this->redirect('/' . AUTH_SLUG . '/forgot-password');
         }
 
-        // TODO: create a reset token and send it with Mailer::send().
-        // The message is the same whether or not the email exists, so this
-        // page cannot be used to find out who has an account.
+        $email     = $this->text('email');
+        $userModel = new User();
+        $user      = $userModel->findByEmail($email);
+
+        if ($user) {
+            $token     = bin2hex(random_bytes(32));
+            $expiresAt = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+            // Store reset token
+            $userModel->createPasswordResetToken($email, $token, $expiresAt);
+
+            // Build full URL
+            $resetUrl = url('/' . AUTH_SLUG . '/reset-password?token=' . $token);
+
+            // Send Email using Mailer
+            Mailer::sendPasswordReset(
+                $email, 
+                $user['full_name'] ?? $user['name'] ?? 'User', 
+                $resetUrl
+            );
+        }
+
         Session::flash('success', 'If an account exists for that email, a password reset link has been sent.');
+        $this->redirect('/' . AUTH_SLUG . '/login');
+    }
+
+    public function resetForm(): void
+    {
+        $token = trim($_GET['token'] ?? '');
+
+        if (!$token) {
+            Session::flash('error', 'Invalid password reset link.');
+            $this->redirect('/' . AUTH_SLUG . '/login');
+        }
+
+        $this->renderBare('reset-password', [
+            'token' => $token,
+            'flash' => Session::takeFlash(),
+            'old'   => Session::takeOld(),
+        ]);
+    }
+
+    public function resetPassword(): void
+    {
+        $this->verifyCsrf();
+
+        $errors = $this->validate($_POST, [
+            'token'            => 'required',
+            'password'         => 'required|min:8',
+            'password_confirm' => 'required|match:password',
+        ]);
+
+        $token = $this->text('token');
+
+        if ($errors) {
+            Session::flash('error', reset($errors));
+            $this->redirect('/' . AUTH_SLUG . '/reset-password?token=' . urlencode($token));
+        }
+
+        $userModel = new User();
+        $reset     = $userModel->findPasswordResetToken($token);
+
+        if (!$reset) {
+            Session::flash('error', 'This password reset link is invalid or has expired.');
+            $this->redirect('/' . AUTH_SLUG . '/forgot-password');
+        }
+
+        $newPasswordHash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+        $userModel->updatePasswordByEmail($reset['email'], $newPasswordHash);
+
+        Session::flash('success', 'Password updated successfully! You can now log in.');
         $this->redirect('/' . AUTH_SLUG . '/login');
     }
 

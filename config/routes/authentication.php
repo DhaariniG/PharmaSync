@@ -21,6 +21,8 @@ return [
     'POST /register'        => ['AuthenticationController', 'register'],
     'GET  /forgot-password' => ['AuthenticationController', 'forgotForm'],
     'POST /forgot-password' => ['AuthenticationController', 'forgot'],
+    'GET  /reset-password'  => ['AuthenticationController', 'resetForm'],
+    'POST /reset-password'  => ['AuthenticationController', 'resetPassword'],
     'POST /logout'          => ['AuthenticationController', 'logout'],
 
 ];
