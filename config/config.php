@@ -110,7 +110,7 @@ define('DB_USER',    'root');
 define('DB_PASS',    '');            // default XAMPP root has no password
 define('DB_CHARSET', 'utf8mb4');
 define('DB_ENABLED', false);
-define('CUSTOMER_DB_ENABLED', false);
+define('CUSTOMER_DB_ENABLED', true);
 
 /*
  * Sample data lives in the session until DB_ENABLED is true, and each model
@@ -190,13 +190,19 @@ define('STORE_PICKUP_PREP_HOURS', 2);
    Mailer::send() is a no-op while MAIL_ENABLED is false, so no page ever
    hangs waiting for SMTP during development.
 */
-define('MAIL_ENABLED',   false);
-define('MAIL_HOST',      'smtp.example.com');
-define('MAIL_PORT',      587);
-define('MAIL_USERNAME',  'no-reply@pharmasync.test');
-define('MAIL_PASSWORD',  '');
-define('MAIL_FROM',      'no-reply@pharmasync.test');
-define('MAIL_FROM_NAME', 'PharmaSync');
+
+// Personal settings (email passwords etc.). Not committed to git.
+if (is_file(__DIR__ . '/local.php')) {
+    require __DIR__ . '/local.php';
+}
+
+defined('MAIL_ENABLED')   || define('MAIL_ENABLED', false);
+defined('MAIL_HOST')      || define('MAIL_HOST', 'smtp.example.com');
+defined('MAIL_PORT')      || define('MAIL_PORT', 587);
+defined('MAIL_USERNAME')  || define('MAIL_USERNAME', 'no-reply@pharmasync.test');
+defined('MAIL_PASSWORD')  || define('MAIL_PASSWORD', '');
+defined('MAIL_FROM')      || define('MAIL_FROM', 'no-reply@pharmasync.test');
+defined('MAIL_FROM_NAME') || define('MAIL_FROM_NAME', 'PharmaSync');
 
 /* ==========================================================================
    8. Environment

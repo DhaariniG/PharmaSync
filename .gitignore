@@ -16,3 +16,6 @@ Thumbs.db
 
 # Local database dumps
 *.sql.bak
+
+# Personal mail credentials (see config/local.example.php)
+config/local.php

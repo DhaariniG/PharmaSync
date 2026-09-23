@@ -174,12 +174,18 @@ class AuthenticationController extends Controller
             // Build full URL
             $resetUrl = url('/' . AUTH_SLUG . '/reset-password?token=' . $token);
 
-            // Send Email using Mailer
-            Mailer::sendPasswordReset(
-                $email, 
-                $user['full_name'] ?? $user['name'] ?? 'User', 
+            // Send Email using Mailer. Never let a mail failure reveal
+            // whether this email has an account - the same success message
+            // is shown either way, further down.
+            $sent = Mailer::sendPasswordReset(
+                $email,
+                $user['full_name'] ?? $user['name'] ?? 'User',
                 $resetUrl
             );
+
+            if (!$sent) {
+                error_log('AuthenticationController::forgot - failed to send password reset email to ' . $email);
+            }
         }
 
         Session::flash('success', 'If an account exists for that email, a password reset link has been sent.');

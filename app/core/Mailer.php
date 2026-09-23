@@ -50,14 +50,8 @@ class Mailer
             $mail->send();
             return true;
         } catch (\Throwable $e) {
-            // Display the exact PHPMailer error message directly in the browser
-            echo '<div style="background:#f8d7da; color:#721c24; padding:20px; border-radius:8px; font-family:sans-serif; margin:20px;">';
-            echo '<h2>Mailer Debug Error</h2>';
-            echo '<p><strong>Message:</strong> ' . htmlspecialchars($e->getMessage()) . '</p>';
-            echo '</div>';
-            exit;
-            //error_log('Mailer error: ' . $e->getMessage());
-            //return false;
+            error_log('Mailer error: ' . $e->getMessage());
+            return false;
         }
     }
 
@@ -92,11 +86,9 @@ class Mailer
 
     public static function sendPasswordReset(string $email, string $name, string $resetUrl): bool
     {
-        /**if (!self::available()) {
-            return false;
-        }**/
         if (!self::available()) {
-            die('<h2 style="color:red; margin:20px;">Mailer Error: MAIL_ENABLED is false OR PHPMailer files are missing in lib/PHPMailer/src/</h2>');
+            error_log('Mailer error: sendPasswordReset skipped - MAIL_ENABLED is false or PHPMailer files are missing in lib/PHPMailer/src/');
+            return false;
         }
 
         require_once __DIR__ . '/../../lib/PHPMailer/src/Exception.php';
