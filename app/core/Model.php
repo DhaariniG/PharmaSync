@@ -4,154 +4,143 @@
  *
  * Rules for everyone:
  *   - ALL SQL lives in models. Never in a controller, never in a view.
- *   - ALWAYS use the helpers below or a prepared statement.
+ *   - ALWAYS use the helpers below or your own prepared statement.
  *     Never concatenate a variable into a query string.
+ *
+ * While DB_ENABLED is false, db() returns null and each model serves its
+ * own sample data from the session. The shape of that sample data must
+ * match the columns in database/001_schema.sql, so that switching the flag
+ * on later changes the model and nothing else.
+ *
+ * Rows come back as ASSOCIATIVE ARRAYS ($row['name']), not objects. Every
+ * view in the project is written that way - do not change it.
  */
-abstract class Model
+class Model
 {
-    protected PDO $db;
-
-    /** Child classes set this, e.g. protected string $table = 'medicines'; */
+    /** Child classes may set this, e.g. protected string $table = 'medicines'; */
     protected string $table = '';
 
-    public function __construct()
+    /** PDO connection, or null while the project still runs on sample data. */
+    protected function db(): ?PDO
     {
-        $this->db = Database::conn();
+        return DB_ENABLED ? Database::getConnection() : null;
     }
 
-    /* ------------------------------------------------------------------
-     * Query helpers
-     * ------------------------------------------------------------------ */
-
-    /** Run a query, return all rows as objects. */
-    protected function all(string $sql, array $params = []): array
+    /** True when this model should read from MySQL rather than the session. */
+    protected function hasDb(): bool
     {
-        $stmt = $this->db->prepare($sql);
+        return DB_ENABLED;
+    }
+
+    /* ==================================================================
+     * Query helpers - only usable once DB_ENABLED is true
+     * ================================================================== */
+
+    /*
+     * These are deliberately named fetchAll / fetchOne / insertRow / ... and
+     * not all / one / insert / update. Models in this project already use the
+     * short names for their own business methods (Medicine::all(),
+     * Prescription::update()), and PHP refuses to let a child class redeclare
+     * a parent method with a different signature. Do not rename them back.
+     */
+
+    /** Run a query and return every row. */
+    protected function fetchAll(string $sql, array $params = []): array
+    {
+        $stmt = $this->db()->prepare($sql);
         $stmt->execute($params);
         return $stmt->fetchAll();
     }
 
-    /** Run a query, return the first row or null. */
-    protected function one(string $sql, array $params = []): ?object
+    /** Run a query and return the first row, or null. */
+    protected function fetchOne(string $sql, array $params = []): ?array
     {
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->db()->prepare($sql);
         $stmt->execute($params);
         $row = $stmt->fetch();
         return $row === false ? null : $row;
     }
 
-    /** Run a query, return a single scalar value. */
-    protected function scalar(string $sql, array $params = [])
+    /** Run a query and return the first column of the first row. */
+    protected function fetchValue(string $sql, array $params = [])
     {
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->db()->prepare($sql);
         $stmt->execute($params);
-        return $stmt->fetchColumn();
+        $value = $stmt->fetchColumn();
+        return $value === false ? null : $value;
     }
 
-    /** Run an INSERT/UPDATE/DELETE, return affected row count. */
-    protected function run(string $sql, array $params = []): int
+    /** Run an INSERT, UPDATE or DELETE and return the rows affected. */
+    protected function exec(string $sql, array $params = []): int
     {
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->db()->prepare($sql);
         $stmt->execute($params);
         return $stmt->rowCount();
     }
 
-    /** Insert a row from an associative array, return the new id. */
-    protected function insert(string $table, array $data): int
+    /**
+     * Insert one row from an array of column => value and return its id.
+     *
+     *   $id = $this->insertRow(['name' => $name, 'price' => $price]);
+     */
+    protected function insertRow(array $data, ?string $table = null): int
     {
-        $cols         = array_keys($data);
-        $placeholders = array_map(fn($c) => ':' . $c, $cols);
+        $table   = $table ?? $this->table;
+        $columns = array_keys($data);
+        $holders = array_map(fn($c) => ':' . $c, $columns);
 
         $sql = 'INSERT INTO ' . $table
-             . ' (' . implode(', ', $cols) . ')'
-             . ' VALUES (' . implode(', ', $placeholders) . ')';
+             . ' (' . implode(', ', $columns) . ')'
+             . ' VALUES (' . implode(', ', $holders) . ')';
 
-        $this->run($sql, $data);
-        return (int) $this->db->lastInsertId();
+        $this->exec($sql, $data);
+
+        return (int) $this->db()->lastInsertId();
     }
 
-    /** Update a row by primary key, return affected row count. */
-    protected function update(string $table, string $pkColumn, $pkValue, array $data): int
+    /** Update one row by primary key. Returns the rows affected. */
+    protected function updateRow(int $id, array $data, ?string $table = null, string $key = 'id'): int
     {
-        $sets = [];
-        foreach (array_keys($data) as $col) {
-            $sets[] = "$col = :$col";
+        $table = $table ?? $this->table;
+        $sets  = [];
+
+        foreach (array_keys($data) as $column) {
+            $sets[] = $column . ' = :' . $column;
         }
 
         $sql = 'UPDATE ' . $table
              . ' SET ' . implode(', ', $sets)
-             . " WHERE $pkColumn = :__pk";
+             . ' WHERE ' . $key . ' = :__id';
 
-        $data['__pk'] = $pkValue;
-        return $this->run($sql, $data);
+        $data['__id'] = $id;
+
+        return $this->exec($sql, $data);
     }
 
-    /* ------------------------------------------------------------------
-     * Transactions
-     * ------------------------------------------------------------------ */
-
-    protected function begin(): void    { $this->db->beginTransaction(); }
-    protected function commit(): void   { $this->db->commit(); }
-    protected function rollback(): void
-    {
-        if ($this->db->inTransaction()) {
-            $this->db->rollBack();
-        }
-    }
+    /* ==================================================================
+     * Sample data helpers - delete once DB_ENABLED is true
+     * ================================================================== */
 
     /**
-     * Run a callback inside a transaction. Rolls back on any exception.
+     * Read a session key, seeding it the first time.
      *
-     *   $this->transaction(function () {
-     *       // ...inserts and updates...
-     *       return $orderId;
-     *   });
+     *   $orders = $this->seeded('orders', fn() => $this->sampleOrders());
+     *
+     * Stale sample data is cleared by the SEED_VERSION check in
+     * public/index.php, so remember to list your keys in
+     * SEEDED_SESSION_KEYS and to bump SEED_VERSION when a shape changes.
      */
-    protected function transaction(callable $work)
+    protected function seeded(string $key, callable $seed): array
     {
-        $this->begin();
-        try {
-            $result = $work();
-            $this->commit();
-            return $result;
-        } catch (Throwable $e) {
-            $this->rollback();
-            throw $e;
+        if (!isset($_SESSION[$key])) {
+            $_SESSION[$key] = $seed();
         }
+        return $_SESSION[$key];
     }
 
-    /* ------------------------------------------------------------------
-     * Shared stock helper
-     * ------------------------------------------------------------------
-     * `medicines` has no stock column - stock is the sum of its usable
-     * batches. Every module must calculate it the same way, so it lives
-     * here and nowhere else.
-     */
-
-    /** Total sellable quantity of one medicine. */
-    public function stockOf(int $medicineId): int
+    /** Overwrite a session key. */
+    protected function sessionPut(string $key, array $value): void
     {
-        return (int) $this->scalar(
-            "SELECT COALESCE(SUM(quantity), 0)
-               FROM stock_batches
-              WHERE medicine_id = ?
-                AND status      = 'Available'
-                AND expiry_date > CURDATE()",
-            [$medicineId]
-        );
-    }
-
-    /**
-     * SQL fragment for stock, to embed as a sub-select in bigger queries.
-     * Usage:
-     *   "SELECT m.*, " . $this->stockSubquery('m.medicine_id') . " AS stock FROM medicines m"
-     */
-    protected function stockSubquery(string $medicineIdColumn): string
-    {
-        return "(SELECT COALESCE(SUM(sb.quantity), 0)
-                   FROM stock_batches sb
-                  WHERE sb.medicine_id = $medicineIdColumn
-                    AND sb.status      = 'Available'
-                    AND sb.expiry_date > CURDATE())";
+        $_SESSION[$key] = $value;
     }
 }

@@ -1,122 +1,213 @@
 <?php
 /**
- * Controller - base class for every controller.
+ * Controller - base class for every controller in the project.
  *
  * Rules for everyone:
  *   - No SQL here. Ask a model.
- *   - No HTML here. Load a view.
- *   - Call requireRole() in your constructor so you can never forget it.
+ *   - No HTML here. Render a view.
+ *   - Start every page method with $this->requireRole('YourRole').
+ *   - Start every POST method with $this->verifyCsrf().
  */
-abstract class Controller
+class Controller
 {
-    /* ------------------------------------------------------------------
-     * Loading models and views
-     * ------------------------------------------------------------------ */
+    /**
+     * Default view folder for this controller, e.g. 'customer'.
+     * Set it once at the top of your controller and every render() call
+     * in that class looks inside app/views/<that folder>/.
+     */
+    protected string $viewBase = '';
+
+    /* ==================================================================
+     * Views
+     * ================================================================== */
 
     /**
-     * Load a model.
-     *   $this->model('Medicine')            -> app/models/Medicine.php
-     *   $this->model('customer/Cart')       -> app/models/customer/Cart.php
+     * Render a view wrapped in your role's header and footer.
+     *
+     *   $this->render('cart.index', ['items' => $items]);
+     *   -> app/views/customer/cart/index.php
+     *      between app/views/customer/partials/header.php and footer.php
+     *
+     * Dots are folder separators, so 'order.show' means order/show.php.
      */
-    protected function model(string $name): Model
+    protected function render(string $view, array $data = [], ?string $base = null): void
     {
-        $file = APP_PATH . '/models/' . $name . '.php';
+        $base = $base ?? $this->viewBase;
+        $dir  = APP_PATH . '/views/' . $base;
+        $file = $dir . '/' . str_replace('.', '/', $view) . '.php';
 
-        if (!file_exists($file)) {
-            throw new RuntimeException("Model not found: $name");
+        if (!is_file($file)) {
+            $this->viewMissing($base, $view);
+            return;
         }
 
-        require_once $file;
+        extract($data, EXTR_SKIP);
 
-        $class = basename($name);
-        return new $class();
+        $header = $dir . '/partials/header.php';
+        $footer = $dir . '/partials/footer.php';
+
+        if (is_file($header)) {
+            require $header;
+        }
+
+        require $file;
+
+        if (is_file($footer)) {
+            require $footer;
+        }
     }
 
     /**
-     * Render a view.
-     *   $this->view('customer/dashboard', ['orders' => $orders])
-     * makes $orders available inside app/views/customer/dashboard.php
+     * Render a view on its own - no header, no footer.
+     * Use it for printable pages, modal bodies and AJAX fragments.
      */
-    protected function view(string $name, array $data = []): void
+    protected function renderBare(string $view, array $data = [], ?string $base = null): void
     {
-        $file = APP_PATH . '/views/' . $name . '.php';
+        $base = $base ?? $this->viewBase;
+        $file = APP_PATH . '/views/' . $base . '/' . str_replace('.', '/', $view) . '.php';
 
-        if (!file_exists($file)) {
-            throw new RuntimeException("View not found: $name");
+        if (!is_file($file)) {
+            $this->viewMissing($base, $view);
+            return;
         }
 
         extract($data, EXTR_SKIP);
         require $file;
     }
 
-    /* ------------------------------------------------------------------
-     * Access control
-     * ------------------------------------------------------------------ */
-
-    /** Any logged-in user. */
-    protected function requireLogin(): void
+    /** Render a view that is shared by everyone, e.g. 'errors/404'. */
+    protected function renderShared(string $view, array $data = []): void
     {
-        if (!Session::isLoggedIn()) {
-            Session::flash('error', 'Please log in to continue.');
-            $this->redirect('/auth/login');
+        $file = APP_PATH . '/views/' . str_replace('.', '/', $view) . '.php';
+
+        if (!is_file($file)) {
+            $this->viewMissing('', $view);
+            return;
+        }
+
+        extract($data, EXTR_SKIP);
+        require $file;
+    }
+
+    private function viewMissing(string $base, string $view): void
+    {
+        http_response_code(500);
+
+        if (APP_ENV === 'dev') {
+            echo 'View not found: ' . e(trim($base . '/' . $view, '/'));
+        } else {
+            echo 'Something went wrong.';
         }
     }
 
+    /* ==================================================================
+     * Models
+     * ================================================================== */
+
     /**
-     * A specific role. Pass the DATABASE value, not the slug.
+     * Load a model by class name. Models are autoloaded, so this is only a
+     * convenience: $this->model('Cart') is the same as new Cart().
+     */
+    protected function model(string $name): Model
+    {
+        if (!class_exists($name)) {
+            throw new RuntimeException("Model not found: $name");
+        }
+        return new $name();
+    }
+
+    /* ==================================================================
+     * Access control
+     * ================================================================== */
+
+    /**
+     * Any signed-in user. Where they were heading is remembered, so the
+     * shared login can send them back after they sign in.
+     */
+    protected function requireAuth(string $reason = 'Please sign in to continue.'): void
+    {
+        if (Session::isLoggedIn()) {
+            return;
+        }
+
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET') {
+            $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'] ?? url('/');
+        }
+
+        Session::flash('error', $reason);
+        header('Location: ' . url('/' . AUTH_SLUG . '/login'));
+        exit;
+    }
+
+    /**
+     * A specific role. Pass the DATABASE spelling, not the URL segment.
+     *
      *   $this->requireRole('Customer');
      *   $this->requireRole(['Admin', 'Pharmacist']);
      */
     protected function requireRole($roles): void
     {
-        $this->requireLogin();
+        $this->requireAuth();
 
         $allowed = is_array($roles) ? $roles : [$roles];
 
         if (!in_array(Session::role(), $allowed, true)) {
             http_response_code(403);
-            $this->view('errors/forbidden');
+            $this->renderShared('errors/forbidden');
             exit;
         }
     }
 
-    /* ------------------------------------------------------------------
-     * Requests and redirects
-     * ------------------------------------------------------------------ */
+    /** The signed-in user array, or null. */
+    protected function currentUser(): ?array
+    {
+        return Session::user();
+    }
+
+    /* ==================================================================
+     * Request
+     * ================================================================== */
 
     protected function isPost(): bool
     {
         return ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST';
     }
 
-    /** Read and trim one POST field. */
-    protected function input(string $key, $default = ''): string
+    /** One POST or GET field. */
+    protected function input(string $key, $default = null)
     {
-        return trim((string) ($_POST[$key] ?? $default));
+        return $_POST[$key] ?? $_GET[$key] ?? $default;
     }
 
+    /** One POST or GET field, trimmed to a string. */
+    protected function text(string $key, string $default = ''): string
+    {
+        return trim((string) ($_POST[$key] ?? $_GET[$key] ?? $default));
+    }
+
+    /* ==================================================================
+     * Responses
+     * ================================================================== */
+
     /**
-     * Redirect to a path relative to the app root.
-     *   $this->redirect('/customer/dashboard');
+     * Redirect to an app path. Always include the role segment.
+     *
+     *   $this->redirect('/customer/cart');
      */
     protected function redirect(string $path): void
     {
-        // Strip any leading slashes to prevent double slashes
-        $path = ltrim($path, '/');
-
-        // Clean redirect without index.php?url=
-        header('Location: ' . rtrim(BASE_URL, '/') . '/' . $path);
+        header('Location: ' . url($path));
         exit;
     }
 
-    /** Send the logged-in user to their own dashboard. */
+    /** Send the signed-in user to their own dashboard. */
     protected function redirectToDashboard(): void
     {
         $slug = Session::roleSlug();
-        $this->redirect($slug ? "/$slug/dashboard" : '/auth/login');
+        $this->redirect($slug ? "/$slug/dashboard" : '/' . AUTH_SLUG . '/login');
     }
 
-    /** Return JSON, for AJAX endpoints. */
+    /** JSON response, for AJAX endpoints. */
     protected function json(array $data, int $status = 200): void
     {
         http_response_code($status);
@@ -125,30 +216,83 @@ abstract class Controller
         exit;
     }
 
-    /* ------------------------------------------------------------------
-     * CSRF protection
-     * ------------------------------------------------------------------
-     * Every POST form must contain:
-     *   <?= csrf_field() ?>
-     * Every POST handler must start with:
-     *   $this->checkCsrf();
-     */
-    protected function checkCsrf(): void
+    /** 404 from inside a controller, e.g. when an id does not exist. */
+    protected function notFound(): void
     {
-        $sent   = $_POST['csrf_token'] ?? '';
-        $stored = $_SESSION['csrf_token'] ?? '';
+        http_response_code(404);
+        $this->renderShared('errors/404');
+        exit;
+    }
 
-        if ($sent === '' || $stored === '' || !hash_equals($stored, $sent)) {
+    /* ==================================================================
+     * Flash messages
+     * ==================================================================
+     * Two ways to call it, both kept because both are in use:
+     *   $this->flash('success', 'Saved.');   // store
+     *   $msg = $this->flash('success');      // read once and clear
+     */
+    protected function flash(string $key, ?string $message = null)
+    {
+        if ($message !== null) {
+            Session::flash($key, $message);
+            return null;
+        }
+
+        $value = $_SESSION['flash'][$key] ?? null;
+        unset($_SESSION['flash'][$key]);
+        return $value;
+    }
+
+    /* ==================================================================
+     * CSRF
+     * ==================================================================
+     * Every POST form needs <?= csrf_field() ?> and every POST handler
+     * needs $this->verifyCsrf() on its first line. Field name: _csrf.
+     */
+    protected function csrfToken(): string
+    {
+        return csrf_token();
+    }
+
+    protected function verifyCsrf(): void
+    {
+        $submitted = (string) ($_POST['_csrf'] ?? '');
+        $expected  = $_SESSION['csrf_token'] ?? '';
+
+        if ($expected === '' || !hash_equals($expected, $submitted)) {
             http_response_code(419);
-            Session::flash('error', 'Your session expired. Please try again.');
-            $this->redirectToDashboard();
+            Session::flash('error', 'Your session expired or the form was invalid. Please try again.');
+            header('Location: ' . $this->safeReferer('/'));
+            exit;
         }
     }
 
-    /* ------------------------------------------------------------------
-     * Simple validation
-     * ------------------------------------------------------------------
-     * Returns an array of error messages, empty if everything passed.
+    /** The referring page, but only if it is on this site. */
+    protected function safeReferer(string $fallback = '/'): string
+    {
+        $referer = $_SERVER['HTTP_REFERER'] ?? '';
+
+        if ($referer !== '') {
+            $refHost  = parse_url($referer, PHP_URL_HOST);
+            $selfHost = $_SERVER['HTTP_HOST'] ?? '';
+
+            if ($refHost === null || $refHost === $selfHost) {
+                $path  = parse_url($referer, PHP_URL_PATH) ?? '';
+                $query = parse_url($referer, PHP_URL_QUERY);
+
+                if ($path !== '' && $path[0] === '/') {
+                    return $path . ($query ? '?' . $query : '');
+                }
+            }
+        }
+
+        return url($fallback);
+    }
+
+    /* ==================================================================
+     * Validation
+     * ==================================================================
+     * Returns an array of messages keyed by field, empty if all passed.
      *
      *   $errors = $this->validate($_POST, [
      *       'email' => 'required|email',
@@ -176,7 +320,7 @@ abstract class Controller
 
                     case 'email':
                         if ($value !== '' && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                            $errors[$field] = "Enter a valid email address.";
+                            $errors[$field] = 'Enter a valid email address.';
                         }
                         break;
 
@@ -212,7 +356,7 @@ abstract class Controller
                 }
 
                 if (isset($errors[$field])) {
-                    break;   // one error per field is enough
+                    break;   // one message per field is enough
                 }
             }
         }

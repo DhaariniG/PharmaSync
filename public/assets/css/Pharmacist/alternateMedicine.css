@@ -1,5 +1,6 @@
 /* Core Document Structural Formats */
 @import url("../Pharmacist/Components/sidebar.css");
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -40,6 +41,11 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #004d40;
 }
 
 .back-link i {
@@ -310,6 +316,8 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .btn i {
@@ -329,6 +337,16 @@ body {
     color: #ef4444;
 }
 
+.btn-approve {
+    background-color: #00766c;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-approve:hover {
+    background-color: #005a52;
+}
+
 .btn-danger:hover { background-color: #fff5f5; }
 .btn-secondary:hover { background-color: #f8fafc; }
 
@@ -340,8 +358,13 @@ body {
     font-weight: 600;
     text-decoration: underline;
     cursor: pointer;
-    display: block;
+    display: inline-block;
     margin-top: 5px;
+    transition: color 0.2s ease;
+}
+
+.btn-cancel-link:hover {
+    color: #334155;
 }
 
 /* Right Metric Stack Invoice Calculators widgets card rules styling properties */
@@ -383,7 +406,7 @@ body {
 }
 
 .text-dark { color: #334155; }
-.text-teal { color: #00b4a4; }
+.text-teal { color: #00766c; }
 
 .highlight-row .metric-label {
     color: #0f172a;

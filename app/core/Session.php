@@ -1,64 +1,74 @@
 <?php
 /**
- * Session - the only place session keys are written or read.
+ * Session - the one place that knows how a signed-in user is stored.
  *
- * AGREED KEYS (do not invent your own):
- *   $_SESSION['user_id']  int
- *   $_SESSION['role']     string, database ENUM value e.g. 'Delivery_Partner'
- *   $_SESSION['name']     string, full_name
+ * The signed-in user is ONE array in $_SESSION['user']:
+ *
+ *   [
+ *     'id'    => 1,             // users.id
+ *     'role'  => 'Customer',    // users.role - the DATABASE spelling
+ *     'name'  => 'Nadeesha Perera',
+ *     'email' => 'customer@example.com',
+ *     ...    // anything else your module needs about the signed-in person
+ *   ]
+ *
+ * 'id', 'role' and 'name' are the three keys every module may rely on.
+ * Read them through the methods below rather than touching $_SESSION
+ * directly, so that when login changes, only this file changes.
+ *
+ * The session itself is started in config/config.php.
  */
 class Session
 {
-    public static function start(): void
+    /* ---------------------------------------------------------------- */
+    /* Auth state                                                        */
+    /* ---------------------------------------------------------------- */
+
+    /** Call this from Authentication after the password check passes. */
+    public static function login(array $user): void
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_set_cookie_params([
-                'httponly' => true,
-                'samesite' => 'Lax',
-            ]);
-            session_start();
-        }
+        session_regenerate_id(true);          // prevents session fixation
+        $_SESSION['user'] = $user;
     }
 
-    /* ---------- Auth state ---------- */
-
-    /** Call this on successful login. */
-    public static function login(int $userId, string $role, string $name): void
-    {
-        session_regenerate_id(true);       // prevents session fixation
-        $_SESSION['user_id'] = $userId;
-        $_SESSION['role']    = $role;
-        $_SESSION['name']    = $name;
-    }
-
+    /** Clear everything and drop the cookie. */
     public static function logout(): void
     {
         $_SESSION = [];
+
         if (ini_get('session.use_cookies')) {
             $p = session_get_cookie_params();
             setcookie(session_name(), '', time() - 42000,
                 $p['path'], $p['domain'], $p['secure'], $p['httponly']);
         }
+
         session_destroy();
     }
 
     public static function isLoggedIn(): bool
     {
-        return isset($_SESSION['user_id']);
+        return !empty($_SESSION['user']);
     }
 
-    public static function userId(): ?int
+    /** The whole signed-in user array, or null. */
+    public static function user(): ?array
     {
-        return $_SESSION['user_id'] ?? null;
+        return $_SESSION['user'] ?? null;
+    }
+
+    public static function id(): ?int
+    {
+        $id = $_SESSION['user']['id'] ?? null;
+        return $id === null ? null : (int) $id;
     }
 
     /** Database ENUM value, e.g. 'Inventory_Manager'. */
     public static function role(): ?string
     {
-        return $_SESSION['role'] ?? null;
+        return $_SESSION['user']['role'] ?? null;
     }
 
-    /** URL slug for the current role, e.g. 'inventory'. */
+    /** URL segment for the current role, e.g. 'InventoryManager'. */
     public static function roleSlug(): ?string
     {
         $role = self::role();
@@ -67,29 +77,47 @@ class Session
 
     public static function name(): ?string
     {
-        return $_SESSION['name'] ?? null;
+        return $_SESSION['user']['name'] ?? null;
     }
 
-    /* ---------- Flash messages ---------- */
-    /* Shown once on the next page load, then removed. */
+    /** Update one field on the signed-in user (after a profile edit). */
+    public static function set(string $key, $value): void
+    {
+        if (isset($_SESSION['user'])) {
+            $_SESSION['user'][$key] = $value;
+        }
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* Flash messages                                                    */
+    /* ---------------------------------------------------------------- */
+    /*
+     * $_SESSION['flash'] is ['success' => '...', 'error' => '...'].
+     * The shared layout prints and clears them, so a message survives
+     * exactly one redirect.
+     */
 
     public static function flash(string $type, string $message): void
     {
-        $_SESSION['flash'][$type][] = $message;
+        $_SESSION['flash'][$type] = $message;
     }
 
+    /** Read and clear every pending message. */
     public static function takeFlash(): array
     {
-        $messages = $_SESSION['flash'] ?? [];
+        $flash = $_SESSION['flash'] ?? [];
         unset($_SESSION['flash']);
-        return $messages;
+        return $flash;
     }
 
-    /* ---------- Form data retention ---------- */
-    /* Keeps what the user typed when validation fails. */
+    /* ---------------------------------------------------------------- */
+    /* Old form input                                                    */
+    /* ---------------------------------------------------------------- */
 
+    /** Keep submitted values so a failed form can be re-filled. */
     public static function keepOld(array $data): void
     {
+        unset($data['_csrf'], $data['password'], $data['password_confirm']);
         $_SESSION['old'] = $data;
     }
 

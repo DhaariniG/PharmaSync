@@ -69,3 +69,16 @@
     background-color: #fef2f2;
     color: #ef4444;
 }
+
+/* Logout is a <button> inside a POST form, so make it look like the other links. */
+.sidebar-logout-form {
+    margin: 0;
+}
+button.nav-item {
+    width: 100%;
+    background: none;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+}
