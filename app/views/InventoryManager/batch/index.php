@@ -49,10 +49,18 @@
                 <?= icon('search', 'material-symbols-outlined') ?>
                 <input type="text" placeholder="Search batches...">
             </div>
-            <button class="filter-btn">
-                <span>All Status</span>
-                <?= icon('chevron-down', 'material-symbols-outlined') ?>
-            </button>
+            <div class="filter-dropdown" id="statusFilter">
+                <button type="button" class="filter-btn" onclick="document.getElementById('statusFilter').classList.toggle('open')">
+                    <span id="statusFilterLabel">All Status</span>
+                    <?= icon('chevron-down', 'material-symbols-outlined') ?>
+                </button>
+                <div class="filter-menu">
+                    <button type="button" class="filter-option active" onclick="pickStatusFilter(this, 'All Status')">All Status</button>
+                    <button type="button" class="filter-option" onclick="pickStatusFilter(this, 'Active')">Active</button>
+                    <button type="button" class="filter-option" onclick="pickStatusFilter(this, 'Expiring Soon')">Expiring Soon</button>
+                    <button type="button" class="filter-option" onclick="pickStatusFilter(this, 'Expired')">Expired</button>
+                </div>
+            </div>
         </div>
 
         <div class="table-card">
@@ -142,3 +150,21 @@
 
     </div>
 </main>
+
+<script>
+function pickStatusFilter(el, label) {
+    document.getElementById('statusFilterLabel').textContent = label;
+    el.closest('.filter-menu').querySelectorAll('.filter-option').forEach(function (opt) {
+        opt.classList.remove('active');
+    });
+    el.classList.add('active');
+    document.getElementById('statusFilter').classList.remove('open');
+}
+
+document.addEventListener('click', function (event) {
+    var dropdown = document.getElementById('statusFilter');
+    if (dropdown && !dropdown.contains(event.target)) {
+        dropdown.classList.remove('open');
+    }
+});
+</script>

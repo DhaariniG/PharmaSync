@@ -131,6 +131,10 @@
 }
 .search-box input:focus { border-color: var(--color-secondary); }
 
+.filter-dropdown {
+    position: relative;
+}
+
 .filter-btn {
     background-color: var(--color-white);
     border: 1px solid var(--color-border);
@@ -143,6 +147,37 @@
     font-size: 14px;
 }
 .filter-btn:hover { background-color: #F7FAFC; }
+
+.filter-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 100%;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: var(--space-xs) 0;
+    z-index: 20;
+}
+.filter-dropdown.open .filter-menu { display: block; }
+
+.filter-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: var(--space-sm) var(--space-md);
+    font-size: 14px;
+    font-family: var(--font-body);
+    color: var(--color-text-main);
+    cursor: pointer;
+    white-space: nowrap;
+}
+.filter-option:hover { background-color: #F7FAFC; }
+.filter-option.active { color: var(--color-secondary); font-weight: 600; }
 
 /* --- Batches table --- */
 .table-card {
