@@ -18,8 +18,17 @@ class Notification extends Model
 
     private function &store(): array
     {
+        // Guests have no notifications. Nothing is written to the session,
+        // so the demo inbox still seeds properly once they log in.
+        if (Session::id() === null) {
+            $none = [];
+            return $none;
+        }
+
         if (!isset($_SESSION['notifications']) || !is_array($_SESSION['notifications'])) {
-            $_SESSION['notifications'] = self::seed();
+            // Sample alerts are about the demo customer's own orders and
+            // prescriptions, so other accounts start with an empty inbox.
+            $_SESSION['notifications'] = Session::id() === DEMO_CUSTOMER_ID ? self::seed() : [];
         }
         return $_SESSION['notifications'];
     }

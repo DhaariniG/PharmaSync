@@ -6,7 +6,7 @@
     <?= icon('package') ?>
     <h5 class="mt-3">No orders yet</h5>
     <p class="muted">Your order history will show up here once you place an order.</p>
-    <a href="<?= BASE_URL ?>/catalog" class="btn btn-ps-primary mt-2">Start Shopping</a>
+    <a href="<?= BASE_URL ?>/customer/catalog" class="btn btn-ps-primary mt-2">Start Shopping</a>
   </div>
 <?php else: ?>
 
@@ -34,11 +34,11 @@
         <div class="flex between middle">
           <span class="small"><?= icon('truck', 'text-success me-1') ?>In transit — track for latest status</span>
           <div class="flex middle gap-2">
-            <form method="POST" action="<?= BASE_URL ?>/orders/reorder/<?= $o['id'] ?>" class="inline">
+            <form method="POST" action="<?= BASE_URL ?>/customer/orders/reorder/<?= $o['id'] ?>" class="inline">
               <?= csrf_field() ?>
               <button type="submit" class="btn btn-ps-outline btn-sm"><?= icon('rotate-cw', 'me-1') ?>Reorder</button>
             </form>
-            <a href="<?= BASE_URL ?>/orders/<?= $o['id'] ?>" class="semibold small">Track Package <?= icon('arrow-right', 'ms-1') ?></a>
+            <a href="<?= BASE_URL ?>/customer/orders/<?= $o['id'] ?>" class="semibold small">Track Package <?= icon('arrow-right', 'ms-1') ?></a>
           </div>
         </div>
       </div>
@@ -57,11 +57,11 @@
         </div>
         <div class="flex middle gap-2">
           <span class="ps-status ps-status-<?= $o['status'] ?>"><?= Order::statusLabel($o['status']) ?></span>
-          <form method="POST" action="<?= BASE_URL ?>/orders/reorder/<?= $o['id'] ?>" class="inline">
+          <form method="POST" action="<?= BASE_URL ?>/customer/orders/reorder/<?= $o['id'] ?>" class="inline">
             <?= csrf_field() ?>
             <button type="submit" class="btn btn-ps-outline btn-sm"><?= icon('rotate-cw', 'me-1') ?>Reorder</button>
           </form>
-          <a href="<?= BASE_URL ?>/orders/<?= $o['id'] ?>" class="btn btn-ps-outline btn-sm">View</a>
+          <a href="<?= BASE_URL ?>/customer/orders/<?= $o['id'] ?>" class="btn btn-ps-outline btn-sm">View</a>
         </div>
       </div>
     <?php endforeach; ?>

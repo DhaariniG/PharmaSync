@@ -1,9 +1,9 @@
-<?php $rating = Medicine::ratingFor($medicine['id']); ?>
+<?php $rating = CustomerMedicine::ratingFor($medicine['id']); ?>
 <nav aria-label="breadcrumb">
   <ol class="crumbs small">
-    <li class="crumb"><a href="<?= BASE_URL ?>/">Home</a></li>
-    <li class="crumb"><a href="<?= BASE_URL ?>/catalog">Medicines</a></li>
-    <li class="crumb"><a href="<?= BASE_URL ?>/catalog?category=<?= $medicine['category_id'] ?>"><?= htmlspecialchars(Medicine::categoryName($medicine['category_id'])) ?></a></li>
+    <li class="crumb"><a href="<?= BASE_URL ?>/customer/">Home</a></li>
+    <li class="crumb"><a href="<?= BASE_URL ?>/customer/catalog">Medicines</a></li>
+    <li class="crumb"><a href="<?= BASE_URL ?>/customer/catalog?category=<?= $medicine['category_id'] ?>"><?= htmlspecialchars(CustomerMedicine::categoryName($medicine['category_id'])) ?></a></li>
     <li class="crumb active"><?= htmlspecialchars($medicine['name']) ?></li>
   </ol>
 </nav>
@@ -66,7 +66,7 @@
           <div class="small">This medicine requires a valid prescription. Upload one and a pharmacist will review, prepare, and confirm your order before it's added to your cart.</div>
         </div>
 
-        <form method="GET" action="<?= BASE_URL ?>/prescription/upload" class="flex middle gap-3 wrap mb-3">
+        <form method="GET" action="<?= BASE_URL ?>/customer/prescription/upload" class="flex middle gap-3 wrap mb-3">
           <input type="hidden" name="medicine_id" value="<?= $medicine['id'] ?>">
           <div class="flex middle border rounded" data-qty-stepper>
             <button type="button" class="btn btn-sm" data-qty-minus><?= icon('minus') ?></button>
@@ -80,7 +80,7 @@
           <span><?= icon('truck', 'text-success me-1') ?>Delivered by our own staff</span>
         </div>
       <?php else: ?>
-        <form method="POST" action="<?= BASE_URL ?>/cart/add" class="flex middle gap-3 wrap mb-3" data-validate>
+        <form method="POST" action="<?= BASE_URL ?>/customer/cart/add" class="flex middle gap-3 wrap mb-3" data-validate>
             <?= csrf_field() ?>
           <input type="hidden" name="medicine_id" value="<?= $medicine['id'] ?>">
           <div class="flex middle border rounded" data-qty-stepper>
@@ -105,7 +105,7 @@
       <?php
         $modalId = 'altModalPD' . $medicine['id'];
         $original = $medicine;
-        $alternates = (new Medicine())->alternatesFor($medicine['id']);
+        $alternates = (new CustomerMedicine())->alternatesFor($medicine['id']);
         require __DIR__ . '/../partials/alternative-modal.php';
       ?>
     <?php endif; ?>
@@ -156,13 +156,13 @@
     <div class="ps-banner p-4 text-center">
       <h6 class="bold mb-1">Need a Refill?</h6>
       <p class="small mb-3">Set up an automatic refill and save 5% on your next order.</p>
-      <a href="<?= BASE_URL ?>/catalog?category=<?= $medicine['category_id'] ?>" class="btn btn-plain btn-sm">Enable Refill</a>
+      <a href="<?= BASE_URL ?>/customer/catalog?category=<?= $medicine['category_id'] ?>" class="btn btn-plain btn-sm">Enable Refill</a>
     </div>
   </div>
 </div>
 
 <?php if (!empty($related)): ?>
-  <h5 class="ps-section-title mt-5 mb-3">Related <?= htmlspecialchars(Medicine::categoryName($medicine['category_id'])) ?></h5>
+  <h5 class="ps-section-title mt-5 mb-3">Related <?= htmlspecialchars(CustomerMedicine::categoryName($medicine['category_id'])) ?></h5>
   <div class="row g-3">
     <?php foreach ($related as $m): ?>
       <div class="col-6 col-md-3">

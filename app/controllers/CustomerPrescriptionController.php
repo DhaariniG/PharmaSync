@@ -2,9 +2,11 @@
 
 class CustomerPrescriptionController extends Controller
 {
+    protected string $viewBase = 'customer';
+
     public function uploadForm(): void
     {
-        $this->requireAuth('Please sign in to upload a prescription.');
+        $this->requireRole('Customer');
 
         $user = $this->currentUser();
         $history = (new Prescription())->forUser($user['id'] ?? 0);
@@ -12,7 +14,7 @@ class CustomerPrescriptionController extends Controller
         // If the customer came from a specific Rx medicine, keep that medicine
         // in context so the form can show and submit it.
         $medicineId = (int) $this->input('medicine_id', 0);
-        $requestedMedicine = $medicineId > 0 ? (new Medicine())->find($medicineId) : null;
+        $requestedMedicine = $medicineId > 0 ? (new CustomerMedicine())->find($medicineId) : null;
         $requestedQuantity = max(1, (int) $this->input('quantity', 1));
 
         $this->render('prescription.upload', [
@@ -26,13 +28,13 @@ class CustomerPrescriptionController extends Controller
 
     public function upload(): void
     {
-        $this->requireAuth();
+        $this->requireRole('Customer');
         $this->verifyCsrf();
         $user = $this->currentUser();
 
         if (empty($_FILES['prescription_file']) || $_FILES['prescription_file']['error'] !== UPLOAD_ERR_OK) {
             $this->flash('error', 'Please choose a file to upload.');
-            $this->redirect('/prescription/upload');
+            $this->redirect('/customer/prescription/upload');
             return;
         }
 
@@ -42,7 +44,7 @@ class CustomerPrescriptionController extends Controller
         $patient = (new FamilyMember())->find($user['id'], (int) $this->input('patient_id', 0));
         if (!$patient) {
             $this->flash('error', 'Please choose who this prescription is for.');
-            $this->redirect('/prescription/upload');
+            $this->redirect('/customer/prescription/upload');
             return;
         }
 
@@ -50,14 +52,14 @@ class CustomerPrescriptionController extends Controller
 
         if ($file['size'] > PRESCRIPTION_MAX_SIZE) {
             $this->flash('error', 'File is too large. Max size is 5MB.');
-            $this->redirect('/prescription/upload');
+            $this->redirect('/customer/prescription/upload');
             return;
         }
 
         $mime = mime_content_type($file['tmp_name']);
         if (!in_array($mime, PRESCRIPTION_ALLOWED_TYPES, true)) {
             $this->flash('error', 'Invalid file type. Please upload a JPG, PNG or PDF.');
-            $this->redirect('/prescription/upload');
+            $this->redirect('/customer/prescription/upload');
             return;
         }
 
@@ -72,7 +74,7 @@ class CustomerPrescriptionController extends Controller
 
         if (!move_uploaded_file($file['tmp_name'], $destination)) {
             $this->flash('error', 'Upload failed. Please try again.');
-            $this->redirect('/prescription/upload');
+            $this->redirect('/customer/prescription/upload');
             return;
         }
 
@@ -89,20 +91,20 @@ class CustomerPrescriptionController extends Controller
         ]);
 
         $this->flash('success', 'Prescription uploaded. A pharmacist will review it shortly.');
-        $this->redirect('/prescription/status/' . $prescription['id']);
+        $this->redirect('/customer/prescription/status/' . $prescription['id']);
     }
 
     public function status($id): void
     {
-        $this->requireAuth();
+        $this->requireRole('Customer');
 
         $prescription = (new Prescription())->find((int) $id);
         if (!$prescription || $prescription['user_id'] !== ($this->currentUser()['id'] ?? null)) {
-            $this->redirect('/prescription/upload');
+            $this->redirect('/customer/prescription/upload');
             return;
         }
 
-        $medicineModel = new Medicine();
+        $medicineModel = new CustomerMedicine();
 
         $requestedMedicine = !empty($prescription['requested_medicine_id'])
             ? $medicineModel->find((int) $prescription['requested_medicine_id'])
@@ -137,12 +139,12 @@ class CustomerPrescriptionController extends Controller
     public function approveAlternative($id): void
     {
         $this->verifyCsrf();
-        $this->requireAuth();
+        $this->requireRole('Customer');
 
         $prescriptionId = (int) $id;
         $prescription = (new Prescription())->find($prescriptionId);
         if (!$prescription || $prescription['user_id'] !== ($this->currentUser()['id'] ?? null)) {
-            $this->redirect('/prescription/upload');
+            $this->redirect('/customer/prescription/upload');
             return;
         }
 
@@ -152,37 +154,37 @@ class CustomerPrescriptionController extends Controller
             $this->flash('success', 'Alternative approved and added to your cart.');
         }
 
-        $this->redirect('/prescription/status/' . $prescriptionId);
+        $this->redirect('/customer/prescription/status/' . $prescriptionId);
     }
 
     // Keep waiting for the original medicine instead of the alternative.
     public function continueWaiting($id): void
     {
         $this->verifyCsrf();
-        $this->requireAuth();
+        $this->requireRole('Customer');
 
         $prescriptionId = (int) $id;
         $prescription = (new Prescription())->find($prescriptionId);
         if (!$prescription || $prescription['user_id'] !== ($this->currentUser()['id'] ?? null)) {
-            $this->redirect('/prescription/upload');
+            $this->redirect('/customer/prescription/upload');
             return;
         }
 
         (new Prescription())->continueWaiting($prescriptionId);
         $this->flash('success', "We'll notify you as soon as the original medicine is back in stock.");
-        $this->redirect('/prescription/status/' . $prescriptionId);
+        $this->redirect('/customer/prescription/status/' . $prescriptionId);
     }
 
     // Confirm the prepared order; its items go into the normal cart.
     public function confirmPrepared($id): void
     {
         $this->verifyCsrf();
-        $this->requireAuth();
+        $this->requireRole('Customer');
 
         $prescriptionId = (int) $id;
         $prescription = (new Prescription())->find($prescriptionId);
         if (!$prescription || $prescription['user_id'] !== ($this->currentUser()['id'] ?? null)) {
-            $this->redirect('/prescription/upload');
+            $this->redirect('/customer/prescription/upload');
             return;
         }
 
@@ -196,13 +198,13 @@ class CustomerPrescriptionController extends Controller
             $this->flash('success', 'Prepared order confirmed and added to your cart.');
         }
 
-        $this->redirect('/cart');
+        $this->redirect('/customer/cart');
     }
 
     // Serve a prescription file, but only to the customer who owns it.
     public function file($id): void
     {
-        $this->requireAuth();
+        $this->requireRole('Customer');
 
         $prescription = (new Prescription())->find((int) $id);
         if (!$prescription || $prescription['user_id'] !== ($this->currentUser()['id'] ?? null)) {

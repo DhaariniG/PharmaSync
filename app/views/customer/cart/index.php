@@ -7,7 +7,7 @@
     <?= icon('shopping-cart') ?>
     <h5 class="mt-3">Your cart is empty</h5>
     <p class="muted">Browse medicines and health essentials to get started.</p>
-    <a href="<?= BASE_URL ?>/catalog" class="btn btn-ps-primary mt-2"><?= icon('briefcase-medical', 'me-2') ?>Browse Medicines</a>
+    <a href="<?= BASE_URL ?>/customer/catalog" class="btn btn-ps-primary mt-2"><?= icon('briefcase-medical', 'me-2') ?>Browse Medicines</a>
   </div>
 
 <?php else: ?>
@@ -27,10 +27,10 @@
             <img src="<?= medicine_image($m) ?>" class="rounded" width="64" height="64" style="object-fit:cover;" alt="<?= htmlspecialchars($m['name']) ?>" onerror="this.onerror=null;this.src='<?= BASE_URL ?>/assets/images/medicines/_placeholder.svg';">
             <div class="grow">
               <div class="semibold"><?= htmlspecialchars($m['name']) ?></div>
-              <div class="muted small"><?= htmlspecialchars(Medicine::categoryName($m['category_id'])) ?></div>
+              <div class="muted small"><?= htmlspecialchars(CustomerMedicine::categoryName($m['category_id'])) ?></div>
               <?php if ($m['requires_rx']): ?><span class="tag ps-badge-rx mt-1">Prescription Required</span><?php endif; ?>
             </div>
-            <form method="POST" action="<?= BASE_URL ?>/cart/update" class="flex middle border rounded" data-qty-stepper onchange="this.submit()">
+            <form method="POST" action="<?= BASE_URL ?>/customer/cart/update" class="flex middle border rounded" data-qty-stepper onchange="this.submit()">
           <?= csrf_field() ?>
               <input type="hidden" name="medicine_id" value="<?= $m['id'] ?>">
               <button type="button" class="btn btn-sm" data-qty-minus><?= icon('minus') ?></button>
@@ -39,12 +39,12 @@
             </form>
             <div class="ps-price text-end" style="min-width:100px;">Rs. <?= number_format($line['subtotal'], 2) ?></div>
             <div class="flex flex-col bottom gap-1">
-              <form method="POST" action="<?= BASE_URL ?>/cart/save-for-later">
+              <form method="POST" action="<?= BASE_URL ?>/customer/cart/save-for-later">
           <?= csrf_field() ?>
                 <input type="hidden" name="medicine_id" value="<?= $m['id'] ?>">
                 <button type="submit" class="btn btn-text btn-sm p-0 small">Save for later</button>
               </form>
-              <form method="POST" action="<?= BASE_URL ?>/cart/remove">
+              <form method="POST" action="<?= BASE_URL ?>/customer/cart/remove">
           <?= csrf_field() ?>
                 <input type="hidden" name="medicine_id" value="<?= $m['id'] ?>">
                 <button type="submit" class="btn btn-sm text-danger p-0"><?= icon('trash-2') ?></button>
@@ -64,7 +64,7 @@
                 <div class="semibold small"><?= htmlspecialchars($m['name']) ?></div>
                 <div class="ps-price small">Rs. <?= number_format($m['price'], 2) ?></div>
               </div>
-              <form method="POST" action="<?= BASE_URL ?>/cart/move-to-cart">
+              <form method="POST" action="<?= BASE_URL ?>/customer/cart/move-to-cart">
           <?= csrf_field() ?>
                 <input type="hidden" name="medicine_id" value="<?= $m['id'] ?>">
                 <button type="submit" class="btn btn-ps-outline btn-sm">Move to Cart</button>
@@ -98,7 +98,7 @@
         <p class="muted small mb-3">Delivery charges are not included yet. Choose home delivery or store pickup at checkout.</p>
 
         <?php if (!empty($promoError)): ?><div class="note note-danger small py-2"><?= htmlspecialchars($promoError) ?></div><?php endif; ?>
-        <form method="POST" action="<?= BASE_URL ?>/cart/apply-promo" class="flex gap-2 mb-3">
+        <form method="POST" action="<?= BASE_URL ?>/customer/cart/apply-promo" class="flex gap-2 mb-3">
           <?= csrf_field() ?>
           <input type="text" name="promo_code" value="<?= htmlspecialchars($promoCode ?? '') ?>" class="field field-sm" placeholder="Promo Code (try HEALTH30)">
           <button type="submit" class="btn btn-ps-outline btn-sm">Apply</button>
@@ -109,8 +109,8 @@
           <div><strong>Two ways to get your order</strong><br>Home delivery (Rs. <?= number_format(DELIVERY_FEE, 2) ?>) or free store pickup.</div>
         </div>
 
-        <a href="<?= BASE_URL ?>/checkout" class="btn btn-ps-primary w-100 py-2">Proceed to Checkout <?= icon('arrow-right', 'ms-1') ?></a>
-        <a href="<?= BASE_URL ?>/catalog" class="btn btn-text w-100 mt-1">Continue shopping</a>
+        <a href="<?= BASE_URL ?>/customer/checkout" class="btn btn-ps-primary w-100 py-2">Proceed to Checkout <?= icon('arrow-right', 'ms-1') ?></a>
+        <a href="<?= BASE_URL ?>/customer/catalog" class="btn btn-text w-100 mt-1">Continue shopping</a>
         <p class="text-center muted small mt-2 mb-0"><?= icon('lock', 'me-1') ?>Secure checkout by PharmaSync</p>
       </div>
     </div>

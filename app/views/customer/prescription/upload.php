@@ -23,7 +23,7 @@
       </div>
     <?php endif; ?>
 
-    <form method="POST" action="<?= BASE_URL ?>/prescription/upload" enctype="multipart/form-data" data-validate novalidate>
+    <form method="POST" action="<?= BASE_URL ?>/customer/prescription/upload" enctype="multipart/form-data" data-validate novalidate>
           <?= csrf_field() ?>
       <?php if (!empty($requestedMedicine)): ?>
         <input type="hidden" name="requested_medicine_id" value="<?= $requestedMedicine['id'] ?>">
@@ -39,7 +39,7 @@
             </option>
           <?php endforeach; ?>
         </select>
-        <a href="<?= BASE_URL ?>/profile" class="small mt-2 block">Add a family member</a>
+        <a href="<?= BASE_URL ?>/customer/profile" class="small mt-2 block">Add a family member</a>
       </div>
 
       <div class="ps-card p-4 mb-3">
@@ -76,7 +76,7 @@
   <div class="col-lg-4">
     <div class="flex between middle mb-3">
       <h6 class="bold mb-0">Recently Uploaded</h6>
-      <a href="<?= BASE_URL ?>/orders" class="small">View All</a>
+      <a href="<?= BASE_URL ?>/customer/orders" class="small">View All</a>
     </div>
     <?php if (empty($history)): ?>
       <div class="ps-empty-state ps-card mb-3">
@@ -94,8 +94,8 @@
                 <span class="ps-status ps-status-<?= $rx['status'] ?>" style="font-size:.65rem;"><?= strtoupper($rx['status']) ?></span>
               </div>
               <div class="muted small">Uploaded: <?= date('M j, g:i A', strtotime($rx['uploaded_at'])) ?></div>
-              <a href="<?= BASE_URL ?>/prescription/status/<?= $rx['id'] ?>" class="small me-2"><?= icon('eye', 'me-1') ?>View</a>
-              <?php if ($rx['status'] === 'approved'): ?><a href="<?= BASE_URL ?>/catalog" class="small"><?= icon('shopping-cart', 'me-1') ?>Order</a><?php endif; ?>
+              <a href="<?= BASE_URL ?>/customer/prescription/status/<?= $rx['id'] ?>" class="small me-2"><?= icon('eye', 'me-1') ?>View</a>
+              <?php if ($rx['status'] === 'approved'): ?><a href="<?= BASE_URL ?>/customer/catalog" class="small"><?= icon('shopping-cart', 'me-1') ?>Order</a><?php endif; ?>
             </div>
           </div>
         <?php endforeach; ?>

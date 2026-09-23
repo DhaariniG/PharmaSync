@@ -6,6 +6,13 @@ class Mailer
 {
     public static function available(): bool
     {
+        // MAIL_ENABLED is false during development, so no page ever hangs
+        // waiting for SMTP. Turn it on in config/config.php when real
+        // credentials are in place.
+        if (!MAIL_ENABLED) {
+            return false;
+        }
+
         return file_exists(__DIR__ . '/../../lib/PHPMailer/src/PHPMailer.php')
             && file_exists(__DIR__ . '/../../lib/PHPMailer/src/SMTP.php')
             && file_exists(__DIR__ . '/../../lib/PHPMailer/src/Exception.php');

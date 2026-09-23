@@ -2,13 +2,15 @@
 
 class CustomerCheckoutController extends Controller
 {
+    protected string $viewBase = 'customer';
+
     public function index(): void
     {
-        $this->requireAuth('Please sign in to complete your order.');
+        $this->requireRole('Customer');
 
         $cart = new Cart();
         if ($cart->isEmpty()) {
-            $this->redirect('/cart');
+            $this->redirect('/customer/cart');
             return;
         }
 
@@ -65,11 +67,11 @@ class CustomerCheckoutController extends Controller
     public function placeOrder(): void
     {
         $this->verifyCsrf();
-        $this->requireAuth('Please sign in to complete your order.');
+        $this->requireRole('Customer');
 
         $cart = new Cart();
         if ($cart->isEmpty()) {
-            $this->redirect('/cart');
+            $this->redirect('/customer/cart');
             return;
         }
 
@@ -84,12 +86,12 @@ class CustomerCheckoutController extends Controller
 
             if (!$rx || $rx['user_id'] !== $user['id']) {
                 $this->flash('error', 'Please select one of your own approved prescriptions.');
-                $this->redirect('/checkout');
+                $this->redirect('/customer/checkout');
                 return;
             }
             if ($rx['status'] !== 'approved') {
                 $this->flash('error', 'That prescription has not been approved by a pharmacist yet.');
-                $this->redirect('/checkout');
+                $this->redirect('/customer/checkout');
                 return;
             }
             $prescriptionId = $rx['id'];
@@ -109,7 +111,7 @@ class CustomerCheckoutController extends Controller
             $patient = $familyMembers->find($user['id'], (int) $this->input('patient_id', 0));
             if (!$patient) {
                 $this->flash('error', 'Please choose who this order is for.');
-                $this->redirect('/checkout');
+                $this->redirect('/customer/checkout');
                 return;
             }
         }
@@ -139,7 +141,7 @@ class CustomerCheckoutController extends Controller
             $chosenAddress = (new Address())->find($user['id'], (int) $this->input('address_id', 0));
             if (!$chosenAddress) {
                 $this->flash('error', 'Please choose a delivery address.');
-                $this->redirect('/checkout');
+                $this->redirect('/customer/checkout');
                 return;
             }
             $address = trim($chosenAddress['line1'] . ', ' . $chosenAddress['city'], ', ');
@@ -154,7 +156,7 @@ class CustomerCheckoutController extends Controller
             $allowed = array_column(pickup_slots(), 'value');
             if (!in_array($chosen, $allowed, true)) {
                 $this->flash('error', 'Please choose a valid pickup date and time.');
-                $this->redirect('/checkout');
+                $this->redirect('/customer/checkout');
                 return;
             }
             [$pdate, $ptime] = explode(' ', $chosen);
@@ -191,6 +193,6 @@ class CustomerCheckoutController extends Controller
         // isn't configured yet (see app/core/Mailer.php).
         Mailer::sendOrderConfirmation($user, $order);
 
-        $this->redirect('/order/confirmation/' . $order['id']);
+        $this->redirect('/customer/order/confirmation/' . $order['id']);
     }
 }

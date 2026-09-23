@@ -2,25 +2,27 @@
 
 class CustomerOrderController extends Controller
 {
+    protected string $viewBase = 'customer';
+
     public function confirmation($id): void
     {
-        $this->requireAuth();
+        $this->requireRole('Customer');
 
         $order = (new Order())->find((int) $id);
         if (!$order || $order['user_id'] !== ($this->currentUser()['id'] ?? null)) {
-            $this->redirect('/orders');
+            $this->redirect('/customer/orders');
             return;
         }
 
         $this->render('order.confirmation', [
             'order'    => $order,
-            'popular'  => (new Medicine())->featured(3),
+            'popular'  => (new CustomerMedicine())->featured(3),
         ]);
     }
 
     public function myOrders(): void
     {
-        $this->requireAuth();
+        $this->requireRole('Customer');
 
         $user = $this->currentUser();
         $orders = (new Order())->forUser($user['id'] ?? 0);
@@ -36,11 +38,11 @@ class CustomerOrderController extends Controller
 
     public function show($id): void
     {
-        $this->requireAuth();
+        $this->requireRole('Customer');
 
         $order = (new Order())->find((int) $id);
         if (!$order || $order['user_id'] !== ($this->currentUser()['id'] ?? null)) {
-            $this->redirect('/orders');
+            $this->redirect('/customer/orders');
             return;
         }
 
@@ -51,15 +53,15 @@ class CustomerOrderController extends Controller
     public function reorder($id): void
     {
         $this->verifyCsrf();
-        $this->requireAuth();
+        $this->requireRole('Customer');
 
         $order = (new Order())->find((int) $id);
         if (!$order || $order['user_id'] !== ($this->currentUser()['id'] ?? null)) {
-            $this->redirect('/orders');
+            $this->redirect('/customer/orders');
             return;
         }
 
-        $medicineModel = new Medicine();
+        $medicineModel = new CustomerMedicine();
         $cart = new Cart();
         $added = 0;
         $skipped = 0;
@@ -97,6 +99,6 @@ class CustomerOrderController extends Controller
             $this->flash('error', 'None of the items from this order are currently available.');
         }
 
-        $this->redirect('/cart');
+        $this->redirect('/customer/cart');
     }
 }

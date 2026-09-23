@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
   <ol class="crumbs small">
-    <li class="crumb"><a href="<?= BASE_URL ?>/catalog">Catalog</a></li>
-    <li class="crumb"><a href="<?= BASE_URL ?>/product/<?= $original['id'] ?>"><?= htmlspecialchars($original['name']) ?></a></li>
+    <li class="crumb"><a href="<?= BASE_URL ?>/customer/catalog">Catalog</a></li>
+    <li class="crumb"><a href="<?= BASE_URL ?>/customer/product/<?= $original['id'] ?>"><?= htmlspecialchars($original['name']) ?></a></li>
     <li class="crumb active">Alternatives</li>
   </ol>
 </nav>
@@ -18,7 +18,7 @@
     <?= icon('package-open') ?>
     <h5 class="mt-3">No alternatives available right now</h5>
     <p class="muted">Check back later, or upload a prescription for pharmacist assistance.</p>
-    <a href="<?= BASE_URL ?>/prescription/upload" class="btn btn-ps-primary mt-2">Upload Prescription</a>
+    <a href="<?= BASE_URL ?>/customer/prescription/upload" class="btn btn-ps-primary mt-2">Upload Prescription</a>
   </div>
 <?php else: ?>
   <div class="row g-3">

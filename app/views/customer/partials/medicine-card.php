@@ -11,17 +11,17 @@
       <?php endif; ?>
     </div>
     <div class="semibold small mb-1"><?= htmlspecialchars($m['name']) ?></div>
-    <div class="muted small mb-2"><?= htmlspecialchars(Medicine::categoryName($m['category_id'])) ?></div>
+    <div class="muted small mb-2"><?= htmlspecialchars(CustomerMedicine::categoryName($m['category_id'])) ?></div>
     <div class="ps-price mb-3"><?= "Rs. " . number_format($m['price'], 2) ?></div>
     <div class="mt-auto flex gap-2">
-      <a href="<?= BASE_URL ?>/product/<?= $m['id'] ?>" class="btn btn-ps-outline btn-sm grow">Details</a>
+      <a href="<?= BASE_URL ?>/customer/product/<?= $m['id'] ?>" class="btn btn-ps-outline btn-sm grow">Details</a>
       <?php if ($m['stock'] > 0): ?>
         <?php if (!empty($m['requires_rx'])): ?>
-          <a href="<?= BASE_URL ?>/prescription/upload?medicine_id=<?= $m['id'] ?>&quantity=1" class="btn btn-ps-primary btn-sm grow" title="Upload Prescription">
+          <a href="<?= BASE_URL ?>/customer/prescription/upload?medicine_id=<?= $m['id'] ?>&quantity=1" class="btn btn-ps-primary btn-sm grow" title="Upload Prescription">
             <?= icon('scroll-text') ?>
           </a>
         <?php else: ?>
-          <form method="POST" action="<?= BASE_URL ?>/cart/add" class="grow">
+          <form method="POST" action="<?= BASE_URL ?>/customer/cart/add" class="grow">
             <?= csrf_field() ?>
             <input type="hidden" name="medicine_id" value="<?= $m['id'] ?>">
             <input type="hidden" name="quantity" value="1">
@@ -43,6 +43,6 @@
 if ($m['stock'] <= 0):
   $modalId = 'altModal' . $m['id'];
   $original = $m;
-  $alternates = (new Medicine())->alternatesFor($m['id']);
+  $alternates = (new CustomerMedicine())->alternatesFor($m['id']);
   require __DIR__ . '/alternative-modal.php';
 endif; ?>

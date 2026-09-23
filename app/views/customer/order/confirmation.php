@@ -72,10 +72,10 @@
       </div>
 
       <div class="flex center gap-2 wrap">
-        <a href="<?= BASE_URL ?>/orders/<?= $order['id'] ?>" class="btn btn-ps-primary"><?= icon('truck', 'me-2') ?>Track Order</a>
+        <a href="<?= BASE_URL ?>/customer/orders/<?= $order['id'] ?>" class="btn btn-ps-primary"><?= icon('truck', 'me-2') ?>Track Order</a>
         <a href="#" class="btn btn-ps-outline"><?= icon('download', 'me-2') ?>Download Invoice</a>
       </div>
-      <a href="<?= BASE_URL ?>/catalog" class="block mt-3">Continue Shopping <?= icon('arrow-right', 'ms-1') ?></a>
+      <a href="<?= BASE_URL ?>/customer/catalog" class="block mt-3">Continue Shopping <?= icon('arrow-right', 'ms-1') ?></a>
     </div>
 
     <h5 class="ps-section-title mb-3">Popular Healthcare Products</h5>

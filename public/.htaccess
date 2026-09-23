@@ -1,6 +1,14 @@
+# Send every request that is not a real file or folder to index.php.
+# The router reads the path from REQUEST_URI, so nothing is passed as a
+# query string here.
 RewriteEngine On
 
-# If the request is not for a real file or directory, route through index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
+
+# Do not list directory contents
+Options -Indexes
+
+# Note: uploads are NOT in here. Prescriptions live in storage/, outside
+# public/, and are served by a controller that checks ownership first.

@@ -2,11 +2,15 @@
 
 class CustomerProductController extends Controller
 {
+    use CustomerGuestAccess;   // browsing works without logging in
+
+    protected string $viewBase = 'customer';
+
     public function show($id): void
     {
-        
+        $this->allowGuest();
 
-        $medicineModel = new Medicine();
+        $medicineModel = new CustomerMedicine();
         $medicine = $medicineModel->find((int) $id);
 
         if (!$medicine) {
@@ -20,7 +24,7 @@ class CustomerProductController extends Controller
             fn($m) => $m['id'] !== $medicine['id']
         ));
 
-        Medicine::trackViewed($medicine['id']);
+        CustomerMedicine::trackViewed($medicine['id']);
 
         $this->render('product.show', [
             'medicine' => $medicine,

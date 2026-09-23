@@ -86,7 +86,7 @@ class Cart extends Model
     public function items(): array
     {
         $cart = $this->store();
-        $medicineModel = new Medicine();
+        $medicineModel = new CustomerMedicine();
         $lines = [];
 
         foreach ($cart as $medicineId => $qty) {
@@ -157,7 +157,7 @@ class Cart extends Model
 
     public function savedItems(): array
     {
-        $medicineModel = new Medicine();
+        $medicineModel = new CustomerMedicine();
         $items = [];
         foreach ($this->savedStore() as $id) {
             $m = $medicineModel->find((int) $id);

@@ -1,5 +1,92 @@
 <?php
-// Small helper functions used across the views.
+/**
+ * Global helper functions. Loaded by config/config.php, so they are available
+ * in every controller, model and view.
+ *
+ * Everything here is wrapped in function_exists() on purpose: if two people
+ * ever load this file twice, PHP must not die with "cannot redeclare".
+ */
+
+/* ==========================================================================
+   Output
+   ========================================================================== */
+
+if (!function_exists('e')) {
+    /**
+     * Escape a value for safe HTML output. Use it on EVERY value that came
+     * from a user or the database before printing it.
+     *
+     *   <td><?= e($medicine['name']) ?></td>
+     *
+     * Forgetting this is how XSS happens.
+     */
+    function e($value): string
+    {
+        return htmlspecialchars((string) ($value ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    }
+}
+
+if (!function_exists('money')) {
+    /** Format money the same way everywhere. */
+    function money($amount): string
+    {
+        return CURRENCY . ' ' . number_format((float) $amount, 2);
+    }
+}
+
+if (!function_exists('dt')) {
+    /** Format a datetime the same way everywhere. */
+    function dt(?string $datetime, string $format = 'd M Y, g:i a'): string
+    {
+        if (empty($datetime)) {
+            return '-';
+        }
+        return date($format, strtotime($datetime));
+    }
+}
+
+if (!function_exists('old')) {
+    /** Re-fill a form field after a failed validation. */
+    function old(string $key, array $oldData, string $default = ''): string
+    {
+        return e($oldData[$key] ?? $default);
+    }
+}
+
+/* ==========================================================================
+   URLs
+   ========================================================================== */
+
+if (!function_exists('url')) {
+    /**
+     * Full URL for an app path. Always include your role segment.
+     *
+     *   <a href="<?= url('/customer/cart') ?>">Cart</a>
+     *   <a href="<?= url('/pharmacist/queue') ?>">Queue</a>
+     *
+     * Never hardcode the folder name - links break the moment someone
+     * clones the project into a differently named folder.
+     */
+    function url(string $path = ''): string
+    {
+        return BASE_URL . '/' . ltrim($path, '/');
+    }
+}
+
+if (!function_exists('asset')) {
+    /** URL for a file under public/, e.g. asset('assets/css/main.css'). */
+    function asset(string $path): string
+    {
+        return BASE_URL . '/' . ltrim($path, '/');
+    }
+}
+
+/* ==========================================================================
+   CSRF
+   ==========================================================================
+   Every POST form needs <?= csrf_field() ?> and every POST handler needs
+   $this->verifyCsrf() on its first line. The field name is _csrf.
+*/
 
 if (!function_exists('csrf_token')) {
     function csrf_token(): string
@@ -12,61 +99,85 @@ if (!function_exists('csrf_token')) {
 }
 
 if (!function_exists('csrf_field')) {
-    // Hidden CSRF input for POST forms.
     function csrf_field(): string
     {
-        return '<input type="hidden" name="_csrf" value="'
-            . htmlspecialchars(csrf_token(), ENT_QUOTES) . '">';
+        return '<input type="hidden" name="_csrf" value="' . e(csrf_token()) . '">';
     }
 }
 
-if (!function_exists('e')) {
-    // Escape a value for safe HTML output.
-    function e($value): string
+/* ==========================================================================
+   Role naming
+   ==========================================================================
+   Three spellings exist and each has one job. Never type them by hand.
+
+     Database ENUM   'Inventory_Manager'   users.role
+     URL segment     'InventoryManager'    /InventoryManager/dashboard
+     Asset folder    'InventoryManager'    public/assets/css/<folder>/
+
+   See the ROLES block in config/config.php.
+*/
+
+if (!function_exists('role_slug')) {
+    /** Database role -> URL segment. */
+    function role_slug(string $role): string
     {
-        return htmlspecialchars((string) ($value ?? ''), ENT_QUOTES, 'UTF-8');
+        return ROLE_SLUGS[$role] ?? '';
     }
 }
 
-if (!function_exists('medicine_image')) {
-    // Main image URL for a medicine (placeholder if none set).
-    function medicine_image(?array $medicine): string
+if (!function_exists('slug_role')) {
+    /** URL segment -> database role. Case-insensitive. '' if unknown. */
+    function slug_role(string $slug): string
     {
-        $filename = $medicine['image'] ?? '';
-        if ($filename === '') {
-            return BASE_URL . '/assets/images/medicines/_placeholder.svg';
-        }
-        return BASE_URL . '/assets/images/medicines/' . rawurlencode($filename);
+        return ROLE_SLUG_LOOKUP[strtolower($slug)] ?? '';
     }
 }
 
-if (!function_exists('medicine_gallery')) {
-    // All image URLs for a medicine: main image first, then any extra angles.
-    function medicine_gallery(?array $medicine): array
+if (!function_exists('role_view_dir')) {
+    /** Database role -> its folder under app/views/ */
+    function role_view_dir(string $role): string
     {
-        $urls = [medicine_image($medicine)];
-
-        foreach ($medicine['images'] ?? [] as $filename) {
-            $filename = trim((string) $filename);
-            if ($filename !== '') {
-                $urls[] = BASE_URL . '/assets/images/medicines/' . rawurlencode($filename);
-            }
-        }
-
-        return array_values(array_unique($urls));
+        return ROLE_VIEW_DIRS[$role] ?? '';
     }
 }
+
+if (!function_exists('role_asset_dir')) {
+    /** Database role -> its folder under public/assets/css/ */
+    function role_asset_dir(string $role): string
+    {
+        return ROLE_ASSET_DIRS[$role] ?? '';
+    }
+}
+
+if (!function_exists('role_css')) {
+    /**
+     * URL of a stylesheet inside a role's own asset folder.
+     *
+     *   <link rel="stylesheet" href="<?= role_css('Customer', 'style.css') ?>">
+     */
+    function role_css(string $role, string $file): string
+    {
+        $dir = role_asset_dir($role);
+        return asset('assets/css/' . ($dir === '' ? '' : $dir . '/') . $file);
+    }
+}
+
+/* ==========================================================================
+   Icons
+   ========================================================================== */
 
 if (!function_exists('icon')) {
-    // Inline a Lucide SVG icon from public/assets/icons/.
-    //
-    // The SVGs are plain files in this repo — no icon font, no JavaScript, no
-    // CDN. They use stroke="currentColor" so they take the surrounding text
-    // colour, and they're sized in `em` (see .lucide in style.css) so the
-    // existing size-1..size-6 and inline font-size rules still work.
-    //
-    // Icons are read once per request and kept in memory, because the same
-    // icon is usually used several times on a page.
+    /**
+     * Inline a Lucide SVG icon from public/assets/icons/.
+     *
+     * The SVGs are plain files in this repo - no icon font, no JavaScript,
+     * no CDN. They use stroke="currentColor" so they take the surrounding
+     * text colour, and they are sized in em.
+     *
+     * Each file is read once per request and kept in memory, because the
+     * same icon is usually used several times on a page. An unknown name
+     * renders nothing rather than a broken box.
+     */
     function icon(string $name, string $classes = '', string $style = ''): string
     {
         static $cache = [];
@@ -74,36 +185,71 @@ if (!function_exists('icon')) {
         $name = preg_replace('/[^a-z0-9-]/', '', strtolower($name));
 
         if (!array_key_exists($name, $cache)) {
-            $file = __DIR__ . '/../public/assets/icons/' . $name . '.svg';
+            $file = PUBLIC_PATH . '/assets/icons/' . $name . '.svg';
             $cache[$name] = is_file($file) ? trim(file_get_contents($file)) : '';
         }
 
         if ($cache[$name] === '') {
-            return ''; // unknown icon: render nothing rather than a broken box
+            return '';
         }
 
-        // Always keep the `lucide` class — the em-based sizing in style.css
-        // hangs off it — and append whatever the caller asked for.
         $class = 'lucide lucide-' . $name;
         if ($classes !== '') {
             $class .= ' ' . $classes;
         }
 
-        $attrs = ' class="' . htmlspecialchars($class, ENT_QUOTES) . '" aria-hidden="true"';
+        $attrs = ' class="' . e($class) . '" aria-hidden="true"';
         if ($style !== '') {
-            $attrs .= ' style="' . htmlspecialchars($style, ENT_QUOTES) . '"';
+            $attrs .= ' style="' . e($style) . '"';
         }
 
-        // Swap the SVG's own class attribute for ours and mark it decorative,
-        // so screen readers skip it and read the adjacent label instead.
         return preg_replace('/^<svg class="[^"]*"/', '<svg' . $attrs, $cache[$name], 1);
     }
 }
 
+/* ==========================================================================
+   Medicines (shared - pharmacist and inventory show the same images)
+   ========================================================================== */
+
+if (!function_exists('medicine_image')) {
+    /** Main image URL for a medicine, or the placeholder if none is set. */
+    function medicine_image(?array $medicine): string
+    {
+        $filename = $medicine['image'] ?? '';
+        if ($filename === '') {
+            return asset('assets/images/medicines/_placeholder.svg');
+        }
+        return asset('assets/images/medicines/' . rawurlencode($filename));
+    }
+}
+
+if (!function_exists('medicine_gallery')) {
+    /** All image URLs for a medicine: main image first, then extra angles. */
+    function medicine_gallery(?array $medicine): array
+    {
+        $urls = [medicine_image($medicine)];
+
+        foreach ($medicine['images'] ?? [] as $filename) {
+            $filename = trim((string) $filename);
+            if ($filename !== '') {
+                $urls[] = asset('assets/images/medicines/' . rawurlencode($filename));
+            }
+        }
+
+        return array_values(array_unique($urls));
+    }
+}
+
+/* ==========================================================================
+   Store pickup
+   ========================================================================== */
+
 if (!function_exists('pickup_slots')) {
-    // Pickup slots for the next few days. Sundays are shorter (store closes at
-    // 5 PM) and same-day slots less than the prep time away are skipped.
-    // Each slot: ['value' => 'Y-m-d H:i', 'label' => 'Mon, 21 Jul — 11:00 AM'].
+    /**
+     * Pickup slots for the next few days. Sundays are shorter (the store
+     * closes at 5 PM) and same-day slots less than the prep time away are
+     * skipped. Each slot: ['value' => 'Y-m-d H:i', 'label' => '...'].
+     */
     function pickup_slots(int $days = 7): array
     {
         $slots   = [];
@@ -121,10 +267,11 @@ if (!function_exists('pickup_slots')) {
                 }
                 $slots[] = [
                     'value' => date('Y-m-d H:i', $start),
-                    'label' => date('D, j M', $start) . ' — ' . date('g:i A', $start),
+                    'label' => date('D, j M', $start) . ' - ' . date('g:i A', $start),
                 ];
             }
         }
+
         return $slots;
     }
 }

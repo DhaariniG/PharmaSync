@@ -144,7 +144,7 @@
           </a>
         </div>
         <div class="col-md-6">
-          <a href="<?= BASE_URL ?>/orders" class="ps-card p-3 block h-100 nounderline text-dark">
+          <a href="<?= BASE_URL ?>/customer/orders" class="ps-card p-3 block h-100 nounderline text-dark">
             <div class="semibold small"><?= icon('package', 'me-2 text-primary') ?>Problem with an order</div>
             <div class="muted small">Track, reorder or report an issue</div>
           </a>
@@ -163,7 +163,7 @@
         <strong><?= icon('triangle-alert', 'me-1') ?>Critical Alert</strong>
         <div class="small">You haven't set a backup recovery email yet. In case of lockout, you may lose access to your medical history.</div>
       </div>
-      <a href="<?= BASE_URL ?>/profile" class="bold small text-danger upper">Set Email Now</a>
+      <a href="<?= BASE_URL ?>/customer/profile" class="bold small text-danger upper">Set Email Now</a>
     </div>
   </div>
 </div>

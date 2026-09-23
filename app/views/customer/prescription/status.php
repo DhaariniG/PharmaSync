@@ -16,7 +16,7 @@ $current = $stages[$prescription['status']] ?? 1;
   </div>
   <div class="flex gap-2">
     <a href="#" class="btn btn-ps-outline btn-sm">Download Receipt</a>
-    <a href="<?= BASE_URL ?>/prescription/upload" class="btn btn-ps-primary btn-sm">Re-upload Document</a>
+    <a href="<?= BASE_URL ?>/customer/prescription/upload" class="btn btn-ps-primary btn-sm">Re-upload Document</a>
   </div>
 </div>
 
@@ -70,7 +70,7 @@ $current = $stages[$prescription['status']] ?? 1;
         <div class="ps-card p-3 h-100">
           <div class="flex between middle mb-2">
             <span class="semibold small">Original Document</span>
-            <a href="<?= BASE_URL ?>/prescription/file/<?= (int) $prescription['id'] ?>" target="_blank" rel="noopener" class="small">View Fullscreen</a>
+            <a href="<?= BASE_URL ?>/customer/prescription/file/<?= (int) $prescription['id'] ?>" target="_blank" rel="noopener" class="small">View Fullscreen</a>
           </div>
           <div class="flex middle center rounded" style="height:160px;background: var(--ps-bg);">
             <?= icon(str_ends_with($prescription['file_name'], '.pdf') ? 'file-text' : 'image', 'size-1 muted') ?>
@@ -122,7 +122,7 @@ $current = $stages[$prescription['status']] ?? 1;
       </div>
       <div class="text-center mb-3">
         <p class="muted small">Review the items above. Confirming will add them to your cart, where they can be combined with any OTC items already there and checked out together.</p>
-        <form method="POST" action="<?= BASE_URL ?>/prescription/confirm/<?= (int) $prescription['id'] ?>" class="inline">
+        <form method="POST" action="<?= BASE_URL ?>/customer/prescription/confirm/<?= (int) $prescription['id'] ?>" class="inline">
           <?= csrf_field() ?>
           <button type="submit" class="btn btn-ps-primary px-4"><?= icon('check', 'me-2') ?>Confirm & Add to Cart</button>
         </form>
@@ -141,7 +141,7 @@ $current = $stages[$prescription['status']] ?? 1;
             <span class="semibold small"><?= htmlspecialchars($alternativeMedicine['name']) ?></span>
             <span class="tag ps-badge-otc">In Stock</span>
           </div>
-          <div class="muted small">Substitute for <?= htmlspecialchars(Medicine::categoryName($alternativeMedicine['category_id'])) ?></div>
+          <div class="muted small">Substitute for <?= htmlspecialchars(CustomerMedicine::categoryName($alternativeMedicine['category_id'])) ?></div>
           <div class="ps-price small">Rs. <?= number_format($alternativeMedicine['price'], 2) ?></div>
         </div>
       </div>
@@ -153,11 +153,11 @@ $current = $stages[$prescription['status']] ?? 1;
       <?php else: ?>
         <p class="muted small mb-2">This substitute was chosen by your pharmacist — you can approve it or keep waiting for the original medicine to be restocked.</p>
         <div class="flex gap-2 mb-3">
-          <form method="POST" action="<?= BASE_URL ?>/prescription/approve-alternative/<?= (int) $prescription['id'] ?>">
+          <form method="POST" action="<?= BASE_URL ?>/customer/prescription/approve-alternative/<?= (int) $prescription['id'] ?>">
             <?= csrf_field() ?>
             <button type="submit" class="btn btn-ps-primary btn-sm"><?= icon('check', 'me-1') ?>Approve Alternative</button>
           </form>
-          <form method="POST" action="<?= BASE_URL ?>/prescription/continue-waiting/<?= (int) $prescription['id'] ?>">
+          <form method="POST" action="<?= BASE_URL ?>/customer/prescription/continue-waiting/<?= (int) $prescription['id'] ?>">
             <?= csrf_field() ?>
             <button type="submit" class="btn btn-ps-outline btn-sm">Continue Waiting for Restock</button>
           </form>
@@ -166,11 +166,11 @@ $current = $stages[$prescription['status']] ?? 1;
 
     <?php elseif ($prescription['status'] === 'approved'): ?>
       <div class="text-center">
-        <a href="<?= BASE_URL ?>/catalog" class="btn btn-ps-primary">Continue Shopping</a>
+        <a href="<?= BASE_URL ?>/customer/catalog" class="btn btn-ps-primary">Continue Shopping</a>
       </div>
     <?php elseif ($prescription['status'] === 'rejected'): ?>
       <div class="text-center">
-        <a href="<?= BASE_URL ?>/prescription/upload" class="btn btn-ps-primary">Upload New Prescription</a>
+        <a href="<?= BASE_URL ?>/customer/prescription/upload" class="btn btn-ps-primary">Upload New Prescription</a>
       </div>
     <?php else: ?>
       <p class="muted small text-center">A pharmacist will review this shortly. This page updates once reviewed.</p>

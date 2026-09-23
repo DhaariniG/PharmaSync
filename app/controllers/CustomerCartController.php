@@ -2,10 +2,16 @@
 
 class CustomerCartController extends Controller
 {
+    use CustomerGuestAccess;   // browsing works without logging in
+
+    protected string $viewBase = 'customer';
+
     public function index(): void
     {
+        $this->allowGuest();
+
         $cart = new Cart();
-        $medicineModel = new Medicine();
+        $medicineModel = new CustomerMedicine();
 
         // No delivery fee on this page: the customer picks home delivery or
         // store pickup at checkout, so the fee is only known from there on.
@@ -27,27 +33,33 @@ class CustomerCartController extends Controller
 
     public function saveForLater(): void
     {
+        $this->allowGuest();
+
         $this->verifyCsrf();
         (new Cart())->saveForLater((int) $this->input('medicine_id'));
-        $this->redirect('/cart');
+        $this->redirect('/customer/cart');
     }
 
     public function moveToCart(): void
     {
+        $this->allowGuest();
+
         $this->verifyCsrf();
         (new Cart())->moveToCart((int) $this->input('medicine_id'));
-        $this->redirect('/cart');
+        $this->redirect('/customer/cart');
     }
 
     public function applyPromo(): void
     {
+        $this->allowGuest();
+
         $this->verifyCsrf();
 
         $code = strtoupper(trim((string) $this->input('promo_code', '')));
 
         if ($code === '') {
             unset($_SESSION['promo_code']);
-            $this->redirect('/cart');
+            $this->redirect('/customer/cart');
             return;
         }
 
@@ -61,17 +73,19 @@ class CustomerCartController extends Controller
             $this->flash('promo_error', 'That promo code isn\'t valid. Try HEALTH30.');
         }
 
-        $this->redirect('/cart');
+        $this->redirect('/customer/cart');
     }
 
     public function add(): void
     {
+        $this->allowGuest();
+
         $this->verifyCsrf();
 
         $medicineId = (int) $this->input('medicine_id');
         $qty = max(1, (int) $this->input('quantity', 1));
 
-        $medicineModel = new Medicine();
+        $medicineModel = new CustomerMedicine();
         $medicine = $medicineModel->find($medicineId);
 
         if (!$medicine) {
@@ -86,40 +100,44 @@ class CustomerCartController extends Controller
         }
 
         if ($this->input('buy_now')) {
-            $this->redirect('/checkout');
+            $this->redirect('/customer/checkout');
             return;
         }
 
         // Go back to whichever page the "Add to cart" form was submitted from,
         // but only if it's a same-host internal path (prevents open redirects).
-        header('Location: ' . $this->safeReferer('/cart'));
+        header('Location: ' . $this->safeReferer('/customer/cart'));
         exit;
     }
 
     public function update(): void
     {
+        $this->allowGuest();
+
         $this->verifyCsrf();
 
         $medicineId = (int) $this->input('medicine_id');
         $qty = (int) $this->input('quantity', 1);
 
-        $medicine = (new Medicine())->find($medicineId);
+        $medicine = (new CustomerMedicine())->find($medicineId);
         if ($medicine && $qty > $medicine['stock']) {
             $qty = (int) $medicine['stock'];
             $this->flash('error', 'Only ' . $qty . ' of ' . $medicine['name'] . ' left in stock.');
         }
 
         (new Cart())->update($medicineId, $qty);
-        $this->redirect('/cart');
+        $this->redirect('/customer/cart');
     }
 
     public function remove(): void
     {
+        $this->allowGuest();
+
         $this->verifyCsrf();
 
         $medicineId = (int) $this->input('medicine_id');
         (new Cart())->remove($medicineId);
         $this->flash('success', 'Item removed from cart.');
-        $this->redirect('/cart');
+        $this->redirect('/customer/cart');
     }
 }

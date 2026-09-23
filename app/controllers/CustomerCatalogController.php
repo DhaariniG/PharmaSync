@@ -2,9 +2,15 @@
 
 class CustomerCatalogController extends Controller
 {
+    use CustomerGuestAccess;   // browsing works without logging in
+
+    protected string $viewBase = 'customer';
+
     public function index(): void
     {
-        $medicineModel = new Medicine();
+        $this->allowGuest();
+
+        $medicineModel = new CustomerMedicine();
         $categoryId = $this->input('category');
         $categoryId = $categoryId !== null ? (int) $categoryId : null;
 
@@ -13,10 +19,10 @@ class CustomerCatalogController extends Controller
 
         $this->render('catalog.index', [
             'items'          => $items,
-            'categories'     => Medicine::categories(),
-            'categoryCounts' => Medicine::categoryCounts(),
-            'brands'         => Medicine::brands(),
-            'priceRange'     => Medicine::priceRange(),
+            'categories'     => CustomerMedicine::categories(),
+            'categoryCounts' => CustomerMedicine::categoryCounts(),
+            'brands'         => CustomerMedicine::brands(),
+            'priceRange'     => CustomerMedicine::priceRange(),
             'activeCategory' => $categoryId,
             'activeBrands'   => $this->selectedBrands(),
             'activeSort'     => $this->input('sort', 'relevance'),
@@ -27,20 +33,22 @@ class CustomerCatalogController extends Controller
 
     public function search(): void
     {
+        $this->allowGuest();
+
         $q = trim((string) $this->input('q', ''));
-        $medicineModel = new Medicine();
+        $medicineModel = new CustomerMedicine();
         $items = $medicineModel->search($q);
         $items = $this->applyFilters($medicineModel, $items);
 
         $this->render('catalog.search', [
             'items'          => $items,
-            'categories'     => Medicine::categories(),
+            'categories'     => CustomerMedicine::categories(),
             // The filter sidebar is shared with the catalog page and needs
             // these two. Without them /search fataled on array_sum(null).
-            'categoryCounts' => Medicine::categoryCounts(),
+            'categoryCounts' => CustomerMedicine::categoryCounts(),
             'activeCategory' => null,
-            'brands'         => Medicine::brands(),
-            'priceRange'     => Medicine::priceRange(),
+            'brands'         => CustomerMedicine::brands(),
+            'priceRange'     => CustomerMedicine::priceRange(),
             'activeBrands'   => $this->selectedBrands(),
             'query'          => $q,
             'suggested'      => array_slice($medicineModel->all(), 0, 4),
@@ -49,11 +57,13 @@ class CustomerCatalogController extends Controller
 
     public function alternate($id): void
     {
-        $medicineModel = new Medicine();
+        $this->allowGuest();
+
+        $medicineModel = new CustomerMedicine();
         $original = $medicineModel->find((int) $id);
 
         if (!$original) {
-            $this->redirect('/catalog');
+            $this->redirect('/customer/catalog');
             return;
         }
 
@@ -69,7 +79,7 @@ class CustomerCatalogController extends Controller
         return is_array($brands) ? $brands : [$brands];
     }
 
-    private function applyFilters(Medicine $medicineModel, array $items): array
+    private function applyFilters(CustomerMedicine $medicineModel, array $items): array
     {
         $minPrice = $this->input('min_price');
         $maxPrice = $this->input('max_price');

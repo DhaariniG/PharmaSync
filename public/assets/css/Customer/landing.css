@@ -1,0 +1,583 @@
+/*
+ * PharmaSync - public landing page (app/views/customer/home/index.php).
+ * Loaded after style.css, so buttons, tags and the medicine card come from
+ * there. Everything here is prefixed lp- so it cannot leak into other pages.
+ *
+ * One memorable element: the prescription slip in the hero, with a
+ * pharmacist's stamp that lands once on page load. The rest stays quiet.
+ */
+
+:root {
+  --lp-ink: #023436;        /* deep pharmacy teal - headings, store band */
+  --lp-teal: #008b8b;       /* brand primary (same as --ps-primary) */
+  --lp-teal-soft: #e3f2f1;
+  --lp-paper: #ffffff;
+  --lp-bg: #f3f7f7;
+  --lp-line: #d9e5e4;
+  --lp-muted: #52666a;
+}
+
+.lp {
+  background: var(--lp-bg);
+  color: var(--lp-ink);
+}
+
+.lp-wrap {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.lp-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.lp-skip {
+  position: absolute;
+  left: 12px;
+  top: -40px;
+  background: var(--lp-ink);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  z-index: 10;
+}
+.lp-skip:focus { top: 12px; color: #fff; }
+
+/* ---------- Top bar ---------- */
+.lp-nav {
+  background: var(--lp-paper);
+  border-bottom: 1px solid var(--lp-line);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.lp-nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 64px;
+}
+
+.lp-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--lp-ink);
+  letter-spacing: -0.01em;
+}
+.lp-brand:hover { color: var(--lp-ink); }
+
+.lp-brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--lp-ink);
+  color: #17e9e1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.lp-brand-mark svg { width: 18px; height: 18px; stroke-width: 3; }
+
+.lp-nav-links {
+  display: flex;
+  gap: 24px;
+}
+.lp-nav-links a {
+  color: var(--lp-muted);
+  font-weight: 600;
+  font-size: .95rem;
+}
+.lp-nav-links a:hover { color: var(--lp-ink); }
+
+.lp-nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lp-cart {
+  position: relative;
+  color: var(--lp-ink);
+  display: inline-flex;
+  padding: 6px;
+}
+.lp-cart svg { width: 22px; height: 22px; }
+.lp-cart-count {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--lp-teal);
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+}
+
+/* ---------- Flash ---------- */
+.lp-flash {
+  text-align: center;
+  padding: 10px 16px;
+  font-size: .92rem;
+  font-weight: 600;
+}
+.lp-flash-ok    { background: var(--lp-teal-soft); color: var(--lp-ink); }
+.lp-flash-error { background: #fdecea; color: #a1281d; }
+
+/* ---------- Hero ---------- */
+.lp-hero {
+  overflow: hidden;             /* the stamp hangs off the slip; never cause sideways scroll */
+  padding: 72px 0 80px;
+  background: var(--lp-paper);
+  border-bottom: 1px solid var(--lp-line);
+}
+
+.lp-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+}
+
+.lp-hero h1 {
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--lp-ink);
+  margin-bottom: 20px;
+  max-width: 17ch;
+  text-wrap: balance;
+}
+
+.lp-lead {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--lp-muted);
+  max-width: 52ch;
+  margin-bottom: 28px;
+}
+
+.lp-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 540px;
+  background: var(--lp-bg);
+  border: 1.5px solid var(--lp-line);
+  border-radius: 12px;
+  padding: 6px 6px 6px 16px;
+}
+.lp-search:focus-within {
+  border-color: var(--lp-teal);
+  background: var(--lp-paper);
+}
+.lp-search-icon { width: 20px; height: 20px; color: var(--lp-muted); flex-shrink: 0; }
+.lp-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 1rem;
+  padding: 10px 4px;
+  color: var(--lp-ink);
+}
+.lp-search input:focus { outline: none; }
+.lp-search .btn { padding: 10px 20px; border-radius: 8px; }
+
+.lp-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 20px;
+}
+.lp-or { color: var(--lp-muted); font-size: .9rem; }
+
+.lp-link-strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--lp-teal);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(0, 139, 139, .3);
+}
+.lp-link-strong:hover { text-decoration-color: currentColor; }
+.lp-link-strong svg { width: 18px; height: 18px; }
+
+/* ---------- The prescription slip ---------- */
+.lp-slip {
+  margin: 0;
+  justify-self: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.lp-slip-paper {
+  position: relative;
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 31px, #eef4f3 31px 32px),
+    var(--lp-paper);
+  border: 1px solid var(--lp-line);
+  border-radius: 4px 4px 14px 14px;
+  padding: 28px 28px 24px;
+  transform: rotate(-2deg);
+  box-shadow: 0 1px 0 var(--lp-line), 0 24px 48px -24px rgba(2, 52, 54, .35);
+}
+/* torn-off pad edge */
+.lp-slip-paper::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 8px;
+  background: radial-gradient(circle at 6px 0, var(--lp-bg) 4px, transparent 4.5px) 0 0 / 12px 8px repeat-x;
+}
+
+.lp-slip-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 16px;
+  margin-bottom: 8px;
+  border-bottom: 2px solid var(--lp-ink);
+}
+
+/* The traditional Rx mark, set in a serif - the one place a serif appears */
+.lp-rx {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--lp-ink);
+}
+.lp-rx span { font-size: .6em; margin-left: -2px; }
+
+.lp-slip-title { font-weight: 800; font-size: 1.05rem; }
+.lp-slip-sub { color: var(--lp-muted); font-size: .85rem; }
+
+.lp-slip-lines {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+.lp-slip-lines li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  height: 32px;
+  align-items: flex-end;
+  padding-bottom: 5px;
+  font-size: .95rem;
+}
+.lp-slip-lines li span:last-child { color: var(--lp-muted); font-variant-numeric: tabular-nums; }
+
+.lp-slip-steps {
+  list-style: none;
+  padding: 14px 0 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  border-top: 1px dashed var(--lp-line);
+}
+.lp-slip-steps li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  text-align: center;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--lp-muted);
+}
+.lp-slip-steps svg {
+  width: 26px;
+  height: 26px;
+  padding: 5px;
+  border-radius: 50%;
+  stroke-width: 3;
+}
+.lp-slip-steps .done svg { background: var(--lp-teal); color: #fff; }
+.lp-slip-steps .now { color: var(--lp-ink); }
+.lp-slip-steps .now svg { background: var(--lp-paper); color: var(--lp-teal); box-shadow: inset 0 0 0 2px var(--lp-teal); stroke-width: 2.4; }
+
+/* Pharmacist's stamp - lands once when the page opens */
+.lp-stamp {
+  position: absolute;
+  right: -34px;
+  bottom: -58px;
+  width: 104px;
+  height: 104px;
+  border: 3px solid var(--lp-teal);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 4px var(--lp-paper), inset 0 0 0 5.5px var(--lp-teal);
+  color: var(--lp-teal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(14deg);
+  opacity: .88;
+  background: rgba(255, 255, 255, .55);
+  animation: lp-stamp 520ms cubic-bezier(.2, .9, .3, 1.2) 450ms both;
+}
+.lp-stamp span { font-weight: 900; font-size: 1.05rem; letter-spacing: .02em; }
+.lp-stamp small { font-size: .68rem; font-weight: 700; }
+
+@keyframes lp-stamp {
+  from { opacity: 0; transform: rotate(14deg) scale(1.6); }
+  to   { opacity: .88; transform: rotate(14deg) scale(1); }
+}
+
+.lp-slip-note {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 44px 8px 0;
+  max-width: 34ch;
+  font-size: .9rem;
+  line-height: 1.5;
+  color: var(--lp-muted);
+}
+.lp-slip-note svg { width: 18px; height: 18px; color: var(--lp-teal); flex-shrink: 0; margin-top: 2px; }
+
+/* ---------- Section headings ---------- */
+.lp-h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--lp-ink);
+  margin-bottom: 20px;
+}
+
+.lp-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.lp-section-head .lp-h2 { margin-bottom: 0; }
+
+/* ---------- Categories ---------- */
+.lp-cats { padding: 56px 0 8px; }
+
+.lp-cat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.lp-cat-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px 8px 8px;
+  border-radius: 999px;
+  background: var(--lp-paper);
+  border: 1px solid var(--lp-line);
+  color: var(--lp-ink);
+  font-weight: 600;
+  font-size: .95rem;
+}
+.lp-cat-list a:hover { border-color: var(--lp-teal); color: var(--lp-ink); }
+.lp-cat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--lp-teal-soft);
+  color: var(--lp-teal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.lp-cat-icon svg { width: 17px; height: 17px; }
+
+/* ---------- Popular medicines ---------- */
+.lp-popular { padding: 48px 0 64px; }
+
+.lp-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.lp-note {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 20px 0 0;
+  font-size: .9rem;
+  color: var(--lp-muted);
+}
+.lp-note svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; color: var(--lp-teal); }
+
+/* ---------- How it works ---------- */
+.lp-how {
+  padding: 64px 0;
+  background: var(--lp-paper);
+  border-top: 1px solid var(--lp-line);
+  border-bottom: 1px solid var(--lp-line);
+}
+
+.lp-steps {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 32px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  counter-reset: none;
+  position: relative;
+}
+/* the line that joins the three steps */
+.lp-steps::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: calc((100% - 80px) / 3 - 21px);   /* stop at the third circle */
+  height: 2px;
+  background: var(--lp-line);
+}
+
+.lp-steps li { position: relative; }
+
+.lp-step-no {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--lp-ink);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 16px;
+  box-shadow: 0 0 0 6px var(--lp-paper);
+}
+
+.lp-steps h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
+.lp-steps p { color: var(--lp-muted); line-height: 1.6; max-width: 34ch; margin: 0; }
+
+.lp-how-cta { padding: 12px 22px; }
+
+/* ---------- Store band ---------- */
+.lp-store {
+  background: var(--lp-ink);
+  color: #d5e7e6;
+  padding: 56px 0;
+}
+.lp-store-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 48px;
+  align-items: start;
+}
+.lp-store h2 { color: #fff; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.015em; }
+.lp-store p { margin: 0; color: #a9c8c7; }
+
+.lp-store-facts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+.lp-store-facts dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.lp-store-facts dt svg { width: 18px; height: 18px; color: #17e9e1; }
+.lp-store-facts dd { margin: 0; line-height: 1.6; white-space: pre-line; }
+.lp-store-facts a { color: #d5e7e6; text-decoration: underline; text-underline-offset: 3px; }
+.lp-store-facts a:hover { color: #fff; }
+
+/* ---------- Footer ---------- */
+.lp-footer {
+  background: #01292a;
+  color: #8fb3b2;
+  font-size: .88rem;
+  padding: 20px 0;
+}
+.lp-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  align-items: center;
+}
+.lp-footer a { color: #cfe3e2; }
+.lp-footer a:hover { color: #fff; }
+.lp-staff { margin-left: auto; }
+
+/* ---------- Focus ---------- */
+.lp a:focus-visible,
+.lp button:focus-visible,
+.lp input:focus-visible {
+  outline: 3px solid #17e9e1;
+  outline-offset: 2px;
+}
+.lp-search input:focus-visible { outline: none; }
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 1000px) {
+  .lp-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lp-store-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+
+@media (max-width: 860px) {
+  .lp-hero { padding: 40px 0 56px; }
+  .lp-hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .lp-nav-links { display: none; }
+  .lp-steps { grid-template-columns: 1fr; gap: 28px; }
+  .lp-steps::before { top: 20px; bottom: 20px; left: 20px; right: auto; width: 2px; height: auto; }
+  .lp-steps li { padding-left: 64px; }
+  .lp-step-no { position: absolute; left: 0; top: 0; }
+}
+
+@media (max-width: 560px) {
+  .lp-wrap { padding: 0 16px; }
+  .lp-hide-sm { display: none; }
+  .lp-nav-inner { gap: 12px; }
+  .lp-cards { gap: 12px; }
+  .lp-store-facts { grid-template-columns: 1fr; gap: 18px; }
+  .lp-search .btn { padding: 10px 14px; }
+  .lp-staff { margin-left: 0; }
+  .lp-slip { max-width: 340px; padding-right: 18px; }
+  .lp-stamp { right: -18px; bottom: -52px; width: 88px; height: 88px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-stamp { animation: none; }
+}

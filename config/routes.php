@@ -1,67 +1,53 @@
 <?php
-// Route table: 'METHOD /path' => [Controller, method]. {id} is a parameter.
-return [
+/**
+ * Route loader.
+ *
+ * Every role owns ONE file in config/routes/. Edit only your own file and
+ * git will never make you resolve a routing conflict.
+ *
+ * Inside your file, write paths WITHOUT your role segment:
+ *
+ *     'GET  /dashboard' => ['PharmacistDashboardController', 'index'],
+ *
+ * This loader turns that into /pharmacist/dashboard. The prefix is what
+ * keeps five dashboards, five notification pages and five settings pages
+ * from overwriting each other.
+ *
+ * Order matters: longer, more specific paths must come before shorter ones
+ * inside a file, because the first match wins.
+ */
 
-    // Login, registration and logout are NOT part of this module. They belong
-    // to the shared PharmaSync login, which puts the signed-in customer in
-    // $_SESSION['user'] before any of these routes are reached. Every page
-    // here assumes a signed-in customer.
+$prefixed = [];
 
-    // --- Dashboard ---
-    'GET  /'                    => ['CustomerDashboardController', 'index'],
-    'GET  /dashboard'           => ['CustomerDashboardController', 'index'],
+/** Add every route in $file under $prefix. */
+$load = function (string $file, string $prefix) use (&$prefixed) {
+    $path = CONFIG_PATH . '/routes/' . $file . '.php';
 
-    // --- Catalog / Search ---
-    'GET  /catalog'              => ['CustomerCatalogController', 'index'],
-    'GET  /search'               => ['CustomerCatalogController', 'search'],
-    'GET  /alternate/{id}'       => ['CustomerCatalogController', 'alternate'],
+    if (!is_file($path)) {
+        return;
+    }
 
-    // --- Product ---
-    'GET  /product/{id}'         => ['CustomerProductController', 'show'],
+    foreach (require $path as $pattern => $action) {
+        [$method, $uri] = preg_split('/\s+/', trim($pattern), 2);
 
-    // --- Cart ---
-    'GET  /cart'                  => ['CustomerCartController', 'index'],
-    'POST /cart/add'              => ['CustomerCartController', 'add'],
-    'POST /cart/update'           => ['CustomerCartController', 'update'],
-    'POST /cart/remove'           => ['CustomerCartController', 'remove'],
-    'POST /cart/save-for-later'   => ['CustomerCartController', 'saveForLater'],
-    'POST /cart/move-to-cart'     => ['CustomerCartController', 'moveToCart'],
-    'POST /cart/apply-promo'      => ['CustomerCartController', 'applyPromo'],
+        $uri  = '/' . ltrim($uri, '/');
+        $full = rtrim($prefix . ($uri === '/' ? '' : $uri), '/');
 
-    // --- Checkout ---
-    'GET  /checkout'              => ['CustomerCheckoutController', 'index'],
-    'POST /checkout/place-order'  => ['CustomerCheckoutController', 'placeOrder'],
+        $prefixed[strtoupper($method) . ' ' . ($full === '' ? '/' : $full)] = $action;
+    }
+};
 
-    // --- Orders ---
-    'GET  /order/confirmation/{id}' => ['CustomerOrderController', 'confirmation'],
-    'GET  /orders'                  => ['CustomerOrderController', 'myOrders'],
-    'GET  /orders/{id}'             => ['CustomerOrderController', 'show'],
-    'POST /orders/reorder/{id}'     => ['CustomerOrderController', 'reorder'],
+/* Shared: the site root and anything that belongs to nobody in particular. */
+$load('shared', '');
 
-    // --- Prescriptions ---
-    'GET  /prescription/upload'    => ['CustomerPrescriptionController', 'uploadForm'],
-    'POST /prescription/upload'    => ['CustomerPrescriptionController', 'upload'],
-    'GET  /prescription/status/{id}' => ['CustomerPrescriptionController', 'status'],
-    'GET  /prescription/file/{id}'   => ['CustomerPrescriptionController', 'file'],
-    'POST /prescription/approve-alternative/{id}' => ['CustomerPrescriptionController', 'approveAlternative'],
-    'POST /prescription/continue-waiting/{id}'    => ['CustomerPrescriptionController', 'continueWaiting'],
-    'POST /prescription/confirm/{id}'             => ['CustomerPrescriptionController', 'confirmPrepared'],
+/* Login, registration, logout: /authentication/... */
+$load('authentication', '/' . AUTH_SLUG);
 
-    // --- Profile ---
-    'GET  /profile'                => ['CustomerProfileController', 'show'],
-    'POST /profile/update'         => ['CustomerProfileController', 'update'],
-    'POST /profile/add-allergy'    => ['CustomerProfileController', 'addAllergy'],
-    'POST /profile/add-condition'  => ['CustomerProfileController', 'addCondition'],
-    'POST /profile/add-member'     => ['CustomerProfileController', 'addFamilyMember'],
+/* One line per role. The prefix comes from ROLE_SLUGS, never typed by hand. */
+$load('customer',          '/' . ROLE_SLUGS['Customer']);
+$load('pharmacist',        '/' . ROLE_SLUGS['Pharmacist']);
+$load('admin',             '/' . ROLE_SLUGS['Admin']);
+$load('inventoryManager',  '/' . ROLE_SLUGS['Inventory_Manager']);
+$load('deliveryPartner',   '/' . ROLE_SLUGS['Delivery_Partner']);
 
-    // --- Settings ---
-    'GET  /settings'               => ['CustomerSettingsController', 'index'],
-
-    // --- Notifications ---
-    'GET  /notifications'                 => ['CustomerNotificationController', 'index'],
-    'POST /notifications/mark-all-read'   => ['CustomerNotificationController', 'markAllRead'],
-    'POST /notifications/mark-all-unread' => ['CustomerNotificationController', 'markAllUnread'],
-    'POST /notifications/toggle-read'     => ['CustomerNotificationController', 'toggleRead'],
-    'POST /notifications/clear'           => ['CustomerNotificationController', 'clearAll'],
-
-];
+return $prefixed;

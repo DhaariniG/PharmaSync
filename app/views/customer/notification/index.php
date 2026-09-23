@@ -4,15 +4,15 @@
     <p class="muted mb-0">Stay updated on your prescriptions, orders, and health journey.</p>
   </div>
   <div class="flex gap-2">
-    <form method="POST" action="<?= BASE_URL ?>/notifications/mark-all-read">
+    <form method="POST" action="<?= BASE_URL ?>/customer/notifications/mark-all-read">
           <?= csrf_field() ?>
       <button type="submit" class="btn btn-ps-outline btn-sm"><?= icon('check-check', 'me-2') ?>Mark all read</button>
     </form>
-    <form method="POST" action="<?= BASE_URL ?>/notifications/mark-all-unread">
+    <form method="POST" action="<?= BASE_URL ?>/customer/notifications/mark-all-unread">
           <?= csrf_field() ?>
       <button type="submit" class="btn btn-ps-outline btn-sm"><?= icon('mail', 'me-2') ?>Mark all unread</button>
     </form>
-    <form method="POST" action="<?= BASE_URL ?>/notifications/clear">
+    <form method="POST" action="<?= BASE_URL ?>/customer/notifications/clear">
           <?= csrf_field() ?>
       <button type="submit" class="btn btn-ps-outline btn-sm"><?= icon('trash-2', 'me-2') ?>Clear all</button>
     </form>
@@ -23,7 +23,7 @@
   <?php
     $types = ['all' => 'All Alerts', 'orders' => 'Orders', 'prescriptions' => 'Prescriptions', 'health-tips' => 'Health Tips', 'promos' => 'Promos'];
     foreach ($types as $key => $label): ?>
-      <a href="<?= BASE_URL ?>/notifications?type=<?= $key ?>" class="btn btn-sm <?= $activeType === $key ? 'btn-ps-primary' : 'btn-ps-outline' ?> rounded-pill"><?= $label ?></a>
+      <a href="<?= BASE_URL ?>/customer/notifications?type=<?= $key ?>" class="btn btn-sm <?= $activeType === $key ? 'btn-ps-primary' : 'btn-ps-outline' ?> rounded-pill"><?= $label ?></a>
   <?php endforeach; ?>
 </div>
 
@@ -54,7 +54,7 @@
               <span class="small <?= $n['color'] === 'banner' ? 'text-white-50' : 'muted' ?>"><?= htmlspecialchars($n['time']) ?></span>
               <!-- Lets the customer restore ("re-enable") a notification they
                    already marked as seen, or dismiss one they've dealt with. -->
-              <form method="POST" action="<?= BASE_URL ?>/notifications/toggle-read" class="inline">
+              <form method="POST" action="<?= BASE_URL ?>/customer/notifications/toggle-read" class="inline">
                 <?= csrf_field() ?>
                 <input type="hidden" name="id" value="<?= (int) $n['id'] ?>">
                 <button type="submit" class="btn btn-sm btn-text p-0 <?= $n['color'] === 'banner' ? 'text-white' : 'muted' ?>"

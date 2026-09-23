@@ -1,45 +1,51 @@
 <?php
-// Front controller — every request comes through here (see .htaccess).
+/**
+ * PharmaSync - front controller.
+ *
+ * Every request in the whole system enters here. Nothing else in the
+ * project is meant to be reachable directly from a browser.
+ */
 
-require __DIR__ . '/../config/config.php';
+require_once dirname(__DIR__) . '/config/config.php';
 
-// Autoloader (no Composer)
-spl_autoload_register(function ($class) {
-    $paths = [
-        __DIR__ . '/../app/core/' . $class . '.php',
-        __DIR__ . '/../app/controllers/' . $class . '.php',
-        __DIR__ . '/../app/models/' . $class . '.php',
-    ];
+/* --------------------------------------------------------------------------
+ * Autoloader. No Composer, so classes are found by filename:
+ *   Cart                     -> app/models/Cart.php
+ *   CustomerCartController   -> app/controllers/CustomerCartController.php
+ *   Router                   -> app/core/Router.php
+ * Controllers and models are FLAT - the role is part of the file name.
+ * -------------------------------------------------------------------------- */
+spl_autoload_register(function (string $class): void {
+    if (!preg_match('/^[A-Za-z][A-Za-z0-9_]*$/', $class)) {
+        return;                       // never let a class name walk the disk
+    }
 
-    foreach ($paths as $path) {
-        if (file_exists($path)) {
-            require $path;
+    foreach (['/core/', '/controllers/', '/models/'] as $dir) {
+        $file = APP_PATH . $dir . $class . '.php';
+
+        if (is_file($file)) {
+            require_once $file;
             return;
         }
     }
 });
 
-// Drop mock data left over from an older seed shape (see SEED_VERSION in
-// config.php). Each model re-seeds itself on the next call. The signed-in
-// user and the CSRF token are deliberately left alone, so this doesn't sign
-// anyone out or break a form that's already open.
+/* --------------------------------------------------------------------------
+ * Drop sample data left over from an older seed shape. See SEED_VERSION in
+ * config/config.php. Each model re-seeds itself on its next call. The
+ * signed-in user and the CSRF token are deliberately left alone, so this
+ * never signs anyone out or breaks a form that is already open.
+ * -------------------------------------------------------------------------- */
 if (($_SESSION['seed_version'] ?? null) !== SEED_VERSION) {
-    foreach (['orders', 'prescriptions', 'family_members', 'addresses',
-              'notifications', 'cart', 'saved_for_later', 'promo_code',
-              'recently_viewed', 'reorder_prescription_id'] as $staleKey) {
+    foreach (SEEDED_SESSION_KEYS as $staleKey) {
         unset($_SESSION[$staleKey]);
     }
     $_SESSION['seed_version'] = SEED_VERSION;
 }
 
-// The shared PharmaSync login is what normally fills $_SESSION['user'].
-// Until it's merged, stand in the demo customer so this module runs on its
-// own. Delete this block (and the flag in config.php) after integration.
-if (AUTO_SIGN_IN_DEMO_CUSTOMER && empty($_SESSION['user'])) {
-    $_SESSION['user'] = (new Customer())->demoUser();
-}
+$router = new Router(require CONFIG_PATH . '/routes.php');
 
-$routes = require __DIR__ . '/../config/routes.php';
-
-$router = new Router($routes);
-$router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+$router->dispatch(
+    $_SERVER['REQUEST_METHOD'] ?? 'GET',
+    $_SERVER['REQUEST_URI'] ?? '/'
+);

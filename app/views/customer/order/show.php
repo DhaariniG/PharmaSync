@@ -1,7 +1,7 @@
 <?php $tracking = $order['tracking'] ?? []; ?>
 <nav aria-label="breadcrumb">
   <ol class="crumbs small">
-    <li class="crumb"><a href="<?= BASE_URL ?>/orders">My Orders</a></li>
+    <li class="crumb"><a href="<?= BASE_URL ?>/customer/orders">My Orders</a></li>
     <li class="crumb active">Order #<?= $order['id'] ?></li>
   </ol>
 </nav>
@@ -10,7 +10,7 @@
   <h4 class="bold mb-0">Order #<?= $order['id'] ?></h4>
   <div class="flex middle gap-2">
     <span class="ps-status ps-status-<?= $order['status'] ?> size-6"><?= Order::statusLabel($order['status']) ?></span>
-    <form method="POST" action="<?= BASE_URL ?>/orders/reorder/<?= $order['id'] ?>" class="inline">
+    <form method="POST" action="<?= BASE_URL ?>/customer/orders/reorder/<?= $order['id'] ?>" class="inline">
       <?= csrf_field() ?>
       <button type="submit" class="btn btn-ps-primary btn-sm"><?= icon('rotate-cw', 'me-1') ?>Reorder</button>
     </form>

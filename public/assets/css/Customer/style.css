@@ -177,7 +177,7 @@ textarea:focus-visible,
 }
 /* the sidebar is always on screen at this width, so hide the ☰ button */
 @media (min-width: 992px) {
-  .lg-hidden { display: none; }
+  .btn.lg-hidden { display: none; }
 }
 
 /* ---------- 5. Text ---------- */
@@ -545,6 +545,7 @@ textarea.field { min-height: 80px; }
   align-items: center;
   gap: 10px;
 }
+.ps-sidebar .user-card.guest-card { flex-direction: column; align-items: stretch; gap: 0; }
 .ps-avatar {
   width: 38px;
   height: 38px;
@@ -582,7 +583,8 @@ textarea.field { min-height: 80px; }
   font-size: .875rem;
 }
 .ps-topbar .ps-search-wrap { position: relative; flex: 1; max-width: 480px; }
-.ps-topbar .ps-search-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--ps-text-muted); }
+.ps-topbar .ps-search-wrap i,
+.ps-topbar .ps-search-wrap > svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--ps-text-muted); }
 .ps-bell { position: relative; color: var(--ps-text); font-size: 1.05rem; }
 .ps-bell .dot {
   position: absolute;
@@ -753,6 +755,19 @@ textarea.field { min-height: 80px; }
 }
 .ps-menu-list a:hover { background: var(--ps-bg); }
 .ps-menu-list .divider { border-top: 1px solid var(--ps-border); margin: .4rem 0; }
+/* a <button> inside the menu (Sign out is a POST form) looks like the links */
+.ps-menu-list .ps-menu-item {
+  display: block;
+  width: 100%;
+  padding: .5rem 1rem;
+  font: inherit;
+  font-size: .9rem;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.ps-menu-list .ps-menu-item:hover { background: var(--ps-bg); }
 
 /* show the error text under a field once the form has been submitted */
 .was-validated .field:invalid { border-color: var(--ps-danger); }

@@ -2,9 +2,11 @@
 
 class CustomerNotificationController extends Controller
 {
+    protected string $viewBase = 'customer';
+
     public function index(): void
     {
-        $this->requireAuth();
+        $this->requireRole('Customer');
 
         $type = $this->input('type', 'all');
         $model = new Notification();
@@ -18,36 +20,36 @@ class CustomerNotificationController extends Controller
     public function markAllRead(): void
     {
         $this->verifyCsrf();
-        $this->requireAuth();
+        $this->requireRole('Customer');
         (new Notification())->markAllRead();
-        $this->redirect('/notifications');
+        $this->redirect('/customer/notifications');
     }
 
     public function markAllUnread(): void
     {
         $this->verifyCsrf();
-        $this->requireAuth();
+        $this->requireRole('Customer');
         (new Notification())->markAllUnread();
-        $this->redirect('/notifications');
+        $this->redirect('/customer/notifications');
     }
 
     // Flip one notification between read and unread.
     public function toggleRead(): void
     {
         $this->verifyCsrf();
-        $this->requireAuth();
+        $this->requireRole('Customer');
         (new Notification())->toggleRead((int) $this->input('id', 0));
 
         // safeReferer() already includes BASE_URL, so redirect with it directly.
-        header('Location: ' . $this->safeReferer('/notifications'));
+        header('Location: ' . $this->safeReferer('/customer/notifications'));
         exit;
     }
 
     public function clearAll(): void
     {
         $this->verifyCsrf();
-        $this->requireAuth();
+        $this->requireRole('Customer');
         (new Notification())->clearAll();
-        $this->redirect('/notifications');
+        $this->redirect('/customer/notifications');
     }
 }

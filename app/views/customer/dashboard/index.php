@@ -44,7 +44,7 @@
         <h6 class="bold mb-0"><?= icon('cloud-upload', 'me-2') ?>Upload Prescription</h6>
         <span class="tag bg-light muted border">Supports JPG, PDF</span>
       </div>
-      <a href="<?= BASE_URL ?>/prescription/upload" class="nounderline">
+      <a href="<?= BASE_URL ?>/customer/prescription/upload" class="nounderline">
         <div class="border border-2 border-dashed rounded-3 text-center py-4 mt-2" style="border-style:dashed !important;">
           <?= icon('image', 'size-2 muted mb-2') ?>
           <div class="semibold">Drag and drop your prescription here</div>
@@ -58,7 +58,7 @@
     <div class="ps-card p-4 h-100">
       <div class="flex between middle mb-3">
         <h6 class="bold mb-0">Shop Categories</h6>
-        <a href="<?= BASE_URL ?>/catalog" class="small">View All</a>
+        <a href="<?= BASE_URL ?>/customer/catalog" class="small">View All</a>
       </div>
       <div class="row g-2">
         <?php
@@ -67,7 +67,7 @@
         foreach ($categories as $id => $name):
           if ($i++ >= 4) break; ?>
           <div class="col-6">
-            <a href="<?= BASE_URL ?>/catalog?category=<?= $id ?>" class="nounderline">
+            <a href="<?= BASE_URL ?>/customer/catalog?category=<?= $id ?>" class="nounderline">
               <div class="ps-card p-3 text-center">
                 <?= icon($icons[$id] ?? 'pill', 'size-5 mb-1', 'color: var(--ps-primary)') ?>
                 <div class="text-dark small semibold"><?= htmlspecialchars($name) ?></div>
@@ -93,7 +93,7 @@
           <?= icon('package-open', 'size-2 muted mb-2') ?>
           <div class="semibold">No active orders</div>
           <p class="muted small mb-2">Your order status will appear here once you place an order.</p>
-          <a href="<?= BASE_URL ?>/catalog" class="btn btn-ps-primary btn-sm self-middle">Browse Medicines</a>
+          <a href="<?= BASE_URL ?>/customer/catalog" class="btn btn-ps-primary btn-sm self-middle">Browse Medicines</a>
         </div>
       <?php endif; ?>
   </div>
@@ -102,14 +102,14 @@
       <div class="tag bg-danger self-top mb-2">Limited Offer</div>
       <h6 class="bold">30% OFF Immunity Boosters</h6>
       <p class="muted small mb-2">Protect your family this season. Use code <strong>HEALTH30</strong> at checkout.</p>
-      <a href="<?= BASE_URL ?>/catalog?category=3" class="btn btn-ps-primary btn-sm self-top">Shop Now</a>
+      <a href="<?= BASE_URL ?>/customer/catalog?category=3" class="btn btn-ps-primary btn-sm self-top">Shop Now</a>
     </div>
   </div>
 </div>
 
 <div class="flex between middle mb-3">
   <h5 class="ps-section-title mb-0">Featured medicines</h5>
-  <a href="<?= BASE_URL ?>/catalog" class="small">View all <?= icon('arrow-right', 'ms-1') ?></a>
+  <a href="<?= BASE_URL ?>/customer/catalog" class="small">View all <?= icon('arrow-right', 'ms-1') ?></a>
 </div>
 <div class="row g-3 mb-4">
   <?php foreach ($featured as $m): ?>
@@ -121,7 +121,7 @@
 
 <div class="flex between middle mb-3">
   <h5 class="ps-section-title mb-0">Recent Orders</h5>
-  <a href="<?= BASE_URL ?>/orders" class="small">See All <?= icon('arrow-right', 'ms-1') ?></a>
+  <a href="<?= BASE_URL ?>/customer/orders" class="small">See All <?= icon('arrow-right', 'ms-1') ?></a>
 </div>
 <div class="ps-card">
   <div class="table-wrap">
@@ -135,7 +135,7 @@
         <?php endif; ?>
         <?php foreach ($recentOrders as $o): ?>
           <tr>
-            <td class="semibold"><a href="<?= BASE_URL ?>/orders/<?= $o['id'] ?>">#<?= $o['id'] ?></a></td>
+            <td class="semibold"><a href="<?= BASE_URL ?>/customer/orders/<?= $o['id'] ?>">#<?= $o['id'] ?></a></td>
             <td><?= htmlspecialchars(implode(', ', array_column($o['items'], 'name'))) ?></td>
             <td><?= date('M j, Y', strtotime($o['placed_at'])) ?></td>
             <td>Rs. <?= number_format($o['total'], 2) ?></td>

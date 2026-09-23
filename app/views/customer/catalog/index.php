@@ -19,7 +19,7 @@
     <div class="flex between middle mb-3 wrap gap-2">
       <div class="flex wrap gap-2">
         <?php if ($activeCategory): ?>
-          <span class="ps-chip"><?= htmlspecialchars(Medicine::categoryName($activeCategory)) ?> <a href="<?= BASE_URL ?>/catalog"><?= icon('x') ?></a></span>
+          <span class="ps-chip"><?= htmlspecialchars(CustomerMedicine::categoryName($activeCategory)) ?> <a href="<?= BASE_URL ?>/customer/catalog"><?= icon('x') ?></a></span>
         <?php endif; ?>
         <?php foreach ($activeBrands as $b): ?>
           <span class="ps-chip"><?= htmlspecialchars($b) ?></span>
@@ -45,7 +45,7 @@
         <?= icon('search') ?>
         <h5 class="mt-3">No medicines found</h5>
         <p class="muted">Try adjusting your filters.</p>
-        <a href="<?= BASE_URL ?>/catalog" class="btn btn-ps-primary mt-2">Reset Filters</a>
+        <a href="<?= BASE_URL ?>/customer/catalog" class="btn btn-ps-primary mt-2">Reset Filters</a>
       </div>
     <?php else: ?>
       <div class="row g-3">
@@ -67,6 +67,8 @@
   </div>
 </div>
 
-<a href="<?= BASE_URL ?>/orders" class="btn btn-ps-primary rounded-pill fixed shadow" style="bottom:24px; right:24px; z-index:1000;">
+<?php if (Session::isLoggedIn()): // guests have no past orders ?>
+<a href="<?= BASE_URL ?>/customer/orders" class="btn btn-ps-primary rounded-pill fixed shadow" style="bottom:24px; right:24px; z-index:1000;">
   <?= icon('rotate-cw', 'me-2') ?>Refill Last Order
 </a>
+<?php endif; ?>

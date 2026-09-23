@@ -1,6 +1,6 @@
 <nav aria-label="breadcrumb">
   <ol class="crumbs small">
-    <li class="crumb"><a href="<?= BASE_URL ?>/">Home</a></li>
+    <li class="crumb"><a href="<?= BASE_URL ?>/customer/">Home</a></li>
     <li class="crumb active">Search Results</li>
   </ol>
 </nav>
@@ -36,7 +36,7 @@
         <p class="muted">Not finding what you need? Our pharmacists can help you find alternatives or check other stock.</p>
         <div class="flex gap-2 center mt-2">
           <a href="mailto:support@pharmasync.test" class="btn btn-ps-primary">Chat with Pharmacist</a>
-          <a href="<?= BASE_URL ?>/prescription/upload" class="btn btn-ps-outline">Upload Prescription</a>
+          <a href="<?= BASE_URL ?>/customer/prescription/upload" class="btn btn-ps-outline">Upload Prescription</a>
         </div>
       </div>
     <?php endif; ?>

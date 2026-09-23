@@ -44,13 +44,13 @@ $readOnly = $readOnly ?? !empty($original['requires_rx']);
                   <?php if ($readOnly): ?>
                     <!-- Rx: view-only. The pharmacist picks the substitute during
                          prescription review, so no add-to-cart here. -->
-                    <a href="<?= BASE_URL ?>/product/<?= $alt['id'] ?>" class="btn btn-ps-outline btn-sm w-100 mt-auto"><?= icon('eye', 'me-1') ?>View Details</a>
+                    <a href="<?= BASE_URL ?>/customer/product/<?= $alt['id'] ?>" class="btn btn-ps-outline btn-sm w-100 mt-auto"><?= icon('eye', 'me-1') ?>View Details</a>
                   <?php else: ?>
                     <!-- OTC: self-service. Customer can inspect the alternative or
                          add it straight to the cart, no pharmacist involved. -->
                     <div class="mt-auto flex gap-2">
-                      <a href="<?= BASE_URL ?>/product/<?= $alt['id'] ?>" class="btn btn-ps-outline btn-sm grow px-1"><?= icon('eye', 'me-1') ?>View</a>
-                      <form method="POST" action="<?= BASE_URL ?>/cart/add" class="grow">
+                      <a href="<?= BASE_URL ?>/customer/product/<?= $alt['id'] ?>" class="btn btn-ps-outline btn-sm grow px-1"><?= icon('eye', 'me-1') ?>View</a>
+                      <form method="POST" action="<?= BASE_URL ?>/customer/cart/add" class="grow">
           <?= csrf_field() ?>
                         <input type="hidden" name="medicine_id" value="<?= $alt['id'] ?>">
                         <input type="hidden" name="quantity" value="1">
@@ -68,7 +68,7 @@ $readOnly = $readOnly ?? !empty($original['requires_rx']);
         <span class="muted small"><?= icon('shield-plus', 'me-1') ?>All recommendations are validated by clinical standards.</span>
         <div class="flex gap-2">
           <?php if ($readOnly): ?>
-            <a href="<?= BASE_URL ?>/prescription/upload?medicine_id=<?= $original['id'] ?>" class="btn btn-ps-primary btn-sm">Request with Prescription</a>
+            <a href="<?= BASE_URL ?>/customer/prescription/upload?medicine_id=<?= $original['id'] ?>" class="btn btn-ps-primary btn-sm">Request with Prescription</a>
           <?php else: ?>
             <button type="button" class="btn btn-ps-outline btn-sm" data-close>Continue Waiting</button>
           <?php endif; ?>

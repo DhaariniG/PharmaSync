@@ -4,7 +4,7 @@
   <div class="note note-danger"><?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
-<form method="POST" action="<?= BASE_URL ?>/checkout/place-order" data-validate novalidate>
+<form method="POST" action="<?= BASE_URL ?>/customer/checkout/place-order" data-validate novalidate>
           <?= csrf_field() ?>
   <div class="row g-4">
     <div class="col-lg-8">
@@ -17,7 +17,7 @@
           <h6 class="bold mb-3"><?= icon('users', 'me-2') ?>Who is this order for?</h6>
           <?php if (empty($familyMembers)): ?>
             <div class="note note-warn small mb-2">You haven't set up any family profiles yet.</div>
-            <a href="<?= BASE_URL ?>/profile" class="btn btn-ps-outline btn-sm">Add a family profile</a>
+            <a href="<?= BASE_URL ?>/customer/profile" class="btn btn-ps-outline btn-sm">Add a family profile</a>
           <?php else: ?>
             <select name="patient_id" class="field" required>
               <?php foreach ($familyMembers as $i => $member): ?>
@@ -26,7 +26,7 @@
                 </option>
               <?php endforeach; ?>
             </select>
-            <div class="muted small mt-2">This is shown on your order history so you can tell your family's orders apart. Manage profiles from <a href="<?= BASE_URL ?>/profile">your profile</a>.</div>
+            <div class="muted small mt-2">This is shown on your order history so you can tell your family's orders apart. Manage profiles from <a href="<?= BASE_URL ?>/customer/profile">your profile</a>.</div>
           <?php endif; ?>
         </div>
       <?php endif; ?>
@@ -98,7 +98,7 @@
 
           <?php if (empty($approvedRx)): ?>
             <div class="note note-warn small mb-2">You don't have an approved prescription yet.</div>
-            <a href="<?= BASE_URL ?>/prescription/upload" class="btn btn-ps-outline btn-sm">Upload Prescription</a>
+            <a href="<?= BASE_URL ?>/customer/prescription/upload" class="btn btn-ps-outline btn-sm">Upload Prescription</a>
           <?php else: ?>
             <?php if (!empty($preselectedPrescriptionId)): ?>
               <div class="note note-ok small mb-2"><?= icon('circle-check', 'me-1') ?>We've pre-selected the approved prescription used for this reorder — change it below if needed.</div>
@@ -215,7 +215,7 @@
           </p>
         </div>
         <div class="flex right gap-2 mt-3">
-          <a href="<?= BASE_URL ?>/prescription/status/<?= (int) $pendingRx[0]['id'] ?>" class="btn btn-ps-outline btn-sm">View Prescription</a>
+          <a href="<?= BASE_URL ?>/customer/prescription/status/<?= (int) $pendingRx[0]['id'] ?>" class="btn btn-ps-outline btn-sm">View Prescription</a>
           <button type="button" class="btn btn-ps-primary btn-sm" data-close>Continue Anyway</button>
         </div>
     </div>
