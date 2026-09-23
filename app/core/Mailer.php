@@ -31,6 +31,7 @@ class Mailer
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
         try {
+            $mail->CharSet    = 'UTF-8';
             $mail->isSMTP();
             $mail->Host       = MAIL_HOST;
             $mail->SMTPAuth   = true;
@@ -98,6 +99,7 @@ class Mailer
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
 
         try {
+            $mail->CharSet    = 'UTF-8';
             $mail->isSMTP();
             $mail->Host       = MAIL_HOST;
             $mail->SMTPAuth   = true;
