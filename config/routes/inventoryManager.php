@@ -40,6 +40,9 @@ return [
     // Own profile
     'GET  /profile' => ['InventoryManagerProfileController', 'index'],
 
+    // Notifications
+    'GET  /notifications' => ['InventoryManagerNotificationController', 'index'],
+
     // Medicines (real database CRUD). Most specific paths first:
     // '/medicines/create' must come before '/medicines/{id}/...'.
     'GET  /medicines/create'        => ['InventoryManagerMedicineController', 'create'],

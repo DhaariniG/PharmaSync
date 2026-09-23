@@ -1,0 +1,64 @@
+/*
+  notifications.css
+  ---------------------------------------------------
+  The Notifications list page. "Shared card" look matches dashboard.css.
+*/
+
+.card {
+    background-color: var(--color-white);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+}
+.notification-item:hover { background-color: var(--color-border); }
+
+.notification-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-color: var(--color-warning-bg);
+    color: var(--color-warning);
+}
+.notification-error .notification-icon {
+    background-color: var(--color-error-bg);
+    color: var(--color-error);
+}
+.notification-success .notification-icon {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.notification-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.notification-title {
+    font-size: var(--text-body);
+    font-weight: 600;
+}
+
+.notification-time {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+}
