@@ -13,8 +13,9 @@
                     </span>
                     <span class="notification-body">
                         <span class="notification-title"><?= e($n['title']) ?></span>
-                        <span class="notification-time"><?= e($n['time']) ?></span>
+                        <span class="notification-desc"><?= e($n['description']) ?></span>
                     </span>
+                    <span class="notification-time"><?= e($n['time']) ?></span>
                 </a>
             <?php endforeach; ?>
         </div>

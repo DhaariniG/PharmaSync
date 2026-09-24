@@ -1,9 +1,40 @@
 /*
   notifications.css
   ---------------------------------------------------
-  The Notifications list page. "Shared card" look matches dashboard.css.
+  Styling ONLY for the Notifications screen. Every Inventory Manager
+  screen repeats this .main-content rule in its own page_css file (see
+  dashboard.css, low_stock_alerts.css, ...) to make room for the fixed
+  sidebar - there is no shared layout file, so a page that skips it
+  renders its content underneath the sidebar.
 */
 
+.main-content {
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 1200px;
+}
+
+.content-area {
+    padding: var(--space-xl);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--text-body);
+}
+
+/* --- Shared "card" look, matches dashboard.css --- */
 .card {
     background-color: var(--color-white);
     padding: var(--space-lg);
@@ -38,16 +69,18 @@
     background-color: var(--color-warning-bg);
     color: var(--color-warning);
 }
-.notification-error .notification-icon {
+.notification-expiry .notification-icon {
     background-color: var(--color-error-bg);
     color: var(--color-error);
 }
-.notification-success .notification-icon {
+.notification-purchase-order .notification-icon {
     background-color: var(--color-primary);
     color: var(--color-white);
 }
 
 .notification-body {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -55,10 +88,20 @@
 
 .notification-title {
     font-size: var(--text-body);
-    font-weight: 600;
+    font-weight: 700;
+}
+
+.notification-desc {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .notification-time {
     font-size: var(--text-small);
     color: var(--color-text-muted);
+    flex-shrink: 0;
+    white-space: nowrap;
 }
