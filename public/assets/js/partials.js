@@ -73,3 +73,35 @@ function showToast(message, redirectTo, delay = 1100) {
 function getParam(name) {
   return new URLSearchParams(window.location.search).get(name);
 }
+
+// Admin logout confirmation UI. The real logout route remains unchanged.
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('logoutModal');
+  if (!modal) return;
+
+  const closeLogoutModal = () => {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+  };
+
+  document.querySelectorAll('[data-logout-open]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      const cancel = modal.querySelector('[data-logout-cancel]');
+      if (cancel) cancel.focus();
+    });
+  });
+
+  const cancel = modal.querySelector('[data-logout-cancel]');
+  if (cancel) cancel.addEventListener('click', closeLogoutModal);
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) closeLogoutModal();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.classList.contains('open')) closeLogoutModal();
+  });
+});

@@ -29,7 +29,7 @@
     <a href="<?= BASE_URL ?>/admin/settings" data-nav="settings">
       <i data-lucide="settings"></i> Settings
     </a>
-    <a href="<?= BASE_URL ?>/authentication/logout" data-nav="logout">
+    <a href="<?= BASE_URL ?>/authentication/logout" data-nav="logout" data-logout-open>
       <i data-lucide="log-out"></i> Logout
     </a>
   </nav>
@@ -42,3 +42,18 @@
     </div>
   </div>
 </aside>
+
+
+<div class="logout-modal" id="logoutModal" aria-hidden="true">
+  <div class="logout-modal-card" role="dialog" aria-modal="true" aria-labelledby="logoutModalTitle">
+    <div class="logout-modal-icon"><i data-lucide="log-out"></i></div>
+    <h2 id="logoutModalTitle">Logout</h2>
+    <p>Are you sure you want to logout from PharmaSync?</p>
+    <div class="logout-modal-actions">
+      <button type="button" class="btn btn-outline" data-logout-cancel>Cancel</button>
+      <a class="btn btn-danger logout-confirm-btn" href="<?= BASE_URL ?>/authentication/logout">
+        <i data-lucide="log-out"></i> Logout
+      </a>
+    </div>
+  </div>
+</div>

@@ -85,7 +85,7 @@
             </div>
           </div>
           <div class="action-list">
-            <a class="btn btn-outline" href="<?= BASE_URL ?>/authentication/logout">
+            <a class="btn btn-outline" href="<?= BASE_URL ?>/authentication/logout" data-logout-open>
               <i data-lucide="log-out"></i> Logout
             </a>
           </div>
