@@ -1,0 +1,13 @@
+# Uploaded files - do not commit user data
+storage/prescriptions/*
+!storage/prescriptions/.gitkeep
+
+# Editor and OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Local database dumps
+*.sql.bak

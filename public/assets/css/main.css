@@ -1,0 +1,501 @@
+/* ==========================================================================
+   PharmaSync - shared base stylesheet
+   --------------------------------------------------------------------------
+   This file is SHARED by all five modules. Agree before changing it.
+
+   Put page-specific styles in your own role folder instead. The folder
+   names are PascalCase and match the repository on GitHub:
+       public/assets/css/Customer/
+       public/assets/css/Pharmacist/
+       public/assets/css/Admin/
+       public/assets/css/InventoryManager/
+       public/assets/css/DeliveryPartner/
+
+   No frameworks. No CDN links. Plain CSS only.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+:root {
+    /* Brand - a clinical green, readable and calm */
+    --c-brand:          #176b5b;
+    --c-brand-dark:     #0f4f43;
+    --c-brand-light:    #e6f2ef;
+
+    /* Neutrals */
+    --c-ink:            #17211f;
+    --c-ink-soft:       #5a6b67;
+    --c-line:           #dde5e3;
+    --c-surface:        #ffffff;
+    --c-bg:             #f6f8f8;
+
+    /* Status - used for order states, stock warnings, flash messages */
+    --c-ok:             #1c7a4f;
+    --c-ok-bg:          #e4f4ec;
+    --c-warn:           #9a6600;
+    --c-warn-bg:        #fdf1d9;
+    --c-error:          #b3261e;
+    --c-error-bg:       #fbeae9;
+    --c-info:           #1b5fa8;
+    --c-info-bg:        #e6effa;
+
+    /* Spacing scale */
+    --sp-1: 0.25rem;
+    --sp-2: 0.5rem;
+    --sp-3: 0.75rem;
+    --sp-4: 1rem;
+    --sp-5: 1.5rem;
+    --sp-6: 2rem;
+    --sp-7: 3rem;
+
+    /* Type */
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Consolas, monospace;
+
+    --fs-xs:   0.75rem;
+    --fs-sm:   0.875rem;
+    --fs-base: 1rem;
+    --fs-lg:   1.125rem;
+    --fs-xl:   1.375rem;
+    --fs-2xl:  1.75rem;
+
+    /* Shape */
+    --radius:    8px;
+    --radius-sm: 5px;
+    --shadow:    0 1px 2px rgba(23, 33, 31, 0.06),
+                 0 4px 12px rgba(23, 33, 31, 0.05);
+
+    --container: 1120px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset
+   -------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    line-height: 1.55;
+    color: var(--c-ink);
+    background: var(--c-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+    margin: 0 0 var(--sp-3);
+    line-height: 1.25;
+    font-weight: 650;
+}
+
+h1 { font-size: var(--fs-2xl); }
+h2 { font-size: var(--fs-xl); }
+h3 { font-size: var(--fs-lg); }
+
+p { margin: 0 0 var(--sp-4); }
+
+a {
+    color: var(--c-brand);
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* Keyboard users must always be able to see where they are */
+:focus-visible {
+    outline: 2px solid var(--c-brand);
+    outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Layout
+   -------------------------------------------------------------------------- */
+.page {
+    flex: 1;
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--sp-6) var(--sp-4);
+}
+
+.page--centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.page-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--sp-5);
+}
+
+.grid {
+    display: grid;
+    gap: var(--sp-4);
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.stack > * + * { margin-top: var(--sp-4); }
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   4. Site header and navigation
+   Each role writes its own header markup, but reuses these classes.
+   -------------------------------------------------------------------------- */
+.site-header {
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-line);
+}
+
+.site-header__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--sp-3) var(--sp-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-4);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    font-weight: 700;
+    font-size: var(--fs-lg);
+    color: var(--c-brand-dark);
+    letter-spacing: -0.01em;
+}
+.brand:hover { text-decoration: none; }
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-1);
+    align-items: center;
+}
+
+.nav a {
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--radius-sm);
+    color: var(--c-ink-soft);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+}
+.nav a:hover {
+    background: var(--c-brand-light);
+    color: var(--c-brand-dark);
+    text-decoration: none;
+}
+.nav a[aria-current="page"] {
+    background: var(--c-brand-light);
+    color: var(--c-brand-dark);
+}
+
+.site-footer {
+    padding: var(--sp-5) var(--sp-4);
+    text-align: center;
+    font-size: var(--fs-sm);
+    color: var(--c-ink-soft);
+    border-top: 1px solid var(--c-line);
+}
+.site-footer p { margin: 0; }
+
+/* --------------------------------------------------------------------------
+   5. Cards
+   -------------------------------------------------------------------------- */
+.card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius);
+    padding: var(--sp-5);
+    box-shadow: var(--shadow);
+}
+
+.card--message {
+    max-width: 420px;
+    text-align: center;
+}
+
+.card__title {
+    font-size: var(--fs-lg);
+    margin-bottom: var(--sp-2);
+}
+
+/* Small uppercase label above a heading */
+.eyebrow {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-ink-soft);
+    margin-bottom: var(--sp-2);
+}
+
+.muted { color: var(--c-ink-soft); }
+
+/* Big number for dashboard tiles */
+.stat {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--c-brand-dark);
+}
+
+/* --------------------------------------------------------------------------
+   6. Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    padding: var(--sp-3) var(--sp-5);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    background: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover { text-decoration: none; }
+
+.btn--primary {
+    background: var(--c-brand);
+    color: #fff;
+}
+.btn--primary:hover { background: var(--c-brand-dark); }
+
+.btn--secondary {
+    background: var(--c-surface);
+    border-color: var(--c-line);
+    color: var(--c-ink);
+}
+.btn--secondary:hover { border-color: var(--c-brand); color: var(--c-brand-dark); }
+
+.btn--danger {
+    background: var(--c-error);
+    color: #fff;
+}
+.btn--danger:hover { filter: brightness(0.92); }
+
+.btn--small {
+    padding: var(--sp-2) var(--sp-3);
+    font-size: var(--fs-xs);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   7. Forms
+   -------------------------------------------------------------------------- */
+.form { max-width: 460px; }
+
+.field { margin-bottom: var(--sp-4); }
+
+.field label {
+    display: block;
+    margin-bottom: var(--sp-2);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+}
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="password"],
+.field input[type="tel"],
+.field input[type="number"],
+.field input[type="date"],
+.field input[type="search"],
+.field input[type="file"],
+.field select,
+.field textarea {
+    width: 100%;
+    padding: var(--sp-3);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-sm);
+    font: inherit;
+    background: var(--c-surface);
+    color: var(--c-ink);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: var(--c-brand);
+    outline: 2px solid var(--c-brand-light);
+    outline-offset: 0;
+}
+
+.field textarea { min-height: 110px; resize: vertical; }
+
+.field .hint {
+    display: block;
+    margin-top: var(--sp-2);
+    font-size: var(--fs-xs);
+    color: var(--c-ink-soft);
+}
+
+/* Validation error under a field */
+.field .error {
+    display: block;
+    margin-top: var(--sp-2);
+    font-size: var(--fs-xs);
+    color: var(--c-error);
+}
+.field--invalid input,
+.field--invalid select,
+.field--invalid textarea {
+    border-color: var(--c-error);
+}
+
+/* --------------------------------------------------------------------------
+   8. Tables
+   -------------------------------------------------------------------------- */
+.table-wrap {
+    overflow-x: auto;
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-sm);
+}
+
+.table th,
+.table td {
+    padding: var(--sp-3) var(--sp-4);
+    text-align: left;
+    border-bottom: 1px solid var(--c-line);
+}
+
+.table th {
+    font-weight: 600;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--c-ink-soft);
+    background: var(--c-bg);
+}
+
+.table tbody tr:last-child td { border-bottom: none; }
+.table tbody tr:hover { background: var(--c-brand-light); }
+
+.table .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   9. Badges - order status, stock level, prescription status
+   -------------------------------------------------------------------------- */
+.badge {
+    display: inline-block;
+    padding: var(--sp-1) var(--sp-3);
+    border-radius: 999px;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+.badge--ok    { background: var(--c-ok-bg);    color: var(--c-ok); }
+.badge--warn  { background: var(--c-warn-bg);  color: var(--c-warn); }
+.badge--error { background: var(--c-error-bg); color: var(--c-error); }
+.badge--info  { background: var(--c-info-bg);  color: var(--c-info); }
+.badge--muted { background: var(--c-bg);       color: var(--c-ink-soft); }
+
+/* --------------------------------------------------------------------------
+   10. Flash messages
+   -------------------------------------------------------------------------- */
+.flash-stack {
+    max-width: var(--container);
+    margin: var(--sp-4) auto 0;
+    padding: 0 var(--sp-4);
+}
+
+.flash {
+    padding: var(--sp-3) var(--sp-4);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid;
+    font-size: var(--fs-sm);
+    margin-bottom: var(--sp-3);
+}
+
+.flash--success { background: var(--c-ok-bg);    border-color: var(--c-ok);    color: var(--c-ok); }
+.flash--error   { background: var(--c-error-bg); border-color: var(--c-error); color: var(--c-error); }
+.flash--warning { background: var(--c-warn-bg);  border-color: var(--c-warn);  color: var(--c-warn); }
+.flash--info    { background: var(--c-info-bg);  border-color: var(--c-info);  color: var(--c-info); }
+
+/* --------------------------------------------------------------------------
+   11. Empty states
+   -------------------------------------------------------------------------- */
+.empty {
+    padding: var(--sp-7) var(--sp-4);
+    text-align: center;
+    color: var(--c-ink-soft);
+}
+.empty h3 { color: var(--c-ink); }
+
+/* --------------------------------------------------------------------------
+   12. Utilities
+   -------------------------------------------------------------------------- */
+.text-right  { text-align: right; }
+.text-center { text-align: center; }
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.w-full { width: 100%; }
+
+/* Visible to screen readers only */
+.sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   13. Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    .page { padding: var(--sp-4) var(--sp-3); }
+    .site-header__inner { flex-direction: column; align-items: flex-start; }
+    .form { max-width: 100%; }
+    h1 { font-size: var(--fs-xl); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

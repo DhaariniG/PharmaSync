@@ -1,0 +1,11 @@
+# Anything hitting the project root is sent to public/, so app/, config/,
+# database/ and storage/ are never reachable from a browser.
+#
+# This is a real redirect, not an internal rewrite, so the address bar always
+# ends up on .../public. That matters: BASE_URL is worked out from the path
+# of index.php, and links break if the browser is on one path while PHP
+# thinks it is on another.
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} !^/?public/
+RewriteRule ^(.*)$ public/$1 [R=302,L]
