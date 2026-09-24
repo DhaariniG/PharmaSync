@@ -233,7 +233,7 @@
 
 </div>
 
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="<?= asset('assets/js/lucide.min.js') ?>"></script>
 
 <script>
     if (window.lucide) {

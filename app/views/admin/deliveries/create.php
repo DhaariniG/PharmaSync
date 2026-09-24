@@ -81,7 +81,7 @@
   </div>
 </div>
 
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="<?= asset('assets/js/lucide.min.js') ?>"></script>
 <script src="<?= BASE_URL ?>/assets/js/partials.js"></script>
 <script>
 document.getElementById('deliveryForm').addEventListener('submit', function(e){
