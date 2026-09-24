@@ -48,10 +48,7 @@ class AdminAccountController extends Controller
             $status === '' ||
             $password === ''
         ) {
-            $this->render('accounts/create', [
-                'user' => $this->currentUser(),
-                'error' => 'Please fill in all required fields.',
-            ]);
+            $this->showCreateForm('Please fill in all required fields.');
 
             return;
         }
@@ -60,10 +57,7 @@ class AdminAccountController extends Controller
         * Validate email.
         */
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->render('accounts/create', [
-                'user' => $this->currentUser(),
-                'error' => 'Please enter a valid email address.',
-            ]);
+            $this->showCreateForm('Please enter a valid email address.');
 
             return;
         }
@@ -72,10 +66,7 @@ class AdminAccountController extends Controller
         * Validate role against the roles defined by the project.
         */
         if (!isset(ROLE_SLUGS[$role])) {
-            $this->render('accounts/create', [
-                'user' => $this->currentUser(),
-                'error' => 'Invalid user role.',
-            ]);
+            $this->showCreateForm('Invalid user role.');
 
             return;
         }
@@ -90,10 +81,7 @@ class AdminAccountController extends Controller
         ];
 
         if (!in_array($status, $allowedStatuses, true)) {
-            $this->render('accounts/create', [
-                'user' => $this->currentUser(),
-                'error' => 'Invalid account status.',
-            ]);
+            $this->showCreateForm('Invalid account status.');
 
             return;
         }
@@ -102,19 +90,13 @@ class AdminAccountController extends Controller
         * Password requirements.
         */
         if (strlen($password) < 8) {
-            $this->render('accounts/create', [
-                'user' => $this->currentUser(),
-                'error' => 'Password must contain at least 8 characters.',
-            ]);
+            $this->showCreateForm('Password must contain at least 8 characters.');
 
             return;
         }
 
         if ($password !== $confirmPassword) {
-            $this->render('accounts/create', [
-                'user' => $this->currentUser(),
-                'error' => 'Passwords do not match.',
-            ]);
+            $this->showCreateForm('Passwords do not match.');
 
             return;
         }
@@ -125,10 +107,7 @@ class AdminAccountController extends Controller
         * Email must be unique.
         */
         if ($userModel->findByEmail($email)) {
-            $this->render('accounts/create', [
-                'user' => $this->currentUser(),
-                'error' => 'An account with this email address already exists.',
-            ]);
+            $this->showCreateForm('An account with this email address already exists.');
 
             return;
         }
@@ -339,6 +318,24 @@ class AdminAccountController extends Controller
         * Return to the accounts list.
         */
         $this->redirect('/admin/accounts');
+    }
+
+    /**
+     * Show the create form again with an error, refilled with what was
+     * typed. Only these fields are sent back - never the passwords.
+     */
+    private function showCreateForm(string $error): void
+    {
+        $old = [];
+        foreach (['full_name', 'email', 'phone', 'address', 'role', 'status'] as $field) {
+            $old[$field] = trim($_POST[$field] ?? '');
+        }
+
+        $this->render('accounts/create', [
+            'user'  => $this->currentUser(),
+            'error' => $error,
+            'old'   => $old,
+        ]);
     }
 
     /** Show an error on the edit form of account $id. */

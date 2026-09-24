@@ -76,6 +76,7 @@
                             type="text"
                             id="full_name"
                             name="full_name"
+                            value="<?= e($old['full_name'] ?? '') ?>"
                             placeholder="e.g. Nadeesha Perera"
                             required
                         >
@@ -89,23 +90,23 @@
 
                             <option value="">Select a role</option>
 
-                            <option value="Customer">
+                            <option value="Customer" <?= ($old['role'] ?? '') === 'Customer' ? 'selected' : '' ?>>
                                 Customer
                             </option>
 
-                            <option value="Pharmacist">
+                            <option value="Pharmacist" <?= ($old['role'] ?? '') === 'Pharmacist' ? 'selected' : '' ?>>
                                 Pharmacist
                             </option>
 
-                            <option value="Admin">
+                            <option value="Admin" <?= ($old['role'] ?? '') === 'Admin' ? 'selected' : '' ?>>
                                 Administrator
                             </option>
 
-                            <option value="Inventory_Manager">
+                            <option value="Inventory_Manager" <?= ($old['role'] ?? '') === 'Inventory_Manager' ? 'selected' : '' ?>>
                                 Inventory Manager
                             </option>
 
-                            <option value="Delivery_Partner">
+                            <option value="Delivery_Partner" <?= ($old['role'] ?? '') === 'Delivery_Partner' ? 'selected' : '' ?>>
                                 Delivery Partner
                             </option>
 
@@ -120,6 +121,7 @@
                             type="email"
                             id="email"
                             name="email"
+                            value="<?= e($old['email'] ?? '') ?>"
                             placeholder="name@example.com"
                             required
                         >
@@ -133,6 +135,7 @@
                             type="tel"
                             id="phone"
                             name="phone"
+                            value="<?= e($old['phone'] ?? '') ?>"
                             placeholder="+94 77 123 4567"
                             required
                         >
@@ -146,6 +149,7 @@
                             type="text"
                             id="address"
                             name="address"
+                            value="<?= e($old['address'] ?? '') ?>"
                             placeholder="Enter address"
                         >
                     </div>
@@ -156,15 +160,15 @@
 
                         <select id="status" name="status" required>
 
-                            <option value="Active">
+                            <option value="Active" <?= ($old['status'] ?? '') === 'Active' ? 'selected' : '' ?>>
                                 Active
                             </option>
 
-                            <option value="Inactive">
+                            <option value="Inactive" <?= ($old['status'] ?? '') === 'Inactive' ? 'selected' : '' ?>>
                                 Inactive
                             </option>
 
-                            <option value="Suspended">
+                            <option value="Suspended" <?= ($old['status'] ?? '') === 'Suspended' ? 'selected' : '' ?>>
                                 Suspended
                             </option>
 
