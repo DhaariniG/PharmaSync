@@ -40,6 +40,14 @@
         <svg class="icon" viewBox="0 0 24 24"><path d="M12 16v-4M12 8h.01"/><circle cx="12" cy="12" r="9"/></svg>
         Support
       </a>
+      <?php /* Logout is POST-only + CSRF (a GET link could be triggered by another site). */ ?>
+      <form method="post" action="<?= url('/' . AUTH_SLUG . '/logout') ?>" class="sidebar-logout-form">
+        <?= csrf_field() ?>
+        <button type="submit" class="nav-link">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4v18h8v-2H4V5z"/></svg>
+          Logout
+        </button>
+      </form>
     </nav>
   </div>
 

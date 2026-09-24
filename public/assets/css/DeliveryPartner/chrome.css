@@ -34,6 +34,8 @@
 }
 .nav-link .icon{ width:18px; height:18px; flex-shrink:0; fill:currentColor; }
 .nav-link:hover{ background: rgba(0,106,102,0.06); }
+/* Logout is a POST form, so its button needs the link look. */
+.sidebar-logout-form .nav-link{ width:100%; text-align:left; }
 .nav-link.active{
   background: rgba(0,106,102,0.05);
   border-left-color: var(--color-teal);
