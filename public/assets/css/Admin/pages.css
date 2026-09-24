@@ -268,3 +268,8 @@
 }
 .toast.show { opacity: 1; transform: translateY(0); }
 .toast svg { width:16px; height:16px; }
+
+/* ---------- Flash messages (partials/flash.php) ---------- */
+.flash { margin-bottom: 20px; padding: 14px 18px; border-radius: 8px; font-weight: 600; }
+.flash-success { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; }
+.flash-error   { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }

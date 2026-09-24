@@ -43,6 +43,8 @@
                 </div>
             </div>
 
+            <?php require APP_PATH . '/views/admin/partials/flash.php'; ?>
+
             <?php if (!empty($error)): ?>
                 <div style="
                     padding: 14px 18px;
@@ -60,6 +62,7 @@
                   action="<?= BASE_URL ?>/admin/accounts/create"
                   style="display:block !important; visibility:visible !important; opacity:1 !important; background:white; padding:30px; margin-top:20px;"
               >
+                <?= csrf_field() ?>
 
                 
 

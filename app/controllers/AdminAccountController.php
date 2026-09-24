@@ -25,6 +25,7 @@ class AdminAccountController extends Controller
 
         public function store(): void
         {
+        $this->verifyCsrf();
         $this->requireRole('Admin');
 
         $fullName = trim($_POST['full_name'] ?? '');
@@ -146,6 +147,7 @@ class AdminAccountController extends Controller
             'status'    => $status,
         ], $password);
 
+        $this->flash('success', 'Account for "' . $fullName . '" was created.');
         $this->redirect('/admin/accounts');
     }
 
@@ -182,6 +184,7 @@ class AdminAccountController extends Controller
 
     public function update(): void
     {
+        $this->verifyCsrf();
         $this->requireRole('Admin');
 
         $id = (int) ($_POST['id'] ?? 0);
@@ -208,30 +211,21 @@ class AdminAccountController extends Controller
             $role === '' ||
             $status === ''
         ) {
-            $this->redirect(
-                '/admin/accounts/detail?id=' . $id . '&mode=edit&error=required'
-            );
-            return;
+            $this->backToEdit($id, 'Please fill in all required fields.');
         }
 
         /*
         * Validate email
         */
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->redirect(
-                '/admin/accounts/detail?id=' . $id . '&mode=edit&error=email'
-            );
-            return;
+            $this->backToEdit($id, 'Please enter a valid email address.');
         }
 
         /*
         * Validate role
         */
         if (!isset(ROLE_SLUGS[$role])) {
-            $this->redirect(
-                '/admin/accounts/detail?id=' . $id . '&mode=edit&error=role'
-            );
-            return;
+            $this->backToEdit($id, 'Please select a valid role.');
         }
 
         /*
@@ -244,10 +238,7 @@ class AdminAccountController extends Controller
         ];
 
         if (!in_array($status, $allowedStatuses, true)) {
-            $this->redirect(
-                '/admin/accounts/detail?id=' . $id . '&mode=edit&error=status'
-            );
-            return;
+            $this->backToEdit($id, 'Please select a valid status.');
         }
 
         $userModel = new User();
@@ -260,6 +251,16 @@ class AdminAccountController extends Controller
         if (!$account) {
             $this->redirect('/admin/accounts');
             return;
+        }
+
+        /*
+        * Email must stay unique: another account may already use it.
+        * (Finding THIS account's own email is fine.)
+        */
+        $owner = $userModel->findByEmail($email);
+
+        if ($owner && (int) $owner['user_id'] !== $id) {
+            $this->backToEdit($id, 'Another account already uses this email address.');
         }
 
         /*
@@ -277,13 +278,13 @@ class AdminAccountController extends Controller
         /*
         * Return to the details page.
         */
-        $this->redirect(
-            '/admin/accounts/detail?id=' . $id . '&updated=1'
-        );
+        $this->flash('success', 'Account updated successfully.');
+        $this->redirect('/admin/accounts/detail?id=' . $id);
     }
 
     public function delete(): void
     {
+        $this->verifyCsrf();
         $this->requireRole('Admin');
 
         /*
@@ -297,6 +298,14 @@ class AdminAccountController extends Controller
         if ($id <= 0) {
             $this->redirect('/admin/accounts');
             return;
+        }
+
+        /*
+        * An admin cannot delete the account they are signed in with.
+        */
+        if ($id === (int) $this->currentUser()['id']) {
+            $this->flash('error', 'You cannot delete your own account while you are signed in with it.');
+            $this->redirect('/admin/accounts/detail?id=' . $id);
         }
 
         $userModel = new User();
@@ -314,12 +323,29 @@ class AdminAccountController extends Controller
         /*
         * Delete the account.
         */
-        $userModel->delete($id);
+        try {
+            $userModel->delete($id);
+            $this->flash('success', 'Account for "' . $account['name'] . '" was deleted.');
+        } catch (PDOException $e) {
+            // MySQL refuses to delete a user that orders, sales, purchase
+            // orders or the audit log still point at (ON DELETE RESTRICT).
+            // Tell the admin what to do instead.
+            $this->flash('error', 'This account has related records and cannot be deleted. '
+                . 'Set its status to Inactive instead.');
+            $this->redirect('/admin/accounts/detail?id=' . $id);
+        }
 
         /*
         * Return to the accounts list.
         */
-        $this->redirect('/admin/accounts?deleted=1');
+        $this->redirect('/admin/accounts');
+    }
+
+    /** Show an error on the edit form of account $id. */
+    private function backToEdit(int $id, string $message): void
+    {
+        $this->flash('error', $message);
+        $this->redirect('/admin/accounts/detail?id=' . $id . '&mode=edit');
     }
 
 }

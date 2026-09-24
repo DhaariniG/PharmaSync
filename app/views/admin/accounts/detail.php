@@ -90,29 +90,6 @@ $lastActivity = $lastLogin
     : 'Never';
 
 
-/*
- * Error messages returned from update().
- */
-$errorMessage = '';
-
-$error = $_GET['error'] ?? '';
-
-if ($error === 'required') {
-    $errorMessage = 'Please fill in all required fields.';
-}
-
-if ($error === 'email') {
-    $errorMessage = 'Please enter a valid email address.';
-}
-
-if ($error === 'role') {
-    $errorMessage = 'Please select a valid role.';
-}
-
-if ($error === 'status') {
-    $errorMessage = 'Please select a valid status.';
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -201,48 +178,9 @@ if ($error === 'status') {
             </a>
 
 
-            <!-- SUCCESS MESSAGE -->
+            <!-- SUCCESS / ERROR MESSAGES (set with $this->flash()) -->
 
-            <?php if (isset($_GET['updated'])): ?>
-
-                <div
-                    style="
-                        margin-bottom:20px;
-                        padding:14px 18px;
-                        background:#ecfdf5;
-                        border:1px solid #a7f3d0;
-                        border-radius:8px;
-                        color:#065f46;
-                        font-weight:600;
-                    "
-                >
-                    Account updated successfully.
-                </div>
-
-            <?php endif; ?>
-
-
-            <!-- ERROR MESSAGE -->
-
-            <?php if ($errorMessage !== ''): ?>
-
-                <div
-                    style="
-                        margin-bottom:20px;
-                        padding:14px 18px;
-                        background:#fef2f2;
-                        border:1px solid #fecaca;
-                        border-radius:8px;
-                        color:#991b1b;
-                        font-weight:600;
-                    "
-                >
-
-                    <?= htmlspecialchars($errorMessage) ?>
-
-                </div>
-
-            <?php endif; ?>
+            <?php require APP_PATH . '/views/admin/partials/flash.php'; ?>
 
 
             <div class="detail-grid">
@@ -320,6 +258,8 @@ if ($error === 'status') {
                                 method="POST"
                                 action="<?= BASE_URL ?>/admin/accounts/update"
                             >
+
+                                <?= csrf_field() ?>
 
 
                                 <!--
@@ -831,6 +771,8 @@ if ($error === 'status') {
                 action="<?= BASE_URL ?>/admin/accounts/delete"
                 onsubmit="return confirm('Are you sure you want to delete this account? This action cannot be undone.');"
             >
+
+                <?= csrf_field() ?>
 
                 <input
                     type="hidden"

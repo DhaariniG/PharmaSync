@@ -36,6 +36,9 @@
 
         <main class="page-content">
 
+            <!-- SUCCESS / ERROR MESSAGES (set with $this->flash()) -->
+            <?php require APP_PATH . '/views/admin/partials/flash.php'; ?>
+
             <!-- =====================================================
                  PAGE HEADER
             ====================================================== -->
