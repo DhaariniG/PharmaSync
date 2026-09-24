@@ -81,6 +81,147 @@ class User extends Model
     }
 
     /* ==================================================================
+     * Account management (Admin)
+     *
+     * These return 'id' and 'name' (not user_id / full_name) because that
+     * is what the admin account views read, and they never return
+     * password_hash - it has no business on an admin page.
+     * ================================================================== */
+
+    /** One account for the admin detail page, or null. */
+    public function find(int $id): ?array
+    {
+        if ($this->hasDb()) {
+            return $this->fetchOne(
+                'SELECT user_id AS id, full_name AS name, email, phone, address,
+                        role, status, last_login, created_at
+                   FROM users
+                  WHERE user_id = :id
+                  LIMIT 1',
+                ['id' => $id]
+            );
+        }
+
+        $user = $this->findById($id);
+        return $user ? self::toAccountRow($user) : null;
+    }
+
+    /** Every account for the admin list - only the columns the list shows. */
+    public function all(): array
+    {
+        if ($this->hasDb()) {
+            return $this->fetchAll(
+                'SELECT user_id AS id, full_name AS name, role, status, last_login
+                   FROM users
+               ORDER BY created_at DESC'
+            );
+        }
+
+        return array_map(fn($u) => self::toAccountRow($u), array_reverse($this->fileUsers()));
+    }
+
+    /** Everyone with one role, e.g. allWithRole('Pharmacist'). */
+    public function allWithRole(string $role): array
+    {
+        if ($this->hasDb()) {
+            return $this->fetchAll(
+                'SELECT user_id AS id, full_name AS name, email, phone, role, status
+                   FROM users
+                  WHERE role = :role
+               ORDER BY full_name',
+                ['role' => $role]
+            );
+        }
+
+        $rows = array_filter($this->fileUsers(), fn($u) => $u['role'] === $role);
+        return array_values(array_map(fn($u) => self::toAccountRow($u), $rows));
+    }
+
+    /**
+     * Create an account of any role. The password is hashed here so no
+     * caller can ever store it as typed. $data keys are users columns:
+     * full_name, email, phone, address, role, status.
+     * Returns the new user_id.
+     */
+    public function create(array $data, string $plainPassword): int
+    {
+        $row = [
+            'full_name'     => $data['full_name'],
+            'email'         => strtolower(trim($data['email'])),
+            'phone'         => $data['phone'],
+            'address'       => $data['address'] ?? null,
+            'password_hash' => password_hash($plainPassword, PASSWORD_BCRYPT),
+            'role'          => $data['role'],
+            'status'        => $data['status'] ?? 'Active',
+        ];
+
+        if ($this->hasDb()) {
+            return $this->insertRow($row);
+        }
+
+        $newId = 0;
+        $this->withFileUsers(function (array &$users) use ($row, &$newId) {
+            $newId = 1 + max(array_map(fn($u) => (int) $u['user_id'], $users) ?: [0]);
+            $users[] = $row + [
+                'user_id'       => $newId,
+                'last_login'    => null,
+                'created_at'    => date('Y-m-d H:i:s'),
+                'date_of_birth' => null,
+            ];
+        });
+        return $newId;
+    }
+
+    /** Update an account's details (not its password). */
+    public function update(int $id, array $data): void
+    {
+        $row = [
+            'full_name' => $data['full_name'],
+            'email'     => strtolower(trim($data['email'])),
+            'phone'     => $data['phone'],
+            'address'   => $data['address'] ?? null,
+            'role'      => $data['role'],
+            'status'    => $data['status'],
+        ];
+
+        if ($this->hasDb()) {
+            $this->exec(
+                'UPDATE users
+                    SET full_name = :full_name, email = :email, phone = :phone,
+                        address = :address, role = :role, status = :status
+                  WHERE user_id = :id',
+                $row + ['id' => $id]
+            );
+            return;
+        }
+
+        $this->withFileUsers(function (array &$users) use ($id, $row) {
+            foreach ($users as &$user) {
+                if ((int) $user['user_id'] === $id) {
+                    $user = $row + $user;
+                }
+            }
+        });
+    }
+
+    /**
+     * Delete an account. With MySQL this throws a PDOException when other
+     * tables still reference the user (ON DELETE RESTRICT) - the caller
+     * decides what to tell the admin.
+     */
+    public function delete(int $id): void
+    {
+        if ($this->hasDb()) {
+            $this->exec('DELETE FROM users WHERE user_id = :id', ['id' => $id]);
+            return;
+        }
+
+        $this->withFileUsers(function (array &$users) use ($id) {
+            $users = array_values(array_filter($users, fn($u) => (int) $u['user_id'] !== $id));
+        });
+    }
+
+    /* ==================================================================
      * Writes
      * ================================================================== */
 
@@ -185,6 +326,22 @@ class User extends Model
         }
 
         return $user;
+    }
+
+    /** A file-store row in the same shape find() returns from MySQL. */
+    private static function toAccountRow(array $u): array
+    {
+        return [
+            'id'         => (int) $u['user_id'],
+            'name'       => $u['full_name'],
+            'email'      => $u['email'],
+            'phone'      => $u['phone'] ?? '',
+            'address'    => $u['address'] ?? null,
+            'role'       => $u['role'],
+            'status'     => $u['status'],
+            'last_login' => $u['last_login'] ?? null,
+            'created_at' => $u['created_at'] ?? null,
+        ];
     }
 
     /* ==================================================================
