@@ -17,6 +17,8 @@ return [
     'GET  /'          => ['DeliveryPartnerDashboardController', 'index'],
     'GET  /dashboard' => ['DeliveryPartnerDashboardController', 'index'],
 
+    'GET  /{page}'    => ['DeliveryPartnerPageController', 'show'],
+
     // Add your pages below, for example:
     // 'GET  /orders'        => ['DeliveryPartnerOrderController', 'index'],
     // 'GET  /orders/{id}'   => ['DeliveryPartnerOrderController', 'show'],
