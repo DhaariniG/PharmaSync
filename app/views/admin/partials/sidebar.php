@@ -29,9 +29,13 @@
     <a href="<?= BASE_URL ?>/admin/settings" data-nav="settings">
       <i data-lucide="settings"></i> Settings
     </a>
-    <a href="<?= BASE_URL ?>/authentication/logout" data-nav="logout" data-logout-open>
-      <i data-lucide="log-out"></i> Logout
-    </a>
+    <?php /* Logout is POST-only + CSRF (a GET link could be triggered by another site). */ ?>
+    <form method="post" action="<?= url('/' . AUTH_SLUG . '/logout') ?>" class="sidebar-logout-form" id="logoutForm">
+      <?= csrf_field() ?>
+      <button type="submit" data-nav="logout" data-logout-open>
+        <i data-lucide="log-out"></i> Logout
+      </button>
+    </form>
   </nav>
 
   <div class="sidebar-footer">
@@ -51,9 +55,10 @@
     <p>Are you sure you want to logout from PharmaSync?</p>
     <div class="logout-modal-actions">
       <button type="button" class="btn btn-outline" data-logout-cancel>Cancel</button>
-      <a class="btn btn-danger logout-confirm-btn" href="<?= BASE_URL ?>/authentication/logout">
+      <?php /* form="logoutForm" submits the sidebar's logout form above. */ ?>
+      <button type="submit" form="logoutForm" class="btn btn-danger logout-confirm-btn">
         <i data-lucide="log-out"></i> Logout
-      </a>
+      </button>
     </div>
   </div>
 </div>

@@ -85,9 +85,12 @@
             </div>
           </div>
           <div class="action-list">
-            <a class="btn btn-outline" href="<?= BASE_URL ?>/authentication/logout" data-logout-open>
-              <i data-lucide="log-out"></i> Logout
-            </a>
+            <form method="post" action="<?= url('/' . AUTH_SLUG . '/logout') ?>">
+              <?= csrf_field() ?>
+              <button type="submit" class="btn btn-outline" data-logout-open>
+                <i data-lucide="log-out"></i> Logout
+              </button>
+            </form>
           </div>
         </aside>
       </div>

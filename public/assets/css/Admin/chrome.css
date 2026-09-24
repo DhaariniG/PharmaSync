@@ -9,13 +9,18 @@
 .brand-sub { font-size: 11.5px; color: var(--ink-400); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
 
 .sidebar-nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
-.sidebar-nav a {
+.sidebar-nav a,
+.sidebar-logout-form button {
   display: flex; align-items: center; gap: 12px;
   padding: 10px 12px; border-radius: 8px;
   font-size: 14px; font-weight: 500; color: var(--ink-700);
 }
-.sidebar-nav a svg { width: 18px; height: 18px; stroke-width: 2; color: var(--ink-400); }
-.sidebar-nav a:hover { background: var(--ink-100); }
+/* Logout is a POST form, so its button needs the link look. */
+.sidebar-logout-form button { width: 100%; background: none; border: 0; text-align: left; }
+.sidebar-nav a svg,
+.sidebar-logout-form button svg { width: 18px; height: 18px; stroke-width: 2; color: var(--ink-400); }
+.sidebar-nav a:hover,
+.sidebar-logout-form button:hover { background: var(--ink-100); }
 .sidebar-nav a.active { background: var(--teal-100); color: var(--teal-700); font-weight: 700; }
 .sidebar-nav a.active svg { color: var(--teal-700); }
 

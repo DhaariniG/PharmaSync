@@ -74,7 +74,8 @@ function getParam(name) {
   return new URLSearchParams(window.location.search).get(name);
 }
 
-// Admin logout confirmation UI. The real logout route remains unchanged.
+// Admin logout confirmation UI. Clicking a [data-logout-open] button shows the
+// popup instead of submitting; the popup's Logout button submits the POST form.
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('logoutModal');
   if (!modal) return;
