@@ -60,18 +60,15 @@ document.getElementById('detailRoot').innerHTML = `
       </div>
     </div>
     <div class="panel">
-      <div class="panel-header"><h2>Actions</h2></div>
+      <div class="panel-header"><h2><i data-lucide="eye"></i> View Only</h2></div>
+      <p class="readonly-note">Suppliers are managed by the Inventory Manager, who also raises purchase orders. Admin approves or rejects them.</p>
       <div class="action-list">
-        <a href="<?= BASE_URL ?>/admin/procurement/create?vendor=${encodeURIComponent(s.name)}" class="btn btn-primary"><i data-lucide="shopping-cart"></i> New Purchase Order</a>
-        <button class="btn btn-outline" id="editBtn"><i data-lucide="pencil"></i> Edit Vendor</button>
-        <button class="btn btn-outline" id="deactivateBtn"><i data-lucide="ban"></i> Deactivate Vendor</button>
+        <a href="<?= BASE_URL ?>/admin/purchase-orders" class="btn btn-outline"><i data-lucide="clipboard-check"></i> PO Approvals</a>
       </div>
     </div>
   </div>
 `;
 if (window.lucide) lucide.createIcons();
-document.getElementById('editBtn').addEventListener('click', () => showToast('Vendor editing coming soon'));
-document.getElementById('deactivateBtn').addEventListener('click', () => showToast(s.name + ' has been deactivated', '<?= BASE_URL ?>/admin/suppliers'));
 </script>
 </body>
 </html>

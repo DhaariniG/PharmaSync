@@ -10,12 +10,6 @@ class AdminInventoryController extends Controller
         $this->render('inventory/index', ['user' => $this->currentUser()]);
     }
 
-    public function add(): void
-    {
-        $this->requireRole('Admin');
-        $this->render('inventory/add', ['user' => $this->currentUser()]);
-    }
-
     public function detail(): void
     {
         $this->requireRole('Admin');

@@ -22,14 +22,14 @@ return [
     'GET  /deliveries/detail'   => ['AdminDeliveryController', 'detail'],
     'GET  /deliveries'          => ['AdminDeliveryController', 'index'],
 
-    'GET  /inventory/add'       => ['AdminInventoryController', 'add'],
+    // Inventory and suppliers are read-only for Admin; the Inventory
+    // Manager adds and edits them and raises purchase orders.
     'GET  /inventory/detail'    => ['AdminInventoryController', 'detail'],
     'GET  /inventory/audit'     => ['AdminInventoryController', 'audit'],
     'GET  /inventory'           => ['AdminInventoryController', 'index'],
 
-    'GET  /procurement/create'  => ['AdminProcurementController', 'create'],
+    'GET  /purchase-orders'     => ['AdminPurchaseOrderController', 'index'],
 
-    'GET  /suppliers/create'    => ['AdminSupplierController', 'create'],
     'GET  /suppliers/detail'    => ['AdminSupplierController', 'detail'],
     'GET  /suppliers'           => ['AdminSupplierController', 'index'],
 

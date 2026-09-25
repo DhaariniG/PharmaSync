@@ -23,6 +23,11 @@
     <a href="<?= BASE_URL ?>/admin/suppliers" data-nav="suppliers">
       <i data-lucide="warehouse"></i> Suppliers
     </a>
+    <a href="<?= BASE_URL ?>/admin/purchase-orders" data-nav="purchase-orders">
+      <i data-lucide="clipboard-check"></i> PO Approvals
+      <?php /* Pending count; the PO Approvals page lowers it after Approve/Reject. */ ?>
+      <span class="nav-badge" id="poPendingBadge">3</span>
+    </a>
     <a href="<?= BASE_URL ?>/admin/reports" data-nav="reports">
       <i data-lucide="bar-chart-2"></i> Reports
     </a>
