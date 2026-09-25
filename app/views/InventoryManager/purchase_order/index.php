@@ -5,6 +5,9 @@
 
     <div class="content-area">
 
+        <?php require __DIR__ . '/../partials/flash.php'; ?>
+
+        <?php /* Sample data - the same POs appear on the Admin's PO Approvals page. */ ?>
         <div class="page-header-row">
             <div>
                 <h2 class="page-title">Purchase Orders</h2>
@@ -20,28 +23,28 @@
             <div class="summary-card">
                 <div>
                     <p class="summary-label">Total Orders</p>
-                    <h3 class="summary-value">48</h3>
+                    <h3 class="summary-value">8</h3>
                 </div>
                 <div class="summary-icon total"><?= icon('shopping-cart', 'material-symbols-outlined') ?></div>
             </div>
             <div class="summary-card">
                 <div>
                     <p class="summary-label">Pending</p>
-                    <h3 class="summary-value">5</h3>
+                    <h3 class="summary-value">3</h3>
                 </div>
                 <div class="summary-icon pending"><?= icon('clock', 'material-symbols-outlined') ?></div>
             </div>
             <div class="summary-card">
                 <div>
                     <p class="summary-label">Approved</p>
-                    <h3 class="summary-value">38</h3>
+                    <h3 class="summary-value">2</h3>
                 </div>
                 <div class="summary-icon approved"><?= icon('circle-check', 'material-symbols-outlined') ?></div>
             </div>
             <div class="summary-card">
                 <div>
                     <p class="summary-label">Received</p>
-                    <h3 class="summary-value">33</h3>
+                    <h3 class="summary-value">2</h3>
                 </div>
                 <div class="summary-icon received"><?= icon('package', 'material-symbols-outlined') ?></div>
             </div>
@@ -79,32 +82,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="td-po-number">PO#P00587</td>
-                        <td>HealthCorp Pvt Ltd (Colombo)</td>
+                        <td class="td-po-number">PO-2026-0112</td>
+                        <td>Ceylon Pharma Distributors</td>
                         <td>
-                            <span class="td-medicine-name">Paracetamol 500mg</span>
-                            <span class="td-medicine-category">Pain Relief</span>
-                        </td>
-                        <td class="td-center">200 Units</td>
-                        <td>May 21, 2025</td>
-                        <td><span class="status-pill approved">APPROVED</span></td>
-                        <td class="align-right">
-                            <div class="row-actions">
-                                <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
-                                <button class="icon-btn"><?= icon('pencil', 'material-symbols-outlined', 'font-size:20px;') ?></button>
-                                <button class="icon-btn delete"><?= icon('trash-2', 'material-symbols-outlined', 'font-size:20px;') ?></button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td-po-number">PO#P00586</td>
-                        <td>MediSupplies (Kandy)</td>
-                        <td>
-                            <span class="td-medicine-name">Amoxicillin 250mg</span>
+                            <span class="td-medicine-name">Amoxicillin 500mg &times; 300</span>
+                            <span class="td-medicine-category">Antibiotic</span>
+                            <span class="td-medicine-name">Azithromycin 250mg &times; 120</span>
                             <span class="td-medicine-category">Antibiotic</span>
                         </td>
-                        <td class="td-center">150 Units</td>
-                        <td>May 20, 2025</td>
+                        <td class="td-center">420 Units</td>
+                        <td>Sep 22, 2026</td>
                         <td><span class="status-pill pending">PENDING</span></td>
                         <td class="align-right">
                             <div class="row-actions">
@@ -115,15 +102,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="td-po-number">PO#P00585</td>
-                        <td>PharmaLife (Galle)</td>
+                        <td class="td-po-number">PO-2026-0111</td>
+                        <td>MedSupply Lanka (Pvt) Ltd</td>
                         <td>
-                            <span class="td-medicine-name">Vitamin D3</span>
-                            <span class="td-medicine-category">Supplements</span>
+                            <span class="td-medicine-name">Paracetamol 500mg</span>
+                            <span class="td-medicine-category">Pain Relief</span>
                         </td>
-                        <td class="td-center">300 Units</td>
-                        <td>May 19, 2025</td>
-                        <td><span class="status-pill received">RECEIVED</span></td>
+                        <td class="td-center">500 Units</td>
+                        <td>Sep 20, 2026</td>
+                        <td><span class="status-pill pending">PENDING</span></td>
                         <td class="align-right">
                             <div class="row-actions">
                                 <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
@@ -133,15 +120,17 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="td-po-number">PO#P00584</td>
-                        <td>MedStock Lanka (Negombo)</td>
+                        <td class="td-po-number">PO-2026-0110</td>
+                        <td>Colombo Wholesale Pharmaceuticals</td>
                         <td>
-                            <span class="td-medicine-name">Cetirizine 10mg</span>
+                            <span class="td-medicine-name">Salbutamol Inhaler 100mcg &times; 60</span>
+                            <span class="td-medicine-category">Respiratory</span>
+                            <span class="td-medicine-name">Cetirizine 10mg &times; 200</span>
                             <span class="td-medicine-category">Antihistamine</span>
                         </td>
-                        <td class="td-center">100 Units</td>
-                        <td>May 18, 2025</td>
-                        <td><span class="status-pill rejected">REJECTED</span></td>
+                        <td class="td-center">260 Units</td>
+                        <td>Sep 17, 2026</td>
+                        <td><span class="status-pill pending">PENDING</span></td>
                         <td class="align-right">
                             <div class="row-actions">
                                 <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
@@ -151,14 +140,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="td-po-number">PO#P00583</td>
-                        <td>CeyMed Distributors (Kurunegala)</td>
+                        <td class="td-po-number">PO-2026-0109</td>
+                        <td>MedSupply Lanka (Pvt) Ltd</td>
                         <td>
                             <span class="td-medicine-name">Metformin 500mg</span>
                             <span class="td-medicine-category">Diabetes</span>
                         </td>
-                        <td class="td-center">250 Units</td>
-                        <td>May 17, 2025</td>
+                        <td class="td-center">400 Units</td>
+                        <td>Sep 12, 2026</td>
                         <td><span class="status-pill approved">APPROVED</span></td>
                         <td class="align-right">
                             <div class="row-actions">
@@ -169,15 +158,71 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="td-po-number">PO#P00582</td>
-                        <td>HealthCorp Pvt Ltd (Colombo)</td>
+                        <td class="td-po-number">PO-2026-0108</td>
+                        <td>Colombo Wholesale Pharmaceuticals</td>
                         <td>
-                            <span class="td-medicine-name">Salbutamol Inhaler</span>
-                            <span class="td-medicine-category">Respiratory</span>
+                            <span class="td-medicine-name">Vitamin C 1000mg</span>
+                            <span class="td-medicine-category">Supplements</span>
+                        </td>
+                        <td class="td-center">600 Units</td>
+                        <td>Sep 08, 2026</td>
+                        <td><span class="status-pill approved">APPROVED</span></td>
+                        <td class="align-right">
+                            <div class="row-actions">
+                                <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn"><?= icon('pencil', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn delete"><?= icon('trash-2', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-po-number">PO-2026-0107</td>
+                        <td>Ceylon Pharma Distributors</td>
+                        <td>
+                            <span class="td-medicine-name">Ibuprofen 400mg &times; 250</span>
+                            <span class="td-medicine-category">Pain Relief</span>
+                            <span class="td-medicine-name">Paracetamol 500mg &times; 300</span>
+                            <span class="td-medicine-category">Pain Relief</span>
+                        </td>
+                        <td class="td-center">550 Units</td>
+                        <td>Sep 02, 2026</td>
+                        <td><span class="status-pill received">RECEIVED</span></td>
+                        <td class="align-right">
+                            <div class="row-actions">
+                                <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn"><?= icon('pencil', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn delete"><?= icon('trash-2', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-po-number">PO-2026-0106</td>
+                        <td>MedSupply Lanka (Pvt) Ltd</td>
+                        <td>
+                            <span class="td-medicine-name">Cetirizine 10mg</span>
+                            <span class="td-medicine-category">Antihistamine</span>
+                        </td>
+                        <td class="td-center">150 Units</td>
+                        <td>Aug 27, 2026</td>
+                        <td><span class="status-pill received">RECEIVED</span></td>
+                        <td class="align-right">
+                            <div class="row-actions">
+                                <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn"><?= icon('pencil', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                                <button class="icon-btn delete"><?= icon('trash-2', 'material-symbols-outlined', 'font-size:20px;') ?></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-po-number">PO-2026-0105</td>
+                        <td>Colombo Wholesale Pharmaceuticals</td>
+                        <td>
+                            <span class="td-medicine-name">Azithromycin 250mg</span>
+                            <span class="td-medicine-category">Antibiotic</span>
                         </td>
                         <td class="td-center">80 Units</td>
-                        <td>May 16, 2025</td>
-                        <td><span class="status-pill received">RECEIVED</span></td>
+                        <td>Aug 21, 2026</td>
+                        <td><span class="status-pill rejected">REJECTED</span></td>
                         <td class="align-right">
                             <div class="row-actions">
                                 <button class="icon-btn"><?= icon('eye', 'material-symbols-outlined', 'font-size:20px;') ?></button>
@@ -190,14 +235,10 @@
             </table>
 
             <div class="pagination-row">
-                <p class="pagination-info">Showing 1 to 6 of 48 orders</p>
+                <p class="pagination-info">Showing 1 to 8 of 8 orders</p>
                 <div class="pagination-buttons">
                     <button class="page-text-btn">Previous</button>
                     <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn dots">...</button>
-                    <button class="page-btn">8</button>
                     <button class="page-text-btn">Next</button>
                 </div>
             </div>

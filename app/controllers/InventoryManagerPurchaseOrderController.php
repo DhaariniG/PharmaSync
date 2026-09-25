@@ -30,4 +30,18 @@ class InventoryManagerPurchaseOrderController extends Controller
             'page_css'    => 'purchase_orders_add.css',
         ]);
     }
+
+    /**
+     * POST /InventoryManager/purchase-orders
+     * Sample data only: nothing is saved yet. The PO goes to the Admin's
+     * PO Approvals page once purchase orders are stored in the database.
+     */
+    public function store(): void
+    {
+        $this->verifyCsrf();
+        $this->requireRole('Inventory_Manager');
+
+        $this->flash('success', 'Purchase order submitted for Admin approval.');
+        $this->redirect('/InventoryManager/purchase-orders');
+    }
 }
