@@ -124,7 +124,18 @@ class CustomerPrescriptionController extends Controller
             }
         }
 
+        // What this prescription still allows: prescribed / ordered / left.
+        $coverage = [];
+        foreach ((new Prescription())->coverage($prescription) as $medicineId => $line) {
+            $m = $medicineModel->find((int) $medicineId);
+            if ($m) {
+                $coverage[] = $line + ['medicine' => $m];
+            }
+        }
+
         $this->render('prescription.status', [
+            'coverage'            => $coverage,
+            'usedInOrders'        => (new Order())->forPrescription((int) $prescription['id']),
             'prescription'        => $prescription,
             'patientLabel'        => (new FamilyMember())->label(
                                         $this->currentUser()['id'],
@@ -148,9 +159,9 @@ class CustomerPrescriptionController extends Controller
             return;
         }
 
-        $line = (new Prescription())->approveAlternative($prescriptionId);
-        if ($line) {
-            (new Cart())->add($line['medicine_id'], $line['quantity']);
+        $model = new Prescription();
+        if ($model->approveAlternative($prescriptionId)) {
+            $this->putInCart($model->find($prescriptionId));
             $this->flash('success', 'Alternative approved and added to your cart.');
         }
 
@@ -188,13 +199,11 @@ class CustomerPrescriptionController extends Controller
             return;
         }
 
-        $lines = (new Prescription())->confirmPrepared($prescriptionId);
-        $cart = new Cart();
-        foreach ($lines as $line) {
-            $cart->add((int) $line['medicine_id'], (int) $line['quantity']);
-        }
-
-        if (!empty($lines)) {
+        // Works once: after this the prescription is 'approved', and asking
+        // again does nothing (it used to add the same items every time).
+        $model = new Prescription();
+        if ($model->confirmPrepared($prescriptionId)) {
+            $this->putInCart($model->find($prescriptionId));
             $this->flash('success', 'Prepared order confirmed and added to your cart.');
         }
 
@@ -227,5 +236,62 @@ class CustomerPrescriptionController extends Controller
         header('X-Content-Type-Options: nosniff');
         readfile($path);
         exit;
+    }
+
+    /**
+     * Put whatever an approved prescription still allows into the cart -
+     * e.g. after items were removed from the cart, or an order using it was
+     * cancelled. Sets the quantity rather than adding, so pressing it twice
+     * changes nothing.
+     */
+    public function addToCart($id): void
+    {
+        $this->verifyCsrf();
+        $this->requireRole('Customer');
+
+        $prescriptionId = (int) $id;
+        $prescription = (new Prescription())->find($prescriptionId);
+        if (!$prescription || $prescription['user_id'] !== ($this->currentUser()['id'] ?? null)) {
+            $this->redirect('/customer/prescription/upload');
+            return;
+        }
+
+        if ($this->putInCart($prescription) > 0) {
+            $this->flash('success', 'The items left on this prescription are in your cart.');
+            $this->redirect('/customer/cart');
+            return;
+        }
+
+        $this->flash('error', 'Nothing left to add - this prescription has been used in full, or the items are out of stock.');
+        $this->redirect('/customer/prescription/status/' . $prescriptionId);
+    }
+
+    /**
+     * Cart quantity for each line = what this prescription still allows,
+     * never more than stock. Returns how many lines went in.
+     */
+    private function putInCart(?array $prescription): int
+    {
+        if (!$prescription) {
+            return 0;
+        }
+
+        $userId = $this->currentUser()['id'] ?? null;
+        $model = new Prescription();
+        $medicines = new CustomerMedicine();
+        $cart = new Cart();
+        $added = 0;
+
+        foreach ($model->coverage($prescription) as $medicineId => $line) {
+            $medicine = $medicines->find((int) $medicineId);
+            if (!$medicine || $line['left'] < 1) {
+                continue;
+            }
+            $result = $cart->setWithinLimit($medicine, $line['left'], $userId);
+            if ($result['quantity'] > 0) {
+                $added++;
+            }
+        }
+        return $added;
     }
 }

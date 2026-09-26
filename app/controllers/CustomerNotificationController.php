@@ -14,6 +14,7 @@ class CustomerNotificationController extends Controller
         $this->render('notification.index', [
             'notifications' => $model->byType($type),
             'activeType'    => $type,
+            'hiddenCount'   => $model->hiddenCount(),
         ]);
     }
 

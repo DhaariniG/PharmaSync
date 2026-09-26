@@ -8,7 +8,7 @@
 
 <div class="note note-warn flex middle gap-2">
   <?= icon('triangle-alert') ?>
-  <div><strong><?= htmlspecialchars($original['name']) ?></strong> is currently out of stock. Here are some alternatives in the same category.</div>
+  <div><strong><?= htmlspecialchars($original['name']) ?></strong> is currently out of stock. Below is the same medicine (<?= e(($original['generic'] ?? '') . ' ' . ($original['strength'] ?? '')) ?>) from other makers.</div>
 </div>
 
 <h5 class="ps-section-title mb-3">Suggested alternatives</h5>

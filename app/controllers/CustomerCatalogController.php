@@ -6,27 +6,25 @@ class CustomerCatalogController extends Controller
 
     protected string $viewBase = 'customer';
 
+    private const SORTS = ['relevance', 'price_asc', 'price_desc', 'name'];
+
     public function index(): void
     {
         $this->allowGuest();
 
         $medicineModel = new CustomerMedicine();
-        $categoryId = $this->input('category');
-        $categoryId = $categoryId !== null ? (int) $categoryId : null;
+        $filters = $this->filters();
 
-        $items = $categoryId ? $medicineModel->byCategory($categoryId) : $medicineModel->all();
-        $items = $this->applyFilters($medicineModel, $items);
+        $items = $filters['category'] ? $medicineModel->byCategory($filters['category']) : $medicineModel->all();
+        $items = $this->applyFilters($medicineModel, $items, $filters);
 
         $this->render('catalog.index', [
             'items'          => $items,
+            'filters'        => $filters,
             'categories'     => CustomerMedicine::categories(),
             'categoryCounts' => CustomerMedicine::categoryCounts(),
             'brands'         => CustomerMedicine::brands(),
             'priceRange'     => CustomerMedicine::priceRange(),
-            'activeCategory' => $categoryId,
-            'activeBrands'   => $this->selectedBrands(),
-            'activeSort'     => $this->input('sort', 'relevance'),
-            'query'          => '',
             'pageTitle'      => 'Pharmacy Catalog',
         ]);
     }
@@ -35,21 +33,26 @@ class CustomerCatalogController extends Controller
     {
         $this->allowGuest();
 
-        $q = trim((string) $this->input('q', ''));
+        $q = $this->scalar('q');
         $medicineModel = new CustomerMedicine();
-        $items = $medicineModel->search($q);
-        $items = $this->applyFilters($medicineModel, $items);
+        $filters = $this->filters();
+
+        $matches = $medicineModel->search($q);
+
+        // Category counts show how many of THESE results sit in each
+        // category, so the numbers in the sidebar match what you get.
+        $categoryCounts = CustomerMedicine::categoryCounts($matches);
+
+        $items = $filters['category'] ? $medicineModel->inCategory($matches, $filters['category']) : $matches;
+        $items = $this->applyFilters($medicineModel, $items, $filters);
 
         $this->render('catalog.search', [
             'items'          => $items,
+            'filters'        => $filters,
             'categories'     => CustomerMedicine::categories(),
-            // The filter sidebar is shared with the catalog page and needs
-            // these two. Without them /search fataled on array_sum(null).
-            'categoryCounts' => CustomerMedicine::categoryCounts(),
-            'activeCategory' => null,
+            'categoryCounts' => $categoryCounts,
             'brands'         => CustomerMedicine::brands(),
             'priceRange'     => CustomerMedicine::priceRange(),
-            'activeBrands'   => $this->selectedBrands(),
             'query'          => $q,
             'suggested'      => array_slice($medicineModel->all(), 0, 4),
         ]);
@@ -73,23 +76,69 @@ class CustomerCatalogController extends Controller
         ]);
     }
 
-    private function selectedBrands(): array
+    /**
+     * Every filter on the page, read once and cleaned. The views build all
+     * their links and hidden fields from this, so choosing a category, a
+     * brand, a price or a sort order never throws the others away.
+     */
+    private function filters(): array
     {
-        $brands = $this->input('brand', []);
-        return is_array($brands) ? $brands : [$brands];
+        $categoryId = (int) $this->scalar('category');
+        if (!isset(CustomerMedicine::categories()[$categoryId])) {
+            $categoryId = null;
+        }
+
+        // Only brands the shop actually has. Anything else is ignored.
+        $posted = $this->input('brand', []);
+        $posted = is_array($posted) ? $posted : [$posted];
+        $posted = array_filter($posted, 'is_string');
+        $brands = array_values(array_intersect(CustomerMedicine::brands(), $posted));
+
+        $min = $this->price('min_price');
+        $max = $this->price('max_price');
+        if ($min !== null && $max !== null && $min > $max) {
+            [$min, $max] = [$max, $min];   // typed the wrong way round
+        }
+
+        $sort = $this->scalar('sort', 'relevance');
+        if (!in_array($sort, self::SORTS, true)) {
+            $sort = 'relevance';
+        }
+
+        return [
+            'category'  => $categoryId,
+            'brand'     => $brands,
+            'min_price' => $min,
+            'max_price' => $max,
+            'sort'      => $sort,
+        ];
     }
 
-    private function applyFilters(CustomerMedicine $medicineModel, array $items): array
+    /** One GET field as trimmed text. Arrays (?q[]=x) are ignored, not warned about. */
+    private function scalar(string $key, string $default = ''): string
     {
-        $minPrice = $this->input('min_price');
-        $maxPrice = $this->input('max_price');
+        $value = $this->input($key, $default);
+        return is_scalar($value) ? trim((string) $value) : $default;
+    }
 
+    /** A price box: a number of zero or more, or null when left empty. */
+    private function price(string $key): ?float
+    {
+        $value = $this->input($key);
+        if (!is_scalar($value) || !is_numeric(trim((string) $value))) {
+            return null;
+        }
+        return max(0.0, (float) $value);
+    }
+
+    private function applyFilters(CustomerMedicine $medicineModel, array $items, array $filters): array
+    {
         return $medicineModel->filterAndSort(
             $items,
-            $this->selectedBrands(),
-            $minPrice !== null && $minPrice !== '' ? (float) $minPrice : null,
-            $maxPrice !== null && $maxPrice !== '' ? (float) $maxPrice : null,
-            (string) $this->input('sort', 'relevance')
+            $filters['brand'],
+            $filters['min_price'],
+            $filters['max_price'],
+            $filters['sort']
         );
     }
 }

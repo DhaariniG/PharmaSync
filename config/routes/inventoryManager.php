@@ -27,7 +27,6 @@ return [
 
     // Purchase orders
     'GET  /purchase-orders/create' => ['InventoryManagerPurchaseOrderController', 'create'],
-    'POST /purchase-orders'        => ['InventoryManagerPurchaseOrderController', 'store'],
     'GET  /purchase-orders'        => ['InventoryManagerPurchaseOrderController', 'index'],
 
     // Alerts

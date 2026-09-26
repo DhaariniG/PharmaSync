@@ -57,7 +57,8 @@
       <span class="semibold ms-1"><?= number_format($rating['stars'], 1) ?>/5</span>
       <span class="muted">(<?= $rating['count'] ?> Reviews)</span>
     </div>
-    <div class="size-3 ps-price mb-3">Rs. <?= number_format($medicine['price'], 2) ?></div>
+    <div class="size-3 ps-price mb-1">Rs. <?= number_format($medicine['price'], 2) ?></div>
+    <div class="ps-pack mb-3">Price per <?= e(lcfirst(CustomerMedicine::packLabel($medicine))) ?>. The quantity you choose is the number of <?= e(CustomerMedicine::unitName($medicine, 2)) ?>.</div>
 
     <?php if ($medicine['stock'] > 0): ?>
       <?php if ($medicine['requires_rx']): ?>
@@ -68,11 +69,7 @@
 
         <form method="GET" action="<?= BASE_URL ?>/customer/prescription/upload" class="flex middle gap-3 wrap mb-3">
           <input type="hidden" name="medicine_id" value="<?= $medicine['id'] ?>">
-          <div class="flex middle border rounded" data-qty-stepper>
-            <button type="button" class="btn btn-sm" data-qty-minus><?= icon('minus') ?></button>
-            <input type="number" name="quantity" value="1" min="1" max="<?= $medicine['stock'] ?>" class="field border-0 text-center" style="width:60px;">
-            <button type="button" class="btn btn-sm" data-qty-plus><?= icon('plus') ?></button>
-          </div>
+          <?php require __DIR__ . '/../partials/pack-quantity.php'; ?>
           <button type="submit" class="btn btn-ps-primary px-4"><?= icon('scroll-text', 'me-2') ?>Upload Prescription</button>
         </form>
         <div class="flex gap-4 small muted">
@@ -83,11 +80,7 @@
         <form method="POST" action="<?= BASE_URL ?>/customer/cart/add" class="flex middle gap-3 wrap mb-3" data-validate>
             <?= csrf_field() ?>
           <input type="hidden" name="medicine_id" value="<?= $medicine['id'] ?>">
-          <div class="flex middle border rounded" data-qty-stepper>
-            <button type="button" class="btn btn-sm" data-qty-minus><?= icon('minus') ?></button>
-            <input type="number" name="quantity" value="1" min="1" max="<?= $medicine['stock'] ?>" class="field border-0 text-center" style="width:60px;">
-            <button type="button" class="btn btn-sm" data-qty-plus><?= icon('plus') ?></button>
-          </div>
+          <?php require __DIR__ . '/../partials/pack-quantity.php'; ?>
           <button type="submit" class="btn btn-ps-outline px-4"><?= icon('shopping-cart', 'me-2') ?>Add to Cart</button>
           <button type="submit" name="buy_now" value="1" class="btn btn-ps-primary px-4">Buy Now</button>
         </form>

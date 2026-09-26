@@ -20,9 +20,9 @@ $readOnly = $readOnly ?? !empty($original['requires_rx']);
         <p class="muted mb-4">
           <strong><?= htmlspecialchars($original['name']) ?></strong> is out of stock.
           <?php if ($readOnly): ?>
-            This is a prescription medicine, so a pharmacist will choose a suitable alternative for you if needed — you'll be notified to approve it. For your reference, here are the in-stock alternatives our pharmacists may consider.
+            This is a prescription medicine, so a pharmacist will choose a suitable alternative for you if needed — you'll be notified to approve it. For your reference, here is the same medicine and strength from other makers that the pharmacist may offer.
           <?php else: ?>
-            Our pharmacist recommends these safe, in-stock alternatives.
+            Below is the same medicine and strength from another maker, in stock now.
           <?php endif; ?>
         </p>
 

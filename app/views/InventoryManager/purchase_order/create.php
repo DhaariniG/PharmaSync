@@ -16,8 +16,7 @@
         </a>
         </div>
 
-        <form class="po-grid" method="post" action="<?= url('/InventoryManager/purchase-orders') ?>">
-            <?= csrf_field() ?>
+        <div class="po-grid">
 
             <!-- Left: form -->
             <div class="form-column">
@@ -31,9 +30,9 @@
                     <div class="form-field">
                         <label for="supplier_id">Select Supplier</label>
                         <select id="supplier_id" name="supplier_id">
-                            <option>MedSupply Lanka (Pvt) Ltd</option>
-                            <option>Ceylon Pharma Distributors</option>
-                            <option>Colombo Wholesale Pharmaceuticals</option>
+                            <option>HealthCorp Pvt Ltd</option>
+                            <option>MediGenics Solutions</option>
+                            <option>Global Pharma Distribution</option>
                         </select>
                     </div>
 
@@ -43,16 +42,16 @@
                         </div>
                         <div class="supplier-info-grid">
                             <div>
-                                <p class="info-label">Email</p>
-                                <p class="info-value">orders@medsupplylanka.lk</p>
+                                <p class="info-label">Contact Person</p>
+                                <p class="info-value">Johnathan Smith</p>
                             </div>
                             <div>
                                 <p class="info-label">Phone</p>
-                                <p class="info-value">+94 11 234 5001</p>
+                                <p class="info-value">+1 (555) 098-1234</p>
                             </div>
                             <div class="full-width">
                                 <p class="info-label">Address</p>
-                                <p class="info-value">221 Negombo Road, Colombo 14</p>
+                                <p class="info-value">402 Industrial Estate, Medical Hub, North Zone, NY 10012</p>
                             </div>
                         </div>
                     </div>
@@ -80,8 +79,8 @@
                     <div class="item-row">
                         <select>
                             <option>Paracetamol 500mg</option>
-                            <option>Amoxicillin 500mg</option>
-                            <option>Vitamin C 1000mg</option>
+                            <option>Amoxicillin 250mg</option>
+                            <option>Vitamin D3</option>
                         </select>
                         <input type="number" value="200">
                         <select class="unit-select">
@@ -96,9 +95,9 @@
 
                     <div class="item-row">
                         <select>
-                            <option>Amoxicillin 500mg</option>
+                            <option>Amoxicillin 250mg</option>
                             <option>Paracetamol 500mg</option>
-                            <option>Vitamin C 1000mg</option>
+                            <option>Vitamin D3</option>
                         </select>
                         <input type="number" value="150">
                         <select class="unit-select">
@@ -113,9 +112,9 @@
 
                     <div class="item-row">
                         <select>
-                            <option>Vitamin C 1000mg</option>
+                            <option>Vitamin D3</option>
                             <option>Paracetamol 500mg</option>
-                            <option>Amoxicillin 500mg</option>
+                            <option>Amoxicillin 250mg</option>
                         </select>
                         <input type="number" value="300">
                         <select class="unit-select">
@@ -150,15 +149,15 @@
                     <div class="summary-rows">
                         <div class="summary-row">
                             <span class="label">PO Number</span>
-                            <span class="value">PO-2026-0113</span>
+                            <span class="value">PO-2025-0522-01</span>
                         </div>
                         <div class="summary-row">
                             <span class="label">Supplier</span>
-                            <span class="value" style="font-weight:500;">MedSupply Lanka (Pvt) Ltd</span>
+                            <span class="value" style="font-weight:500;">HealthCorp Pvt Ltd</span>
                         </div>
                         <div class="summary-row">
                             <span class="label">Order Date</span>
-                            <span class="value" style="font-weight:500;">Sep 25, 2026</span>
+                            <span class="value" style="font-weight:500;">May 22, 2025</span>
                         </div>
                         <div class="summary-row">
                             <span class="label">Status</span>
@@ -176,11 +175,11 @@
                                 <span class="qty">200 Units</span>
                             </div>
                             <div class="summary-item-row">
-                                <span>Amoxicillin 500mg</span>
+                                <span>Amoxicillin 250mg</span>
                                 <span class="qty">150 Units</span>
                             </div>
                             <div class="summary-item-row">
-                                <span>Vitamin C 1000mg</span>
+                                <span>Vitamin D3</span>
                                 <span class="qty">300 Units</span>
                             </div>
                         </div>
@@ -198,7 +197,7 @@
                     </div>
 
                     <div class="summary-actions">
-                        <button type="submit" class="btn-submit">Submit Purchase Order</button>
+                        <button type="button" class="btn-submit">Submit Purchase Order</button>
                         <button type="button" class="btn-draft">Save as Draft</button>
                         <button type="button" class="btn-cancel-link">Cancel Order</button>
                     </div>
@@ -206,10 +205,10 @@
 
                 <div class="info-note" style="margin-top: var(--space-lg);">
                     <?= icon('info', 'material-symbols-outlined') ?>
-                    <p>Submitted purchase orders go to the Admin for approval. Once approved, the PO is sent to the supplier's registered email.</p>
+                    <p>This PO will be sent to the supplier's registered email once submitted. Approval from the Chief Pharmacist may be required for orders exceeding 500 units.</p>
                 </div>
             </div>
 
-        </form>
+        </div>
     </div>
 </div>

@@ -36,6 +36,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // Delivery date + time picker (partials/delivery-slot-picker.php).
+  // Clicking a day shows that day's windows; the ticked window stays ticked
+  // while you look at other days, and its day gets a small dot.
+  document.querySelectorAll('[data-slot-picker]').forEach(function (picker) {
+    var days = picker.querySelectorAll('.ps-day');
+    var panels = picker.querySelectorAll('[data-day-panel]');
+    var field = picker.dataset.field || 'delivery_slot';
+
+    function chosen() {
+      return picker.querySelector('input[name="' + field + '"]:checked');
+    }
+    function showDay(date) {
+      days.forEach(function (d) {
+        var on = d.dataset.day === date;
+        d.classList.toggle('active', on);
+        d.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      panels.forEach(function (p) {
+        p.classList.toggle('hidden', p.dataset.dayPanel !== date);
+      });
+    }
+    function markChoice() {
+      var c = chosen();
+      days.forEach(function (d) {
+        d.classList.toggle('has-choice', !!c && c.value.split('|')[0] === d.dataset.day);
+      });
+    }
+
+    days.forEach(function (d) {
+      d.addEventListener('click', function () { showDay(d.dataset.day); });
+    });
+    picker.addEventListener('change', markChoice);
+
+    var first = chosen();
+    if (days.length) showDay(first ? first.value.split('|')[0] : days[0].dataset.day);
+    markChoice();
+  });
+
+  // Pack totals under a quantity stepper (product page): "= 20 tablets".
+  // Quantity counts packs, so the total is quantity x pack size.
+  document.querySelectorAll('[data-pack-total]').forEach(function (out) {
+    var input = out.parentElement.querySelector('input[type="number"]');
+    if (!input) return;
+    var size = parseInt(out.dataset.packSize, 10) || 0;
+    function refresh() {
+      var qty = Math.max(1, parseInt(input.value, 10) || 1);
+      out.textContent = '= ' + (qty * size) + ' ' + out.dataset.packItem;
+    }
+    input.addEventListener('input', refresh);
+    input.addEventListener('change', refresh);
+  });
+
   // Show validation messages when a form is submitted
   document.querySelectorAll('form[data-validate]').forEach(function (form) {
     form.addEventListener('submit', function (e) {

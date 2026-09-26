@@ -27,7 +27,7 @@
           <p>Manage 24 active vendor partnerships and logistics.</p>
         </div>
         <div class="page-head-actions">
-          <a href="<?= BASE_URL ?>/admin/purchase-orders" class="btn btn-outline"><i data-lucide="clipboard-check"></i> PO Approvals</a>
+          <a href="<?= BASE_URL ?>/admin/procurement/create" class="btn btn-primary" style="background:var(--teal-500);"><i data-lucide="shopping-cart"></i> New Procurement Action</a>
         </div>
       </div>
 
@@ -136,7 +136,7 @@
               <span class="badge badge-gray">Delivered</span>
             </div>
           </div>
-          <a href="<?= BASE_URL ?>/admin/purchase-orders" class="panel-footer-link">View All Purchase Orders</a>
+          <a href="<?= BASE_URL ?>/admin/suppliers" class="panel-footer-link">View All Procurement History</a>
         </div>
       </div>
     </main>

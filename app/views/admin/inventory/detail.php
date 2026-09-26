@@ -41,9 +41,13 @@ const ITEMS = {
 };
 
 const id = getParam('id') || 'BT-99021-X';
+const editMode = getParam('mode') === 'edit';
 const it = ITEMS[id] || ITEMS['BT-99021-X'];
 
 function fieldRow(label, value) {
+  if (editMode) {
+    return `<div class="form-group"><label>${label}</label><input type="text" value="${value}" /></div>`;
+  }
   return `<div class="detail-row"><span class="k">${label}</span><span class="v">${value}</span></div>`;
 }
 
@@ -60,25 +64,31 @@ document.getElementById('detailRoot').innerHTML = `
   <div class="detail-grid">
     <div class="panel">
       <div class="detail-section">
-        <h3>Batch Details</h3>
-        <div>
+        <h3>${editMode ? 'Edit Batch' : 'Batch Details'}</h3>
+        <div class="${editMode ? 'form-grid' : ''}">
           ${fieldRow('Stock Quantity', it.qty)}
           ${fieldRow('Expiration Date', it.expiry)}
           ${fieldRow('Warehouse Location', it.location)}
           ${fieldRow('Status', it.status)}
         </div>
       </div>
+      ${editMode ? '<div class="form-actions"><a href="<?= BASE_URL ?>/admin/inventory/detail?id='+id+'" class="btn btn-outline">Cancel</a><button class="btn btn-primary" id="saveBtn"><i data-lucide="check"></i> Save Changes</button></div>' : ''}
     </div>
     <div class="panel">
-      <div class="panel-header"><h2><i data-lucide="eye"></i> View Only</h2></div>
-      <p class="readonly-note">Stock and batches are managed by the Inventory Manager. Admin can view them and run audits.</p>
+      <div class="panel-header"><h2>Actions</h2></div>
       <div class="action-list">
-        <a href="<?= BASE_URL ?>/admin/inventory/audit" class="btn btn-outline"><i data-lucide="file-bar-chart"></i> Generate Audit</a>
+        <a href="<?= BASE_URL ?>/admin/inventory/detail?id=${id}&mode=edit" class="btn btn-outline"><i data-lucide="pencil"></i> Edit Batch</a>
+        <button class="btn btn-outline" id="disposalBtn"><i data-lucide="trash-2"></i> Flag for Disposal</button>
+        <button class="btn btn-outline" id="redistributeBtn"><i data-lucide="shuffle"></i> Request Redistribution</button>
       </div>
     </div>
   </div>
 `;
 if (window.lucide) lucide.createIcons();
+const save = document.getElementById('saveBtn');
+if (save) save.addEventListener('click', () => showToast('Batch updated', '<?= BASE_URL ?>/admin/inventory/detail?id=' + id));
+document.getElementById('disposalBtn').addEventListener('click', () => showToast('Batch ' + id + ' flagged for disposal'));
+document.getElementById('redistributeBtn').addEventListener('click', () => showToast('Redistribution request submitted'));
 </script>
 </body>
 </html>

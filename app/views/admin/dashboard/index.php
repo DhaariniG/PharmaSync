@@ -30,7 +30,7 @@
           <a href="<?= BASE_URL ?>/admin/accounts/create" class="btn btn-primary"><i data-lucide="user-plus"></i> Create User</a>
           <a href="<?= BASE_URL ?>/admin/deliveries/create" class="btn btn-primary"><i data-lucide="send"></i> Assign Delivery</a>
           <a href="<?= BASE_URL ?>/admin/reports" class="btn btn-outline"><i data-lucide="file-bar-chart"></i> Generate Report</a>
-          <a href="<?= BASE_URL ?>/admin/purchase-orders" class="btn btn-outline"><i data-lucide="clipboard-check"></i> PO Approvals</a>
+          <a href="<?= BASE_URL ?>/admin/suppliers/create" class="btn btn-outline"><i data-lucide="truck"></i> Add Supplier</a>
         </div>
       </div>
 
@@ -161,7 +161,7 @@
             <div class="alert-card crit">
               <div class="alert-title crit"><i data-lucide="pill"></i> Low Stock Alert</div>
               <div class="alert-body">Insulin Glargine (Solostar) is below safety threshold (<b>5 units left</b>).</div>
-              <a href="<?= BASE_URL ?>/admin/inventory" class="alert-btn crit" style="display:block;text-align:center;">View Inventory</a>
+              <a href="<?= BASE_URL ?>/admin/procurement/create?item=Insulin+Glargine+(Solostar)" class="alert-btn crit" style="display:block;text-align:center;">Order Now</a>
             </div>
             <div class="alert-card warn">
               <div class="alert-title warn"><i data-lucide="calendar-clock"></i> Expiry Warning</div>

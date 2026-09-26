@@ -131,11 +131,13 @@ class Order extends Model
                 ['label' => 'Collected',         'time' => 'Pending', 'done' => false],
             ];
         } else {
+            // The last step shows the window the customer booked.
+            $slotText = DeliverySlot::describe($data['delivery_slot'] ?? null, 'D, j M');
             $tracking = [
                 ['label' => 'Order Received',    'time' => date('M j, g:i A'), 'done' => true],
                 ['label' => 'Pharmacist Review', 'time' => 'Pending', 'done' => false],
                 ['label' => 'In Transit',        'time' => 'Pending', 'done' => false],
-                ['label' => 'Out for Delivery',  'time' => 'Pending', 'done' => false],
+                ['label' => 'Out for Delivery',  'time' => $slotText !== null ? 'Scheduled ' . $slotText : 'Pending', 'done' => false],
             ];
         }
 
@@ -155,12 +157,21 @@ class Order extends Model
             'address'        => $method === 'pickup' ? null : ($data['address'] ?? null),
             'address_notes'  => $method === 'pickup' ? '' : ($data['address_notes'] ?? ''),
             'pickup'         => $method === 'pickup' ? ($data['pickup'] ?? null) : null,
+            // Home delivery only: ['date' => 'Y-m-d', 'start' => 'H:i', 'end' => 'H:i'].
+            // Orders placed before slots existed simply don't have it.
+            'delivery_slot'  => $method === 'pickup' ? null : ($data['delivery_slot'] ?? null),
             'items'          => $data['items'],
             'subtotal'       => $data['subtotal'],
             'discount'       => $data['discount'] ?? 0,
             'delivery_fee'   => $data['delivery_fee'],
             'tax'            => $data['tax'] ?? 0,
             'total'          => $data['total'],
+            // Whether the money is in: see paymentLabel().
+            'payment_status' => self::initialPaymentStatus($data['payment_method']),
+            // One use per customer is checked against this (Cart::promoProblem).
+            'promo_code'     => $data['promo_code'] ?? null,
+            // Allergy warnings the customer saw and accepted, for the pharmacist.
+            'allergy_alerts' => $data['allergy_alerts'] ?? [],
             'placed_at'      => date('Y-m-d H:i:s'),
             'delivery_person' => $method === 'pickup' ? null : 'Not assigned yet',
             'tracking'       => $tracking,
@@ -170,8 +181,187 @@ class Order extends Model
         return $order;
     }
 
+    /**
+     * Orders (from every customer) booked into one delivery window.
+     * Cancelled orders free their place. Used by DeliverySlot.
+     */
+    public function countForDeliverySlot(string $date, string $start): int
+    {
+        $count = 0;
+        foreach ($this->store() as $o) {
+            $slot = $o['delivery_slot'] ?? null;
+            if ($slot
+                && ($slot['date'] ?? null) === $date
+                && ($slot['start'] ?? null) === $start
+                && ($o['status'] ?? '') !== 'cancelled') {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
     public static function statusLabel(string $status): string
     {
         return ucfirst($status);
+    }
+
+    /* ==================================================================
+     * Payment
+     * ================================================================== */
+
+    /**
+     * paid              card - charged when the order was placed
+     * pay_on_delivery   cash when the rider arrives, or at the counter
+     * refund_due        a paid order was cancelled; the money goes back
+     * not_charged       an unpaid order was cancelled
+     */
+    private static function initialPaymentStatus(string $method): string
+    {
+        return [
+            'card'          => 'paid',
+            'cod'           => 'pay_on_delivery',
+        ][$method] ?? 'pay_on_delivery';
+    }
+
+    /** Payment status, also for older orders saved before it was stored. */
+    public static function paymentStatus(array $order): string
+    {
+        if (!empty($order['payment_status'])) {
+            return $order['payment_status'];
+        }
+        if (($order['status'] ?? '') === 'delivered') {
+            return 'paid';
+        }
+        return self::initialPaymentStatus((string) ($order['payment_method'] ?? 'cod'));
+    }
+
+    /** "Paid by card", "Pay on delivery" ... */
+    public static function paymentLabel(array $order): string
+    {
+        $pickup = ($order['delivery_method'] ?? '') === 'pickup';
+        return [
+            'paid'              => ($order['payment_method'] ?? '') === 'card' ? 'Paid by card' : 'Paid',
+            'pay_on_delivery'   => $pickup ? 'Pay at the counter' : 'Pay on delivery',
+            'refund_due'        => 'Refund due',
+            'not_charged'       => 'Not charged',
+        ][self::paymentStatus($order)] ?? 'Unpaid';
+    }
+
+    /** True once the customer has actually paid. */
+    public static function isPaid(array $order): bool
+    {
+        return self::paymentStatus($order) === 'paid';
+    }
+
+    /* ==================================================================
+     * Customer changes: cancel, new delivery time
+     * ================================================================== */
+
+    /**
+     * Only an order nobody has started on can be changed. Once it is in
+     * pharmacist review ('processing') or later, the pharmacy must be asked.
+     */
+    public static function canChange(array $order): bool
+    {
+        return ($order['status'] ?? '') === 'pending';
+    }
+
+    private function change(int $id, array $changes): ?array
+    {
+        $store = &$this->store();
+        foreach ($store as &$o) {
+            if ($o['id'] === $id) {
+                $o = array_merge($o, $changes);
+                return $o;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Cancel a pending order. Its delivery window and prescription
+     * quantities are freed (both are counted from non-cancelled orders).
+     * A card payment becomes a refund to be paid back.
+     */
+    public function cancel(int $id): ?array
+    {
+        $order = $this->find($id);
+        if (!$order || !self::canChange($order)) {
+            return null;
+        }
+
+        $tracking = $order['tracking'] ?? [];
+        $tracking[] = ['label' => 'Cancelled by you', 'time' => date('M j, g:i A'), 'done' => true];
+
+        return $this->change($id, [
+            'status'         => 'cancelled',
+            'payment_status' => self::isPaid($order) ? 'refund_due' : 'not_charged',
+            'cancelled_at'   => date('Y-m-d H:i:s'),
+            'tracking'       => $tracking,
+        ]);
+    }
+
+    /** Move a pending home delivery to another window. */
+    public function reschedule(int $id, array $slot): ?array
+    {
+        $order = $this->find($id);
+        if (!$order || !self::canChange($order) || ($order['delivery_method'] ?? '') !== 'delivery') {
+            return null;
+        }
+
+        $tracking = $order['tracking'] ?? [];
+        foreach ($tracking as &$step) {
+            if ($step['label'] === 'Out for Delivery') {
+                $step['time'] = 'Scheduled ' . DeliverySlot::describe($slot, 'D, j M');
+            }
+        }
+        unset($step);
+
+        return $this->change($id, [
+            'delivery_slot' => ['date' => $slot['date'], 'start' => $slot['start'], 'end' => $slot['end']],
+            'tracking'      => $tracking,
+        ]);
+    }
+
+    /* ==================================================================
+     * Used by Prescription and Cart
+     * ================================================================== */
+
+    /**
+     * Packs of each medicine already ordered with one prescription,
+     * cancelled orders left out. [medicine_id => packs]
+     */
+    public function quantitiesOrderedWith(int $prescriptionId): array
+    {
+        $totals = [];
+        foreach ($this->store() as $o) {
+            if ((int) ($o['prescription_id'] ?? 0) !== $prescriptionId || ($o['status'] ?? '') === 'cancelled') {
+                continue;
+            }
+            foreach ($o['items'] ?? [] as $item) {
+                $medicineId = (int) $item['medicine_id'];
+                $totals[$medicineId] = ($totals[$medicineId] ?? 0) + (int) $item['quantity'];
+            }
+        }
+        return $totals;
+    }
+
+    /** Orders placed with one prescription, newest first (cancelled ones included). */
+    public function forPrescription(int $prescriptionId): array
+    {
+        $orders = array_filter($this->store(), fn($o) => (int) ($o['prescription_id'] ?? 0) === $prescriptionId);
+        usort($orders, fn($a, $b) => strtotime($b['placed_at']) <=> strtotime($a['placed_at']));
+        return array_values($orders);
+    }
+
+    /** The customer's earlier order that used this promo code, if any. */
+    public function orderUsingPromo(int $userId, string $code): ?array
+    {
+        foreach ($this->forUser($userId) as $o) {
+            if (($o['promo_code'] ?? null) === $code && ($o['status'] ?? '') !== 'cancelled') {
+                return $o;
+            }
+        }
+        return null;
     }
 }

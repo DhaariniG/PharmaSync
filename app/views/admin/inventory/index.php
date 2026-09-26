@@ -28,6 +28,7 @@
         </div>
         <div class="page-head-actions">
           <a href="<?= BASE_URL ?>/admin/inventory/audit" class="btn btn-outline"><i data-lucide="file-bar-chart"></i> Generate Audit</a>
+          <a href="<?= BASE_URL ?>/admin/inventory/add" class="btn btn-primary"><i data-lucide="plus"></i> Add Stock</a>
         </div>
       </div>
 
@@ -74,7 +75,7 @@
               <td>Oct 12, 2025</td>
               <td><i data-lucide="map-pin" style="width:12px;height:12px;color:var(--ink-400);"></i> WH-Alpha-R4</td>
               <td><span class="badge badge-teal">Optimal</span></td>
-              <td><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-99021-X" class="icon-btn" style="border:none;"><i data-lucide="eye"></i></a></td>
+              <td><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-99021-X&mode=edit" class="icon-btn" style="border:none;"><i data-lucide="pencil"></i></a></td>
             </tr>
             <tr>
               <td style="color:var(--teal-700);font-weight:700;">#BT-11204-Y</td>
@@ -83,7 +84,7 @@
               <td>Aug 04, 2024</td>
               <td><i data-lucide="map-pin" style="width:12px;height:12px;color:var(--ink-400);"></i> Cold-Storage-C1</td>
               <td><span class="badge badge-red">Low Stock</span></td>
-              <td><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-11204-Y" class="icon-btn" style="border:none;"><i data-lucide="eye"></i></a></td>
+              <td><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-11204-Y&mode=edit" class="icon-btn" style="border:none;"><i data-lucide="pencil"></i></a></td>
             </tr>
             <tr>
               <td style="color:var(--teal-700);font-weight:700;">#BT-55670-Z</td>
@@ -92,7 +93,7 @@
               <td style="color:#b45309;font-weight:700;">Mar 15, 2024</td>
               <td><i data-lucide="map-pin" style="width:12px;height:12px;color:var(--ink-400);"></i> WH-Gamma-R12</td>
               <td><span class="badge badge-amber">Expiring Soon</span></td>
-              <td><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-55670-Z" class="icon-btn" style="border:none;"><i data-lucide="eye"></i></a></td>
+              <td><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-55670-Z&mode=edit" class="icon-btn" style="border:none;"><i data-lucide="pencil"></i></a></td>
             </tr>
             <tr>
               <td style="color:var(--teal-700);font-weight:700;">#BT-88432-A</td>
@@ -101,7 +102,7 @@
               <td>Nov 22, 2026</td>
               <td><i data-lucide="map-pin" style="width:12px;height:12px;color:var(--ink-400);"></i> WH-Alpha-R9</td>
               <td><span class="badge badge-teal">Optimal</span></td>
-              <td><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-88432-A" class="icon-btn" style="border:none;"><i data-lucide="eye"></i></a></td>
+              <td><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-88432-A&mode=edit" class="icon-btn" style="border:none;"><i data-lucide="pencil"></i></a></td>
             </tr>
             <tr>
               <td style="color:var(--teal-700);font-weight:700;">#BT-23419-B</td>
@@ -110,7 +111,7 @@
               <td>Jan 30, 2025</td>
               <td><i data-lucide="map-pin" style="width:12px;height:12px;color:var(--ink-400);"></i> WH-Beta-R2</td>
               <td><span class="badge badge-red">Critical Stock</span></td>
-              <td><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-23419-B" class="icon-btn" style="border:none;"><i data-lucide="eye"></i></a></td>
+              <td><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-23419-B&mode=edit" class="icon-btn" style="border:none;"><i data-lucide="pencil"></i></a></td>
             </tr>
           </tbody>
         </table>
