@@ -72,31 +72,31 @@
             </thead>
             <tbody>
               <tr>
-                <td>Southside Community Clinic<br><span style="color:var(--ink-400);font-size:11.5px;">#220</span></td>
-                <td><div class="driver-cell"><span class="driver-initials">SJ</span> Sarah Jenkins</div></td>
+                <td>9c,Flemington,Vajira<br><span style="color:var(--ink-400);font-size:11.5px;">#220</span></td>
+                <td><div class="driver-cell"><span class="driver-initials">SJ</span> Nimal Perera</div></td>
                 <td><span class="badge badge-cyan"><span class="dot dot-cyan" style="margin-right:5px;"></span>Loading</span></td>
-                <td>11:15 AM</td>
+                
                 <td><a href="<?= BASE_URL ?>/admin/deliveries/detail?id=220" class="icon-btn" style="border:none;"><i data-lucide="eye"></i></a></td>
               </tr>
               <tr>
-                <td>University Research Lab<br><span style="color:var(--ink-400);font-size:11.5px;">#221</span></td>
-                <td><div class="driver-cell"><span class="driver-initials">DM</span> David Miller</div></td>
+                <td>UOK Research Lab<br><span style="color:var(--ink-400);font-size:11.5px;">#221</span></td>
+                <td><div class="driver-cell"><span class="driver-initials">DM</span> Dasun Priyanath</div></td>
                 <td><span class="badge badge-gray"><span class="dot dot-gray" style="margin-right:5px;"></span>Scheduled</span></td>
-                <td>1:00 PM</td>
+                
                 <td><a href="<?= BASE_URL ?>/admin/deliveries/detail?id=221" class="icon-btn" style="border:none;"><i data-lucide="eye"></i></a></td>
               </tr>
               <tr>
-                <td>North Hills Hospice<br><span style="color:var(--ink-400);font-size:11.5px;">#194</span></td>
-                <td><div class="driver-cell"><span class="driver-initials">ER</span> Elena Rodriguez</div></td>
+                <td>Nawala Medicare Center<br><span style="color:var(--ink-400);font-size:11.5px;">#194</span></td>
+                <td><div class="driver-cell"><span class="driver-initials">ER</span> Saman Rodriguez</div></td>
                 <td><span class="badge badge-amber"><span class="dot dot-amber" style="margin-right:5px;"></span>Delayed</span></td>
-                <td>11:30 AM*</td>
+               
                 <td><a href="<?= BASE_URL ?>/admin/deliveries/detail?id=194" class="icon-btn" style="border:none;"><i data-lucide="eye"></i></a></td>
               </tr>
               <tr>
-                <td>City Children's Hospital<br><span style="color:var(--ink-400);font-size:11.5px;">#195</span></td>
-                <td><div class="driver-cell"><span class="driver-initials">TB</span> Tom Baker</div></td>
-                <td><span class="badge badge-teal"><span class="dot dot-cyan" style="margin-right:5px;"></span>En Route</span></td>
-                <td>11:45 AM</td>
+                <td>Maharagama Children's Hospital<br><span style="color:var(--ink-400);font-size:11.5px;">#195</span></td>
+                <td><div class="driver-cell"><span class="driver-initials">TB</span> Tomas Gomas</div></td>
+                <td><span class="badge badge-teal"><span class="dot dot-cyan" style="margin-right:5px;"></span>On Route</span></td>
+                
                 <td><a href="<?= BASE_URL ?>/admin/deliveries/detail?id=195" class="icon-btn" style="border:none;"><i data-lucide="eye"></i></a></td>
               </tr>
             </tbody>
@@ -119,32 +119,32 @@
               <div class="priority-icon"><i data-lucide="snowflake"></i></div>
               <div style="flex:1;">
                 <div class="priority-top"><span class="priority-name">Vaccine Batch #099</span><span class="badge badge-cyan">Critical</span></div>
-                <div class="priority-sub">To: St. Jude Medical Center</div>
-                <div class="priority-sub">Est: 14 mins</div>
+                <div class="priority-sub">12B, Nawala Road</div>
+                
               </div>
             </div>
             <div class="priority-item">
               <div class="priority-icon"><i data-lucide="syringe"></i></div>
               <div style="flex:1;">
                 <div class="priority-top"><span class="priority-name">Insulin Restock</span><span class="badge badge-amber">Urgent</span></div>
-                <div class="priority-sub">To: Central Pharmacy Hub</div>
-                <div class="priority-sub">Est: 32 mins</div>
+                <div class="priority-sub"> Central Pharmacy Hub, Nugegoda</div>
+                
               </div>
             </div>
             <div class="priority-item">
               <div class="priority-icon"><i data-lucide="first-aid-kit"></i></div>
               <div style="flex:1;">
                 <div class="priority-top"><span class="priority-name">General Supplies</span><span class="badge badge-gray">Routine</span></div>
-                <div class="priority-sub">To: Westview Clinic</div>
-                <div class="priority-sub">Est: 58 mins</div>
+                <div class="priority-sub">11A, Prime Homes, Piliyandala</div>
+               
               </div>
             </div>
             <div class="priority-item">
               <div class="priority-icon"><i data-lucide="flask-conical"></i></div>
               <div style="flex:1;">
                 <div class="priority-top"><span class="priority-name">Reagent Refill #204</span><span class="badge badge-amber">Urgent</span></div>
-                <div class="priority-sub">To: BioLabs South</div>
-                <div class="priority-sub">Est: 1h 05m</div>
+                <div class="priority-sub">12S, LUX residencies, Maharagama</div>
+                
               </div>
             </div>
             <div class="priority-item">
@@ -152,7 +152,7 @@
               <div style="flex:1;">
                 <div class="priority-top"><span class="priority-name">Stat Antibiotics</span><span class="badge badge-cyan">Critical</span></div>
                 <div class="priority-sub">To: Mercy Urgent Care</div>
-                <div class="priority-sub">Est: 12 mins</div>
+                
               </div>
             </div>
           </div>

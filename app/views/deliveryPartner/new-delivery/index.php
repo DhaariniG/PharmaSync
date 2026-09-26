@@ -44,11 +44,11 @@
           </div>
           <div class="form-group full">
             <label for="destName">Destination / Patient Name</label>
-            <input type="text" id="destName" placeholder="e.g. Jonathan Edwards" required />
+            <input type="text" id="destName" placeholder="e.g. Saman Kumara" required />
           </div>
           <div class="form-group full">
             <label for="destAddress">Destination Address</label>
-            <input type="text" id="destAddress" placeholder="e.g. 452 Oak Avenue, Medical Heights" required />
+            <input type="text" id="destAddress" placeholder="e.g. 452/11, jayanthipura, Delkanda" required />
           </div>
           <div class="form-group">
             <label for="priority">Priority</label>

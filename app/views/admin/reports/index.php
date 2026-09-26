@@ -54,7 +54,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-label">Inventory Value</div>
-          <div class="stat-value">$1.42M</div>
+          <div class="stat-value">Rs.133,444,000</div>
           <div class="kpi-sub" style="margin-bottom:2px;">Total Assets</div>
           <div class="mini-bars">
             <span style="height:30%"></span><span style="height:38%"></span><span style="height:42%"></span>

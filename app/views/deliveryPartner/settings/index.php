@@ -59,11 +59,8 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="language">Language</label>
-                <select id="language">
-                  <option>English</option>
-                  <option>Sinhala</option>
-                  <option>Tamil</option>
+                
+                
                 </select>
               </div>
             </div>

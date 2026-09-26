@@ -110,7 +110,7 @@
                     </div>
 
                     <div class="stat-value">
-                        342
+                        2
                     </div>
 
                 </div>
@@ -130,7 +130,7 @@
                     </div>
 
                     <div class="stat-value">
-                        86
+                        9
                     </div>
 
                 </div>

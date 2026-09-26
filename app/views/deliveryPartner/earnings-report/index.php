@@ -41,7 +41,7 @@
       <div class="metric-grid two-col">
         <div class="metric-card">
           <div class="metric-top"><span class="metric-label">TOTAL EARNED</span></div>
-          <div class="metric-bottom"><span class="metric-value">$1,240.50</span></div>
+          <div class="metric-bottom"><span class="metric-value">Rs.55,550</span></div>
         </div>
         <div class="metric-card">
           <div class="metric-top"><span class="metric-label">TOTAL DELIVERIES</span></div>
@@ -55,9 +55,9 @@
           <table>
             <thead><tr><th>Category</th><th>Amount</th></tr></thead>
             <tbody>
-              <tr><td>Base Earnings</td><td>$845.20</td></tr>
-              <tr><td>Tips &amp; Gratuities</td><td>$210.30</td></tr>
-              <tr><td>Performance Bonuses</td><td>$185.00</td></tr>
+              <tr><td>Base Earnings</td><td>RS.845.20</td></tr>
+              <tr><td>Tips &amp; Gratuities</td><td>Rs.210.30</td></tr>
+              <tr><td>Performance Bonuses</td><td>Rs.185.00</td></tr>
             </tbody>
           </table>
         </div>
@@ -71,10 +71,10 @@
               <tr><th>Date</th><th>Order ID</th><th>Type</th><th>Base Pay</th><th>Tips</th><th>Status</th></tr>
             </thead>
             <tbody>
-              <tr><td>Jun 28, 2024</td><td class="order-id">#PH-889021</td><td><span class="badge cold-chain">Cold Chain</span></td><td>$45.00</td><td class="tip-cell">+$12.50</td><td><span class="status-badge delivered">Completed</span></td></tr>
-              <tr><td>Jun 28, 2024</td><td class="order-id">#PH-889104</td><td><span class="badge standard">Standard</span></td><td>$22.00</td><td class="tip-cell muted">&mdash;</td><td><span class="status-badge pending">Pending</span></td></tr>
-              <tr><td>Jun 27, 2024</td><td class="order-id">#PH-888442</td><td><span class="badge hazmat">Hazmat</span></td><td>$65.00</td><td class="tip-cell">+$25.00</td><td><span class="status-badge delivered">Completed</span></td></tr>
-              <tr><td>Jun 27, 2024</td><td class="order-id">#PH-888320</td><td><span class="badge standard">Standard</span></td><td>$18.50</td><td class="tip-cell">+$5.00</td><td><span class="status-badge delivered">Completed</span></td></tr>
+              <tr><td>Jun 28, 2024</td><td class="order-id">#PH-889021</td><td><span class="badge cold-chain">Cold Chain</span></td><td>Rs.450.00</td><td class="tip-cell">+Rs12.50</td><td><span class="status-badge delivered">Completed</span></td></tr>
+              <tr><td>Jun 28, 2024</td><td class="order-id">#PH-889104</td><td><span class="badge standard">Standard</span></td><td>Rs.223.00</td><td class="tip-cell muted">&mdash;</td><td><span class="status-badge pending">Pending</span></td></tr>
+              <tr><td>Jun 27, 2024</td><td class="order-id">#PH-888442</td><td><span class="badge hazmat">Hazmat</span></td><td>Rs.650.00</td><td class="tip-cell">+Rs25.00</td><td><span class="status-badge delivered">Completed</span></td></tr>
+              <tr><td>Jun 27, 2024</td><td class="order-id">#PH-888320</td><td><span class="badge standard">Standard</span></td><td>Rs.180.50</td><td class="tip-cell">+Rs5.00</td><td><span class="status-badge delivered">Completed</span></td></tr>
             </tbody>
           </table>
         </div>

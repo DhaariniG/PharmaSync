@@ -32,19 +32,19 @@
         <div class="form-panel form-grid">
           <div class="form-group">
             <label for="fullName">Full Name</label>
-            <input type="text" id="fullName" value="Sarah Jenkins" required />
+            <input type="text" id="fullName" value="Kasun Bandara" required />
           </div>
           <div class="form-group">
             <label for="email">Email Address</label>
-            <input type="email" id="email" value="s.jenkins@pharmaroute.com" required />
+            <input type="email" id="email" value="kbandara@gmail.com" required />
           </div>
           <div class="form-group">
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" value="+1 (555) 012-3456" />
+            <input type="tel" id="phone" value="0779239600" />
           </div>
           <div class="form-group">
             <label for="region">Operating Region</label>
-            <input type="text" id="region" value="Metropolitan North (MN-04)" />
+            <input type="text" id="region" value="Western Province" />
           </div>
           <div class="form-group">
             <label for="vehicleType">Vehicle Type</label>
@@ -56,7 +56,7 @@
           </div>
           <div class="form-group">
             <label for="plate">License Plate</label>
-            <input type="text" id="plate" value="PH-772-RX" />
+            <input type="text" id="plate" value="CBK 6766" />
           </div>
         </div>
         <div class="form-actions">
