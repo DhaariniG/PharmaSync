@@ -45,6 +45,8 @@ return [
     'GET  /orders'                  => ['CustomerOrderController', 'myOrders'],
     'GET  /orders/{id}'             => ['CustomerOrderController', 'show'],
     'POST /orders/reorder/{id}'     => ['CustomerOrderController', 'reorder'],
+    'POST /orders/cancel/{id}'      => ['CustomerOrderController', 'cancel'],
+    'POST /orders/reschedule/{id}'  => ['CustomerOrderController', 'reschedule'],
 
     // --- Prescriptions ---
     'GET  /prescription/upload'    => ['CustomerPrescriptionController', 'uploadForm'],
@@ -54,6 +56,7 @@ return [
     'POST /prescription/approve-alternative/{id}' => ['CustomerPrescriptionController', 'approveAlternative'],
     'POST /prescription/continue-waiting/{id}'    => ['CustomerPrescriptionController', 'continueWaiting'],
     'POST /prescription/confirm/{id}'             => ['CustomerPrescriptionController', 'confirmPrepared'],
+    'POST /prescription/add-to-cart/{id}'         => ['CustomerPrescriptionController', 'addToCart'],
 
     // --- Profile ---
     'GET  /profile'                => ['CustomerProfileController', 'show'],
@@ -83,6 +86,10 @@ return [
 
     // --- Settings ---
     'GET  /settings'               => ['CustomerSettingsController', 'index'],
+    'POST /settings/notifications' => ['CustomerSettingsController', 'saveNotifications'],
+    'POST /settings/password'      => ['CustomerSettingsController', 'changePassword'],
+    'GET  /settings/download-data' => ['CustomerSettingsController', 'downloadData'],
+    'POST /settings/close-account' => ['CustomerSettingsController', 'closeAccount'],
 
     // --- Notifications ---
     'GET  /notifications'                 => ['CustomerNotificationController', 'index'],

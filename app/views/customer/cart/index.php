@@ -28,15 +28,19 @@
             <div class="grow">
               <div class="semibold"><?= htmlspecialchars($m['name']) ?></div>
               <div class="muted small"><?= htmlspecialchars(CustomerMedicine::categoryName($m['category_id'])) ?></div>
+              <div class="ps-pack"><?= e(CustomerMedicine::packLabel($m)) ?> &middot; Rs. <?= number_format($m['price'], 2) ?> per <?= e(CustomerMedicine::unitName($m)) ?></div>
               <?php if ($m['requires_rx']): ?><span class="tag ps-badge-rx mt-1">Prescription Required</span><?php endif; ?>
             </div>
+            <div>
             <form method="POST" action="<?= BASE_URL ?>/customer/cart/update" class="flex middle border rounded" data-qty-stepper onchange="this.submit()">
           <?= csrf_field() ?>
               <input type="hidden" name="medicine_id" value="<?= $m['id'] ?>">
               <button type="button" class="btn btn-sm" data-qty-minus><?= icon('minus') ?></button>
-              <input type="number" name="quantity" value="<?= $line['quantity'] ?>" min="1" max="<?= $m['stock'] ?>" class="field border-0 text-center" style="width:56px;">
+              <input type="number" name="quantity" value="<?= $line['quantity'] ?>" min="1" max="<?= (int) max(1, $line['limit']) ?>" class="field border-0 text-center" style="width:56px;">
               <button type="button" class="btn btn-sm" data-qty-plus><?= icon('plus') ?></button>
             </form>
+            <div class="ps-qty-caption"><?= e(CustomerMedicine::unitName($m, (int) $line['quantity'])) ?> &middot; <?= e(CustomerMedicine::contentsFor($m, (int) $line['quantity'])) ?></div>
+            </div>
             <div class="ps-price text-end" style="min-width:100px;">Rs. <?= number_format($line['subtotal'], 2) ?></div>
             <div class="flex flex-col bottom gap-1">
               <form method="POST" action="<?= BASE_URL ?>/customer/cart/save-for-later">
@@ -83,12 +87,12 @@
         </div>
         <?php if (!empty($discount)): ?>
         <div class="flex between mb-2 small">
-          <span class="muted">Discount <?php if (!empty($promoCode)): ?>(<?= htmlspecialchars($promoCode) ?>)<?php endif; ?></span>
+          <span class="muted">Discount <?php if (!empty($promoCode)): ?>(<?= htmlspecialchars($promoCode) ?>, over-the-counter items)<?php endif; ?></span>
           <span class="text-success">- Rs. <?= number_format($discount, 2) ?></span>
         </div>
         <?php endif; ?>
         <div class="flex between mb-2 small">
-          <span class="muted">Estimated Tax (2%)</span><span>Rs. <?= number_format($tax, 2) ?></span>
+          <span class="muted">Estimated Tax (<?= rtrim(rtrim(number_format(TAX_RATE * 100, 2), '0'), '.') ?>%)</span><span>Rs. <?= number_format($tax, 2) ?></span>
         </div>
         <hr>
         <div class="flex between bold mb-1">
@@ -98,11 +102,13 @@
         <p class="muted small mb-3">Delivery charges are not included yet. Choose home delivery or store pickup at checkout.</p>
 
         <?php if (!empty($promoError)): ?><div class="note note-danger small py-2"><?= htmlspecialchars($promoError) ?></div><?php endif; ?>
-        <form method="POST" action="<?= BASE_URL ?>/customer/cart/apply-promo" class="flex gap-2 mb-3">
+        <?php if (!empty($promoProblem)): ?><div class="note note-warn small py-2">Your promo code isn't applied: <?= e($promoProblem) ?></div><?php endif; ?>
+        <form method="POST" action="<?= BASE_URL ?>/customer/cart/apply-promo" class="flex gap-2 mb-1">
           <?= csrf_field() ?>
           <input type="text" name="promo_code" value="<?= htmlspecialchars($promoCode ?? '') ?>" class="field field-sm" placeholder="Promo Code (try HEALTH30)">
           <button type="submit" class="btn btn-ps-outline btn-sm">Apply</button>
         </form>
+        <p class="muted small mb-3">HEALTH30: 30% off over-the-counter items, minimum <?= e(money(Cart::PROMOS['HEALTH30']['min_subtotal'])) ?>, once per customer, until <?= date('j M Y', strtotime(Cart::PROMOS['HEALTH30']['expires'])) ?>. Prescription medicines are never discounted.</p>
 
         <div class="note note-plain border small flex middle gap-2 mb-3">
           <?= icon('store', 'text-success') ?>

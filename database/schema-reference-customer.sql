@@ -325,3 +325,19 @@ CREATE TABLE promo_codes (
     valid_from   DATE NULL,
     valid_until  DATE NULL
 );
+
+-- ---------------------------------------------------------------------
+-- customer_settings  (Settings page - see database/007_add_customer_settings_table.sql)
+-- One row per customer: which notification types to show, and when the
+-- password was last changed from Settings. CustomerSettings uses the
+-- session instead until 007 is imported.
+-- ---------------------------------------------------------------------
+-- CREATE TABLE customer_settings (
+--     user_id              INT UNSIGNED PRIMARY KEY,   -- users.user_id
+--     notify_orders        TINYINT(1) NOT NULL DEFAULT 1,
+--     notify_prescriptions TINYINT(1) NOT NULL DEFAULT 1,
+--     notify_refills       TINYINT(1) NOT NULL DEFAULT 1,
+--     notify_offers        TINYINT(1) NOT NULL DEFAULT 0,
+--     password_changed_at  DATETIME NULL,
+--     updated_at           DATETIME NOT NULL
+-- );

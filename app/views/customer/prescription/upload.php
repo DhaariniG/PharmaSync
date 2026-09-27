@@ -3,7 +3,7 @@
     <h3 class="bold mb-1">Upload Prescription</h3>
     <p class="muted mb-0">Securely upload your medical documents. Our licensed pharmacists will verify them within 2 hours during business hours.</p>
   </div>
-  <a href="tel:+94112345678" class="btn btn-ps-outline"><?= icon('phone', 'me-2') ?>Request Callback</a>
+  <a href="tel:+94778764530" class="btn btn-ps-outline"><?= icon('phone', 'me-2') ?>Call the Pharmacy</a>
 </div>
 
 <?php if (!empty($error)): ?>
@@ -17,7 +17,7 @@
         <img src="<?= medicine_image($requestedMedicine) ?>" class="rounded" width="56" height="56" style="object-fit:cover;" alt="<?= htmlspecialchars($requestedMedicine['name']) ?>" onerror="this.onerror=null;this.src='<?= BASE_URL ?>/assets/images/medicines/_placeholder.svg';">
         <div class="grow">
           <div class="muted small">Requesting prescription for</div>
-          <div class="semibold"><?= htmlspecialchars($requestedMedicine['name']) ?> &times; <?= (int) $requestedQuantity ?></div>
+          <div class="semibold"><?= htmlspecialchars($requestedMedicine['name']) ?> &times; <?= e(CustomerMedicine::quantityLabel($requestedMedicine, (int) $requestedQuantity)) ?></div>
         </div>
         <span class="tag ps-badge-rx">Rx Required</span>
       </div>

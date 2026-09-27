@@ -1,3 +1,10 @@
+<?php
+  // Search keeps the typed text (q) on every filter link and form.
+  $formAction = url('/customer/search');
+  $baseQuery  = ['q' => $query];
+  $allLabel   = 'All Results';
+  require __DIR__ . '/../partials/catalog-url.php';
+?>
 <nav aria-label="breadcrumb">
   <ol class="crumbs small">
     <li class="crumb"><a href="<?= BASE_URL ?>/customer/">Home</a></li>
@@ -12,15 +19,13 @@
 <div class="row g-4">
   <div class="col-lg-3">
     <div class="ps-card p-3">
-      <?php
-        $formAction = BASE_URL . '/search';
-        $hiddenFields = ['q' => $query];
-        require __DIR__ . '/../partials/catalog-filters.php';
-      ?>
+      <?php require __DIR__ . '/../partials/catalog-filters.php'; ?>
     </div>
   </div>
 
   <div class="col-lg-9">
+    <?php require __DIR__ . '/../partials/catalog-toolbar.php'; ?>
+
     <?php if (!empty($items)): ?>
       <div class="row g-3 mb-4">
         <?php foreach ($items as $m): ?>

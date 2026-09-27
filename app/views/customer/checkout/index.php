@@ -4,8 +4,26 @@
   <div class="note note-danger"><?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
-<form method="POST" action="<?= BASE_URL ?>/customer/checkout/place-order" data-validate novalidate>
+<?php if (!empty($cartProblems)): ?>
+  <!-- Stock or limits changed since these went into the cart. -->
+  <div class="note note-danger">
+    <strong>Your cart needs a change before you can order:</strong>
+    <ul class="mb-1 mt-1">
+      <?php foreach ($cartProblems as $reason): ?><li><?= e($reason) ?></li><?php endforeach; ?>
+    </ul>
+    <a href="<?= BASE_URL ?>/customer/cart">Go back to your cart</a>
+  </div>
+<?php endif; ?>
+
+<?php if (!empty($promoProblem)): ?>
+  <div class="note note-warn small">Your promo code isn't applied: <?= e($promoProblem) ?></div>
+<?php endif; ?>
+
+<form method="POST" action="<?= BASE_URL ?>/customer/checkout/place-order" id="checkoutForm" data-validate novalidate>
           <?= csrf_field() ?>
+  <!-- The discount on screen. If it changed before "Place Order" (promo used
+       in another tab...), the controller stops and shows the new total. -->
+  <input type="hidden" name="expected_discount" value="<?= number_format((float) $discount, 2, '.', '') ?>">
   <div class="row g-4">
     <div class="col-lg-8">
 
@@ -19,7 +37,7 @@
             <div class="note note-warn small mb-2">You haven't set up any family profiles yet.</div>
             <a href="<?= BASE_URL ?>/customer/profile" class="btn btn-ps-outline btn-sm">Add a family profile</a>
           <?php else: ?>
-            <select name="patient_id" class="field" required>
+            <select name="patient_id" id="patientSelect" class="field" required>
               <?php foreach ($familyMembers as $i => $member): ?>
                 <option value="<?= (int) $member['id'] ?>" <?= $member['relationship'] === 'Self' ? 'selected' : '' ?>>
                   <?= htmlspecialchars($patients->label($user['id'], $member['id'])) ?>
@@ -45,8 +63,10 @@
         </div>
       </div>
 
-      <!-- Home delivery: address + notes -->
-      <div class="ps-card p-4 mb-3" id="deliveryBlock">
+      <!-- Home delivery: address + notes, then the date and time window.
+           The whole wrapper hides when Store Pickup is chosen. -->
+      <div id="deliveryBlock">
+      <div class="ps-card p-4 mb-3">
         <div class="flex between middle mb-3">
           <h6 class="bold mb-0"><?= icon('map-pin', 'me-2') ?>Delivery Address</h6>
         </div>
@@ -64,7 +84,23 @@
           </label>
         <?php endforeach; ?>
         <textarea name="address_notes" class="field mt-2" rows="2" placeholder="Additional delivery notes (optional)"></textarea>
-        <div class="muted small mt-2"><?= icon('truck', 'me-1') ?>Estimated arrival: <strong>tomorrow by 6:00 PM</strong>.</div>
+      </div>
+
+      <!-- Delivery date & time. Windows come from DeliverySlot::schedule();
+           full, closed and too-late windows are shown but cannot be ticked. -->
+      <div class="ps-card p-4 mb-3" id="slotCard">
+        <h6 class="bold mb-1"><?= icon('calendar', 'me-2') ?>Delivery Date &amp; Time</h6>
+        <p class="muted small mb-3">Choose when you want your order to arrive. Our rider comes within the window you pick.</p>
+
+        <?php if ($selectedSlot === null): ?>
+          <div class="note note-warn small mb-0">Every delivery time for the next <?= (int) DeliverySlot::DAYS_SHOWN ?> days is fully booked. Please choose <strong>Store Pickup</strong>, or try again later.</div>
+        <?php else: ?>
+          <?php require __DIR__ . '/../partials/delivery-slot-picker.php'; ?>
+        <?php endif; ?>
+
+        <div class="note note-danger small mt-2 mb-0 hidden" id="slotError" role="alert">Please choose a delivery date and time.</div>
+        <div class="muted small mt-2"><?= icon('clock', 'me-1') ?>Times close <?= (int) $leadHours ?> hours before they start, so we have time to pack and send your order<?= $hasRxItem ? ' and a pharmacist can check the prescription items' : '' ?>.</div>
+      </div>
       </div>
 
       <!-- Store pickup: just choose a slot (slots built by pickup_slots()) -->
@@ -94,18 +130,36 @@
       <?php if ($hasRxItem): ?>
         <div class="ps-card p-4 mb-3">
           <h6 class="bold mb-3"><?= icon('scroll-text', 'me-2') ?>Prescription</h6>
-          <p class="muted small">Your cart includes prescription medicine. Select an approved prescription to continue.</p>
+          <p class="muted small">Your cart includes prescription medicine. Choose the approved prescription it comes from. Only prescriptions that still cover every prescription item in your cart are listed.</p>
 
           <?php if (empty($approvedRx)): ?>
-            <div class="note note-warn small mb-2">You don't have an approved prescription yet.</div>
-            <a href="<?= BASE_URL ?>/customer/prescription/upload" class="btn btn-ps-outline btn-sm">Upload Prescription</a>
+            <div class="note note-warn small mb-2">None of your approved prescriptions covers the prescription items in your cart.</div>
+            <?php if (!empty($rxShortfall)): ?>
+              <table class="ps-cover-table small w-100 mb-2">
+                <thead><tr><th>Medicine</th><th>In cart</th><th>Your prescriptions allow</th></tr></thead>
+                <tbody>
+                  <?php foreach ($rxShortfall as $row): ?>
+                    <tr>
+                      <td class="semibold"><?= e($row['medicine']['name']) ?></td>
+                      <td><?= (int) $row['in_cart'] ?></td>
+                      <td class="<?= $row['allowed'] < $row['in_cart'] ? 'text-danger semibold' : '' ?>"><?= (int) $row['allowed'] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+              <p class="muted small">One order uses one prescription. If your items come from two prescriptions, order them separately.</p>
+            <?php endif; ?>
+            <div class="flex gap-2 wrap">
+              <a href="<?= BASE_URL ?>/customer/cart" class="btn btn-ps-outline btn-sm">Edit Cart</a>
+              <a href="<?= BASE_URL ?>/customer/prescription/upload" class="btn btn-ps-outline btn-sm">Upload Prescription</a>
+            </div>
           <?php else: ?>
-            <?php if (!empty($preselectedPrescriptionId)): ?>
-              <div class="note note-ok small mb-2"><?= icon('circle-check', 'me-1') ?>We've pre-selected the approved prescription used for this reorder — change it below if needed.</div>
+            <?php if (!empty($preselectedPrescriptionId) && count($approvedRx) > 1): ?>
+              <div class="note note-ok small mb-2"><?= icon('circle-check', 'me-1') ?>We've pre-selected the prescription used for this reorder — change it below if needed.</div>
             <?php endif; ?>
             <?php foreach ($approvedRx as $rx): ?>
               <div class="check-row mb-2">
-                <input class="check-box" type="radio" name="prescription_id" value="<?= $rx['id'] ?>" id="rx<?= $rx['id'] ?>" required <?= (int) $rx['id'] === (int) ($preselectedPrescriptionId ?? 0) ? 'checked' : '' ?>>
+                <input class="check-box" type="radio" name="prescription_id" value="<?= $rx['id'] ?>" id="rx<?= $rx['id'] ?>" data-patient="<?= (int) ($rx['patient_id'] ?? 0) ?>" required <?= (int) $rx['id'] === (int) ($preselectedPrescriptionId ?? 0) ? 'checked' : '' ?>>
                 <label class="check-text" for="rx<?= $rx['id'] ?>">
                   <?= htmlspecialchars($rx['file_name']) ?>
                   <span class="muted">— for <?= htmlspecialchars($patients->label($user['id'], $rx['patient_id'] ?? null)) ?>,
@@ -113,7 +167,35 @@
                 </label>
               </div>
             <?php endforeach; ?>
+
+            <?php if ($hasOtcItem): ?>
+              <!-- One order has one patient: the prescription's. -->
+              <div class="note note-warn small mt-2 mb-0">
+                <?= icon('info', 'me-1') ?>Everything in this order, including the over-the-counter items, will be recorded as for the person on the prescription. To buy those items for someone else, remove them and place a separate order.
+              </div>
+            <?php endif; ?>
           <?php endif; ?>
+        </div>
+      <?php endif; ?>
+
+      <?php if (!empty($allergyWarnings)): ?>
+        <!-- Allergy check. One block per family member with a match; the
+             script below shows the block for the person this order is for. -->
+        <div class="ps-card p-4 mb-3 hidden" id="allergyCard">
+          <h6 class="bold mb-2 text-danger"><?= icon('circle-alert', 'me-2') ?>Allergy warning</h6>
+          <?php foreach ($allergyWarnings as $memberId => $warnings): ?>
+            <div class="hidden" data-allergy-for="<?= (int) $memberId ?>">
+              <p class="small mb-2"><strong><?= e($patients->label($user['id'], $memberId)) ?></strong> has an allergy on their profile that may be linked to:</p>
+              <ul class="small mb-2">
+                <?php foreach ($warnings as $w): ?><li><?= e($w) ?></li><?php endforeach; ?>
+              </ul>
+            </div>
+          <?php endforeach; ?>
+          <p class="muted small">This is based on the medicine's ingredient and drug group. Check with your doctor or ask our pharmacist before using it. Your answer is shown to the pharmacist who checks this order.</p>
+          <div class="check-row">
+            <input class="check-box" type="checkbox" name="allergy_ack" value="1" id="allergyAck">
+            <label class="check-text small" for="allergyAck">I have read this warning and still want to place the order.</label>
+          </div>
         </div>
       <?php endif; ?>
 
@@ -123,18 +205,17 @@
         <label class="block ps-card p-3 mb-2" style="cursor:pointer;">
           <input class="check-box me-2" type="radio" name="payment_method" value="card" id="payCard" checked onclick="document.getElementById('cardFields').classList.remove('hidden')">
           <span class="semibold">Credit / Debit Card</span>
+          <!-- The card inputs have no name on purpose: the browser checks them
+               (see the script below) and they are never sent to our server.
+               A real payment gateway takes over this part later. -->
           <div id="cardFields" class="mt-3">
-            <input type="text" class="field mb-2" placeholder="Card Number: XXXX XXXX XXXX XXXX">
+            <input type="text" class="field mb-2" id="cardNumber" inputmode="numeric" autocomplete="cc-number" placeholder="Card Number: XXXX XXXX XXXX XXXX" aria-label="Card number">
             <div class="row g-2">
-              <div class="col-6"><input type="text" class="field" placeholder="Expiry Date MM/YY"></div>
-              <div class="col-6"><input type="text" class="field" placeholder="CVV"></div>
+              <div class="col-6"><input type="text" class="field" id="cardExpiry" inputmode="numeric" autocomplete="cc-exp" placeholder="Expiry Date MM/YY" aria-label="Expiry date"></div>
+              <div class="col-6"><input type="password" class="field" id="cardCvv" inputmode="numeric" autocomplete="cc-csc" maxlength="4" placeholder="CVV" aria-label="CVV"></div>
             </div>
+            <div class="note note-danger small mt-2 mb-0 hidden" id="cardError" role="alert"></div>
           </div>
-        </label>
-
-        <label class="block ps-card p-3 mb-2" style="cursor:pointer;" onclick="document.getElementById('cardFields').classList.add('hidden')">
-          <input class="check-box me-2" type="radio" name="payment_method" value="bank_transfer" id="payBank">
-          <span class="semibold">Bank Transfer (SLIPS/LANKA QR)</span>
         </label>
 
         <label class="block ps-card p-3" style="cursor:pointer;" onclick="document.getElementById('cardFields').classList.add('hidden')">
@@ -151,18 +232,25 @@
       <div class="ps-card p-4">
         <h6 class="bold mb-3">Order Summary</h6>
         <?php foreach ($items as $line): ?>
-          <div class="flex between small mb-2">
-            <span><?= htmlspecialchars($line['medicine']['name']) ?> &times; <?= $line['quantity'] ?></span>
+          <div class="flex between small mb-2 gap-2">
+            <span>
+              <?= htmlspecialchars($line['medicine']['name']) ?> &times; <?= e($line['quantity'] . ' ' . CustomerMedicine::unitName($line['medicine'], $line['quantity'])) ?>
+              <span class="block muted"><?= e(CustomerMedicine::contentsFor($line['medicine'], $line['quantity'])) ?></span>
+            </span>
             <span>Rs. <?= number_format($line['subtotal'], 2) ?></span>
           </div>
         <?php endforeach; ?>
+        <div class="flex between small mb-2 gap-2">
+          <span class="muted" id="psWhenLabel">Delivery</span>
+          <span class="text-end semibold" id="psWhen">&mdash;</span>
+        </div>
         <hr>
         <div class="flex between small mb-2">
           <span class="muted">Subtotal</span><span>Rs. <?= number_format($subtotal, 2) ?></span>
         </div>
         <?php if (!empty($discount)): ?>
           <div class="flex between small mb-2">
-            <span class="muted">Promo discount</span>
+            <span class="muted">Promo discount <span class="block">(over-the-counter items)</span></span>
             <span class="text-success">- Rs. <?= number_format($discount, 2) ?></span>
           </div>
         <?php endif; ?>
@@ -170,14 +258,14 @@
           <span class="muted" id="psFeeLabel">Delivery Fee</span><span id="psDeliveryFee">Rs. <?= number_format($delivery, 2) ?></span>
         </div>
         <div class="flex between small mb-2">
-          <span class="muted">Estimated Tax (2%)</span><span>Rs. <?= number_format($tax, 2) ?></span>
+          <span class="muted">Estimated Tax (<?= rtrim(rtrim(number_format(TAX_RATE * 100, 2), '0'), '.') ?>%)</span><span>Rs. <?= number_format($tax, 2) ?></span>
         </div>
         <hr>
         <div class="flex between bold mb-3">
           <span>Total</span><span id="psOrderTotal">Rs. <?= number_format($orderTotal, 2) ?></span>
         </div>
         <button type="submit" class="btn btn-ps-primary w-100 py-2" id="psPlaceOrderBtn"><?= icon('lock', 'me-2') ?>Place Order</button>
-        <p class="text-center muted small mt-2 mb-0">Secure 256-bit SSL Encrypted Payment</p>
+        <p class="text-center muted small mt-2 mb-0">Card details are checked on your device and never stored by PharmaSync.</p>
       </div>
     </div>
   </div>
@@ -247,4 +335,139 @@
   document.getElementById('mHome').addEventListener('change', updateFulfilment);
   document.getElementById('mPickup').addEventListener('change', updateFulfilment);
   updateFulfilment();
+
+  // ---- Delivery date & time -------------------------------------------
+  // Switching days is handled by main.js ([data-slot-picker]). Here: keep
+  // the order summary showing what is chosen, and stop the form if home
+  // delivery has no window ticked.
+  (function () {
+    var radios = document.querySelectorAll('input[name="delivery_slot"]');
+    var pickupSelect = document.getElementById('pickupSlot');
+    var slotError = document.getElementById('slotError');
+
+    function chosenSlot() {
+      return document.querySelector('input[name="delivery_slot"]:checked');
+    }
+
+    function updateWhen() {
+      var pickup = document.getElementById('mPickup').checked;
+      var label = document.getElementById('psWhenLabel');
+      var when  = document.getElementById('psWhen');
+      var slot  = chosenSlot();
+
+      if (pickup) {
+        label.textContent = 'Pickup';
+        when.textContent = pickupSelect && pickupSelect.selectedIndex >= 0
+          ? pickupSelect.options[pickupSelect.selectedIndex].text : '—';
+      } else {
+        label.textContent = 'Delivery';
+        when.textContent = slot ? slot.dataset.label : 'Choose a time';
+      }
+    }
+
+    radios.forEach(function (r) {
+      r.addEventListener('change', function () {
+        slotError.classList.add('hidden');
+        updateWhen();
+      });
+    });
+    if (pickupSelect) pickupSelect.addEventListener('change', updateWhen);
+    document.getElementById('mHome').addEventListener('change', updateWhen);
+    document.getElementById('mPickup').addEventListener('change', updateWhen);
+
+    document.getElementById('checkoutForm').addEventListener('submit', function (e) {
+      if (!document.getElementById('mPickup').checked && !chosenSlot()) {
+        e.preventDefault();
+        slotError.classList.remove('hidden');
+        document.getElementById('slotCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+
+    updateWhen();
+  })();
+
+  // ---- Allergy warning ---------------------------------------------------
+  // Show the warning for whoever this order is for: the chosen family
+  // member, or for a prescription order the prescription's patient.
+  (function () {
+    var card = document.getElementById('allergyCard');
+    if (!card) return;
+    var select = document.getElementById('patientSelect');
+
+    function patientId() {
+      var rx = document.querySelector('input[name="prescription_id"]:checked');
+      if (rx) return rx.dataset.patient;
+      return select ? select.value : '';
+    }
+    function refresh() {
+      var id = patientId();
+      var any = false;
+      card.querySelectorAll('[data-allergy-for]').forEach(function (block) {
+        var on = block.dataset.allergyFor === id;
+        block.classList.toggle('hidden', !on);
+        any = any || on;
+      });
+      card.classList.toggle('hidden', !any);
+    }
+
+    if (select) select.addEventListener('change', refresh);
+    document.querySelectorAll('input[name="prescription_id"]').forEach(function (r) {
+      r.addEventListener('change', refresh);
+    });
+    document.getElementById('checkoutForm').addEventListener('submit', function (e) {
+      if (!card.classList.contains('hidden') && !document.getElementById('allergyAck').checked) {
+        e.preventDefault();
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.getElementById('allergyAck').focus();
+      }
+    });
+    refresh();
+  })();
+
+  // ---- Card details --------------------------------------------------------
+  // Checked here only. The fields have no name, so nothing typed in them is
+  // sent to the server; a payment gateway would take this over.
+  (function () {
+    var error = document.getElementById('cardError');
+
+    function luhn(digits) {
+      var sum = 0, dbl = false;
+      for (var i = digits.length - 1; i >= 0; i--) {
+        var d = parseInt(digits.charAt(i), 10);
+        if (dbl) { d *= 2; if (d > 9) d -= 9; }
+        sum += d; dbl = !dbl;
+      }
+      return sum % 10 === 0;
+    }
+    function problem() {
+      var number = document.getElementById('cardNumber').value.replace(/[\s-]/g, '');
+      var expiry = document.getElementById('cardExpiry').value.trim();
+      var cvv    = document.getElementById('cardCvv').value.trim();
+
+      if (!/^\d{13,19}$/.test(number) || !luhn(number)) return 'Please enter a valid card number.';
+      var m = expiry.match(/^(\d{2})\s*\/\s*(\d{2})$/);
+      if (!m || +m[1] < 1 || +m[1] > 12) return 'Please enter the expiry date as MM/YY.';
+      var endOfMonth = new Date(2000 + +m[2], +m[1], 0, 23, 59, 59);
+      if (endOfMonth < new Date()) return 'This card has expired.';
+      if (!/^\d{3,4}$/.test(cvv)) return 'Please enter the 3 or 4 digit CVV.';
+      return '';
+    }
+
+    // Space the card number in groups of four as it is typed.
+    document.getElementById('cardNumber').addEventListener('input', function () {
+      var digits = this.value.replace(/\D/g, '').slice(0, 19);
+      this.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', function (e) {
+      if (!document.getElementById('payCard').checked) return;
+      var msg = problem();
+      error.textContent = msg;
+      error.classList.toggle('hidden', msg === '');
+      if (msg) {
+        e.preventDefault();
+        document.getElementById('cardFields').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  })();
 </script>

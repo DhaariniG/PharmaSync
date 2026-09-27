@@ -17,8 +17,19 @@ class CustomerCartController extends Controller
         // store pickup at checkout, so the fee is only known from there on.
         $totals = $cart->totals('none');
 
+        // Each line knows the most it may hold, for the stepper's max.
+        $userId = $this->currentUser()['id'] ?? null;
+        $items = $cart->items();
+        foreach ($items as &$line) {
+            $line['limit'] = $cart->limitFor($line['medicine'], $userId)['max'];
+        }
+        unset($line);
+
+        $promoCode = $_SESSION['promo_code'] ?? null;
+
         $this->render('cart.index', [
-            'items'          => $cart->items(),
+            'promoProblem'   => $promoCode ? $cart->promoProblem($promoCode) : null,
+            'items'          => $items,
             'subtotal'       => $totals['subtotal'],
             'tax'            => $totals['tax'],
             'discount'       => $totals['discount'],
@@ -45,7 +56,18 @@ class CustomerCartController extends Controller
         $this->allowGuest();
 
         $this->verifyCsrf();
-        (new Cart())->moveToCart((int) $this->input('medicine_id'));
+
+        // Same limits as "Add to cart": stock, per-order limit, prescription.
+        $cart = new Cart();
+        $medicine = (new CustomerMedicine())->find((int) $this->input('medicine_id'));
+        if ($medicine) {
+            $limit = $cart->limitFor($medicine, $this->currentUser()['id'] ?? null);
+            if ($cart->quantityOf((int) $medicine['id']) < $limit['max']) {
+                $cart->moveToCart((int) $medicine['id']);
+            } else {
+                $this->flash('error', $limit['reason']);
+            }
+        }
         $this->redirect('/customer/cart');
     }
 
@@ -63,14 +85,16 @@ class CustomerCartController extends Controller
             return;
         }
 
-        // Single demo promo for now — HEALTH30 gives 30% off the subtotal.
-        // Codes live in Cart::PROMOS so this is trivial to extend later.
-        if (isset(Cart::PROMOS[$code])) {
+        // Rules for each code live in Cart::PROMOS (expiry, minimum spend,
+        // once per customer, over-the-counter items only).
+        $problem = (new Cart())->promoProblem($code);
+        if ($problem === null) {
             $_SESSION['promo_code'] = $code;
-            $this->flash('success', 'Promo code "' . $code . '" applied — ' . (int) round(Cart::PROMOS[$code] * 100) . '% off your items.');
+            $this->flash('success', 'Promo code "' . $code . '" applied — '
+                . (int) round(Cart::PROMOS[$code]['rate'] * 100) . '% off over-the-counter items.');
         } else {
             unset($_SESSION['promo_code']);
-            $this->flash('promo_error', 'That promo code isn\'t valid. Try HEALTH30.');
+            $this->flash('promo_error', $problem);
         }
 
         $this->redirect('/customer/cart');
@@ -90,13 +114,22 @@ class CustomerCartController extends Controller
 
         if (!$medicine) {
             $this->flash('error', 'That medicine could not be found.');
-        } elseif ($medicine['stock'] < 1) {
-            $this->flash('error', $medicine['name'] . ' is out of stock.');
+        } elseif (!empty($medicine['requires_rx'])) {
+            // Prescription medicine only reaches the cart from an approved
+            // prescription (prescription page), never from a plain "Add".
+            $this->flash('error', $medicine['name'] . ' needs a prescription. Upload one, and once our pharmacist approves it you can add it from the prescription page.');
         } else {
-            // Never let the cart hold more than the shop has (BUG-04).
-            $qty = min($qty, (int) $medicine['stock']);
-            (new Cart())->add($medicineId, $qty);
-            $this->flash('success', $medicine['name'] . ' added to cart.');
+            // Never more than stock or the per-order limit - counting what
+            // is already in the cart, not just this click (BUG-04).
+            $result = (new Cart())->addWithinLimit($medicine, $qty, $this->currentUser()['id'] ?? null);
+            if ($result['added'] === 0) {
+                $this->flash('error', $result['note']);
+            } elseif ($result['note'] !== null) {
+                $this->flash('success', 'Added ' . $result['added'] . ' ' . CustomerMedicine::unitName($medicine, $result['added'])
+                    . ' of ' . $medicine['name'] . '. ' . $result['note']);
+            } else {
+                $this->flash('success', $medicine['name'] . ' added to cart.');
+            }
         }
 
         if ($this->input('buy_now')) {
@@ -120,12 +153,19 @@ class CustomerCartController extends Controller
         $qty = (int) $this->input('quantity', 1);
 
         $medicine = (new CustomerMedicine())->find($medicineId);
-        if ($medicine && $qty > $medicine['stock']) {
-            $qty = (int) $medicine['stock'];
-            $this->flash('error', 'Only ' . $qty . ' of ' . $medicine['name'] . ' left in stock.');
+        if (!$medicine) {
+            $this->redirect('/customer/cart');
+            return;
         }
 
-        (new Cart())->update($medicineId, $qty);
+        if ($qty <= 0) {
+            (new Cart())->remove($medicineId);
+        } else {
+            $result = (new Cart())->setWithinLimit($medicine, $qty, $this->currentUser()['id'] ?? null);
+            if ($result['note'] !== null) {
+                $this->flash('error', $result['note']);
+            }
+        }
         $this->redirect('/customer/cart');
     }
 

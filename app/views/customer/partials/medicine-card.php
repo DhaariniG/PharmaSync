@@ -12,7 +12,8 @@
     </div>
     <div class="semibold small mb-1"><?= htmlspecialchars($m['name']) ?></div>
     <div class="muted small mb-2"><?= htmlspecialchars(CustomerMedicine::categoryName($m['category_id'])) ?></div>
-    <div class="ps-price mb-3"><?= "Rs. " . number_format($m['price'], 2) ?></div>
+    <div class="ps-price"><?= "Rs. " . number_format($m['price'], 2) ?></div>
+    <div class="ps-pack mb-3">per <?= e(lcfirst(CustomerMedicine::packLabel($m))) ?></div>
     <div class="mt-auto flex gap-2">
       <a href="<?= BASE_URL ?>/customer/product/<?= $m['id'] ?>" class="btn btn-ps-outline btn-sm grow">Details</a>
       <?php if ($m['stock'] > 0): ?>

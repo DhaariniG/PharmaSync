@@ -796,3 +796,157 @@ svg.lucide {
 /* Icons sitting alone in a round badge should fill it a bit more. */
 .ps-stat-icon .lucide,
 .ps-bell .lucide { width: 1.1em; height: 1.1em; }
+
+/* ---------------------------------------------------------------
+   Checkout: home delivery date + time window picker
+   (checkout/index.php, windows from app/models/DeliverySlot.php)
+   --------------------------------------------------------------- */
+.ps-day-picker {
+  display: flex;
+  gap: .5rem;
+  overflow-x: auto;           /* scrolls sideways on a phone */
+  padding-bottom: .25rem;
+}
+.ps-day {
+  position: relative;
+  flex: 0 0 auto;
+  min-width: 68px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: .5rem .4rem;
+  border: 1px solid var(--ps-border);
+  border-radius: var(--ps-radius);
+  background: #fff;
+  color: var(--ps-text);
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.15;
+}
+.ps-day:hover { border-color: var(--ps-primary); }
+.ps-day-name  { font-size: .72rem; color: var(--ps-text-muted); text-transform: uppercase; letter-spacing: .03em; }
+.ps-day-num   { font-size: 1.25rem; font-weight: 700; }
+.ps-day-month { font-size: .75rem; }
+.ps-day-free  { font-size: .68rem; color: #1a7f4b; font-weight: 600; margin-top: 2px; }
+.ps-day.is-full .ps-day-free { color: var(--ps-danger); }
+.ps-day.active {
+  background: var(--ps-primary);
+  border-color: var(--ps-primary);
+  color: #fff;
+}
+.ps-day.active .ps-day-name,
+.ps-day.active .ps-day-free { color: #fff; }
+/* small dot on the day that holds the chosen window */
+.ps-day.has-choice::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ps-accent);
+}
+
+.ps-slot {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .7rem .9rem;
+  margin-bottom: .5rem;
+  border: 1px solid var(--ps-border);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+.ps-slot:hover { border-color: var(--ps-primary); }
+.ps-slot-time   { font-weight: 600; font-variant-numeric: tabular-nums; min-width: 110px; }
+.ps-slot-status { margin-left: auto; font-size: .85rem; font-weight: 600; text-align: right; }
+.ps-slot-state  { white-space: nowrap; }
+.ps-slot-left   { display: block; font-size: .72rem; font-weight: 600; color: #b5760a; }
+.ps-slot.is-available .ps-slot-status { color: #1a7f4b; }
+
+/* the ticked window */
+.ps-slot:has(input:checked) {
+  border-color: var(--ps-primary);
+  background: var(--ps-primary-light);
+  box-shadow: inset 0 0 0 1px var(--ps-primary);
+}
+
+/* full / closed / too late: shown, but greyed out and not clickable */
+.ps-slot.is-full,
+.ps-slot.is-closed,
+.ps-slot.is-past {
+  background: var(--ps-bg);
+  cursor: not-allowed;
+}
+.ps-slot.is-full:hover,
+.ps-slot.is-closed:hover,
+.ps-slot.is-past:hover { border-color: var(--ps-border); }
+.ps-slot.is-full .ps-slot-time,
+.ps-slot.is-closed .ps-slot-time,
+.ps-slot.is-past .ps-slot-time { color: var(--ps-text-muted); text-decoration: line-through; }
+.ps-slot.is-full .ps-slot-status   { color: var(--ps-danger); }
+.ps-slot.is-closed .ps-slot-status,
+.ps-slot.is-past .ps-slot-status   { color: var(--ps-text-muted); }
+
+/* without JavaScript every day's panel shows, so space them out */
+.ps-slot-panel { margin-bottom: 1rem; }
+
+/* ---------------------------------------------------------------
+   Pack size next to prices and quantities ("per strip of 20 tablets")
+   --------------------------------------------------------------- */
+.ps-pack { font-size: .78rem; color: var(--ps-text-muted); }
+.ps-qty-caption { font-size: .75rem; color: var(--ps-text-muted); text-align: center; margin-top: .2rem; line-height: 1.2; }
+
+/* ---------------------------------------------------------------
+   Prescription coverage table (prescription status + checkout)
+   --------------------------------------------------------------- */
+.ps-table-wrap { overflow-x: auto; }
+.ps-cover-table { border-collapse: collapse; }
+.ps-cover-table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--ps-text-muted);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  padding: .4rem .5rem;
+  border-bottom: 1px solid var(--ps-border);
+}
+.ps-cover-table td { padding: .5rem; border-bottom: 1px solid var(--ps-border); }
+.ps-cover-table tr:last-child td { border-bottom: 0; }
+
+/* ---------------------------------------------------------------
+   Payment status tags (order page, confirmation)
+   --------------------------------------------------------------- */
+.ps-pay { font-weight: 600; }
+.ps-pay-paid              { background: var(--ps-primary-light); color: var(--ps-primary-dark); }
+.ps-pay-pay_on_delivery   { background: #e6f0ff; color: #1a56c4; }
+.ps-pay-refund_due        { background: #fde8e6; color: var(--ps-danger); }
+
+/* "Change delivery time" on the order page */
+.ps-reschedule summary { cursor: pointer; color: var(--ps-primary); font-weight: 600; }
+.ps-reschedule[open] summary { margin-bottom: .25rem; }
+/* The order page sidebar is narrow: time on one line, status under it. */
+.ps-reschedule .ps-slot { flex-wrap: wrap; row-gap: .1rem; padding: .55rem .7rem; }
+.ps-reschedule .ps-slot-time { min-width: 0; white-space: nowrap; }
+.ps-reschedule .ps-slot-status { flex-basis: 100%; margin-left: 1.9rem; text-align: left; font-size: .78rem; }
+.ps-reschedule .ps-slot-left { display: inline; margin-left: .35rem; }
+.ps-pay-not_charged       { background: var(--ps-bg); color: var(--ps-text-muted); }
+
+/* ---------------------------------------------------------------
+   Settings page
+   --------------------------------------------------------------- */
+.ps-settings-nav a.active {
+  background: var(--ps-primary-light);
+  color: var(--ps-primary-dark) !important;
+}
+/* A settings row that opens a small form under it */
+.ps-setting > summary { list-style: none; cursor: pointer; }
+.ps-setting > summary::-webkit-details-marker { display: none; }
+.ps-setting[open] > summary .btn { background: var(--ps-primary-light); }
+.ps-setting-form > .field,
+.ps-setting-form > .note { max-width: 380px; }
+#security, #notifications, #privacy, #help { scroll-margin-top: 80px; }

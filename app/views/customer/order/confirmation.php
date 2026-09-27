@@ -37,9 +37,10 @@
             <div class="muted small"><?= htmlspecialchars(STORE_ADDRESS) ?></div>
           </div>
         <?php else: ?>
+          <?php $slotText = DeliverySlot::describe($order['delivery_slot'] ?? null); ?>
           <div class="col-md-6">
-            <div class="muted small upper">Estimated Delivery</div>
-            <div class="bold">Tomorrow, by 6:00 PM</div>
+            <div class="muted small upper">Delivery Slot</div>
+            <div class="bold"><?= $slotText !== null ? e($slotText) : 'To be confirmed' ?></div>
           </div>
           <div class="col-md-6">
             <div class="muted small upper">Delivery Address</div>
@@ -53,7 +54,7 @@
           <div class="muted small upper">Payment Method</div>
           <div class="bold">
             <?php
-              $labels = ['cod' => $isPickup ? 'Over the Counter' : 'Cash on Delivery', 'card' => 'Credit / Debit Card', 'bank_transfer' => 'Bank Transfer'];
+              $labels = ['cod' => $isPickup ? 'Over the Counter' : 'Cash on Delivery', 'card' => 'Credit / Debit Card'];
               echo $labels[$order['payment_method']] ?? ucfirst($order['payment_method']);
             ?>
           </div>
@@ -63,12 +64,20 @@
         <div class="note note-plain border small text-start"><?= icon('id-card', 'text-primary me-1') ?>Remember to bring a valid photo ID when collecting your order.</div>
       <?php endif; ?>
 
+      <?php
+        // Say what is true: only a card order has actually been paid.
+        $payStatus = Order::paymentStatus($order);
+        $amountLabel = [
+            'paid'              => 'Total Paid',
+            'pay_on_delivery'   => $isPickup ? 'Amount to Pay at the Counter' : 'Amount to Pay on Delivery',
+        ][$payStatus] ?? 'Order Total';
+      ?>
       <div class="ps-card p-3 flex between middle mb-4" style="background: var(--ps-bg);">
         <div class="text-start">
-          <div class="muted small">Total Paid Amount</div>
+          <div class="muted small"><?= e($amountLabel) ?></div>
           <div class="bold size-4">Rs. <?= number_format($order['total'], 2) ?></div>
         </div>
-        <span class="tag ps-badge-otc"><?= icon('check', 'me-1') ?>Verified Order</span>
+        <span class="tag ps-pay ps-pay-<?= e($payStatus) ?>"><?= e(Order::paymentLabel($order)) ?></span>
       </div>
 
       <div class="flex center gap-2 wrap">
@@ -90,7 +99,7 @@
     <div class="ps-banner p-4 flex between middle wrap gap-3">
       <div>
         <div class="bold">Need help with your order?</div>
-        <div class="small">Our pharmacists are available 24/7 for consultations.</div>
+        <div class="small">Our pharmacists are available during store hours: <?= e(STORE_HOURS) ?>.</div>
       </div>
       <a href="mailto:support@pharmasync.test" class="btn btn-plain">Chat with Pharmacist</a>
     </div>

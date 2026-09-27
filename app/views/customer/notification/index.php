@@ -19,6 +19,13 @@
   </div>
 </div>
 
+<?php if (!empty($hiddenCount)): ?>
+  <div class="note note-plain border small mb-3">
+    <?= icon('bell', 'me-1') ?><?= (int) $hiddenCount ?> notification<?= $hiddenCount === 1 ? ' is' : 's are' ?> hidden because some types are switched off.
+    <a href="<?= BASE_URL ?>/customer/settings#notifications" class="semibold">Change in Settings</a>
+  </div>
+<?php endif; ?>
+
 <div class="flex wrap gap-2 mb-4">
   <?php
     $types = ['all' => 'All Alerts', 'orders' => 'Orders', 'prescriptions' => 'Prescriptions', 'health-tips' => 'Health Tips', 'promos' => 'Promos'];
