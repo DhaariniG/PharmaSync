@@ -7,5 +7,14 @@
 # thinks it is on another.
 RewriteEngine On
 
-RewriteCond %{REQUEST_URI} !^/?public/
-RewriteRule ^(.*)$ public/$1 [R=302,L]
+# Already inside public/: leave it to public/.htaccess.
+RewriteRule ^public/ - [L]
+
+# Work out this folder's URL without writing its name here, so the project
+# works in any folder. $1 is the path after this folder (e.g. "admin/x").
+# REQUEST_URI is the full path (e.g. "/PharmaSync/admin/x"). Whatever comes
+# before $1 in REQUEST_URI is this folder's URL, captured as %1
+# ("/PharmaSync/"). Without this, Apache would put the folder's disk path
+# (C:/xampp/htdocs/...) into the redirect.
+RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$
+RewriteRule ^(.*)$ %1public/$1 [R=302,L]
