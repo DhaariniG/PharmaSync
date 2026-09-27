@@ -129,8 +129,8 @@ class InventoryManagerMedicineController extends Controller
         } catch (PDOException $e) {
             // MySQL refuses to delete a medicine that batches, orders or
             // prescriptions still point at. Tell the user what to do instead.
-            $this->flash('error', '"' . $medicine['name'] . '" is used by other records (batches or orders) '
-                . 'and cannot be deleted. Set its status to Discontinued instead.');
+            $this->flash('error', '"' . $medicine['name'] . '" is used by other records (batches, sales or orders) '
+                . 'and cannot be deleted. Set its status to Inactive instead.');
         }
 
         $this->redirect('/InventoryManager/medicines');
