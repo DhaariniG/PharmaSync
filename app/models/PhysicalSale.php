@@ -25,6 +25,7 @@ class PhysicalSale extends Model
                FROM stock_batches sb
                JOIN medicines m ON sb.medicine_id = m.medicine_id
               WHERE sb.status = 'Available'
+                AND m.status = 'Active'
                 AND sb.quantity > 0
                 AND sb.expiry_date >= CURDATE()
               ORDER BY sb.expiry_date ASC, m.name ASC"
@@ -91,12 +92,13 @@ class PhysicalSale extends Model
                     "SELECT sb.batch_id, sb.medicine_id, sb.quantity, sb.status, sb.expiry_date, m.unit_price
                        FROM stock_batches sb
                        JOIN medicines m ON sb.medicine_id = m.medicine_id
-                      WHERE sb.batch_id = :batch_id",
+                      WHERE sb.batch_id = :batch_id
+                        AND m.status = 'Active'",
                     ['batch_id' => $item['batch_id']]
                 );
 
                 if ($batch === null) {
-                    throw new RuntimeException('One of the selected batches does not exist.');
+                    throw new RuntimeException('One of the selected medicines does not exist or is no longer active.');
                 }
                 if ($batch['status'] !== 'Available' || $batch['expiry_date'] < date('Y-m-d')) {
                     throw new RuntimeException('One of the selected batches is expired or unavailable.');
