@@ -60,7 +60,7 @@
           <span class="card-title">Weekly Trends</span>
           <div class="legend">
             <div class="legend-item"><span class="legend-swatch"></span>Base Pay</div>
-            <div class="legend-item"><span class="legend-swatch muted"></span></div>
+            <div class="legend-item"><span class="legend-swatch muted"></span>Bonuses</div>
           </div>
         </div>
         <div class="bars">
