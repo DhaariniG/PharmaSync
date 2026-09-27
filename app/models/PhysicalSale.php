@@ -1,46 +1,22 @@
 <?php
 /**
  * PhysicalSale - counter (walk-in) sales made by a pharmacist.
- *
- * Tables: physical_orders, physical_order_items, payments, stock_batches,
- * stock_changes. All SQL for the Pharmacist sale screens lives here.
- *
- * physical_orders has no `status` column, so the status is worked out from
- * the payment row (see STATUS_SQL below):
- *   payment 'Refunded'                       -> 'Cancelled' (or 'Refunded' if the
- *                                               notes carry a "[Refunded: ...]" tag)
- *   anything else                            -> 'Completed'
- *
- * When something goes wrong a method returns false / null and puts a short
- * message in $this->error for the controller to show.
  */
 class PhysicalSale extends Model
 {
-    /**
-     * This module already has a real, populated database, so it always uses
-     * MySQL. The base class returns null while DB_ENABLED is false (that flag
-     * is shared by the whole team), so we skip that check for this model only.
-     */
     protected function db(): ?PDO
     {
         return Database::getConnection();
     }
 
-    /** Why the last call failed. */
     public string $error = '';
 
-    /** SQL that turns the payment row into the status shown on screen. */
     private const STATUS_SQL = "CASE
             WHEN p.payment_status = 'Refunded' THEN
                 CASE WHEN po.notes LIKE '%[Refunded:%' THEN 'Refunded' ELSE 'Cancelled' END
             ELSE 'Completed'
         END";
 
-    /* ==================================================================
-     * Reading
-     * ================================================================== */
-
-    /** Batches that can be sold today, earliest expiry first (FEFO). */
     public function getAvailableStock(): array
     {
         return $this->fetchAll(
@@ -55,7 +31,6 @@ class PhysicalSale extends Model
         );
     }
 
-    /** Every counter sale, newest first, for the history screen. */
     public function getAllPhysicalSales(): array
     {
         return $this->fetchAll(
@@ -70,7 +45,6 @@ class PhysicalSale extends Model
         );
     }
 
-    /** One sale with its line items, or null if the id is not a real sale. */
     public function getOrderDetails(int $orderId): ?array
     {
         $order = $this->fetchOne(
@@ -102,16 +76,6 @@ class PhysicalSale extends Model
         return $order;
     }
 
-    /* ==================================================================
-     * Creating a sale
-     * ================================================================== */
-
-    /**
-     * Record a sale and take the stock out of the batches.
-     * $items is [ ['batch_id' => 4, 'quantity' => 2], ... ]. Prices are read
-     * from the database here - a price sent by the browser is never trusted.
-     * Returns the new order id, or null (see $this->error).
-     */
     public function createSale(int $pharmacistId, string $customerName, array $items, string $paymentMethod, string $notes): ?int
     {
         $db = $this->db();
@@ -140,12 +104,25 @@ class PhysicalSale extends Model
 
                 $subtotal = $item['quantity'] * (float) $batch['unit_price'];
                 $total   += $subtotal;
-                $lines[]  = [
-                    'medicine_id' => (int) $batch['medicine_id'],
-                    'batch_id'    => (int) $batch['batch_id'],
-                    'quantity'    => $item['quantity'],
-                    'unit_price'  => (float) $batch['unit_price'],
-                    'subtotal'    => $subtotal,
+
+                $prescribedQty = null;
+                if (!empty($item['prescribed_quantity'])) {
+                    $prescribedQty = (int) $item['prescribed_quantity'];
+                }
+
+                $frequency = null;
+                if (!empty($item['frequency'])) {
+                    $frequency = trim($item['frequency']);
+                }
+
+                $lines[] = [
+                    'medicine_id'         => (int) $batch['medicine_id'],
+                    'batch_id'            => (int) $batch['batch_id'],
+                    'quantity'            => $item['quantity'],
+                    'prescribed_quantity' => $prescribedQty,
+                    'frequency'           => $frequency,
+                    'unit_price'          => (float) $batch['unit_price'],
+                    'subtotal'            => $subtotal,
                 ];
             }
 
@@ -187,11 +164,6 @@ class PhysicalSale extends Model
         }
     }
 
-    /* ==================================================================
-     * Cancel / refund
-     * ================================================================== */
-
-    /** Put the stock back and mark the payment refunded. $status is 'Cancelled' or 'Refunded'. */
     public function cancelSale(int $orderId, int $userId, string $status, string $reason): bool
     {
         $db = $this->db();
@@ -245,14 +217,6 @@ class PhysicalSale extends Model
         }
     }
 
-    /* ==================================================================
-     * Editing quantities
-     * ================================================================== */
-
-    /**
-     * Change the quantity of some lines of one sale. $quantities is
-     * [ item_id => new quantity ]. Stock moves by the difference (delta).
-     */
     public function updateQuantities(int $orderId, array $quantities, int $userId): bool
     {
         $db = $this->db();
@@ -272,7 +236,6 @@ class PhysicalSale extends Model
             }
 
             foreach ($quantities as $itemId => $newQty) {
-                // The item must belong to THIS order.
                 $item = $this->fetchOne(
                     "SELECT item_id, batch_id, quantity, unit_price
                        FROM physical_order_items
@@ -327,11 +290,6 @@ class PhysicalSale extends Model
         }
     }
 
-    /* ==================================================================
-     * Small stock helpers (used inside the transactions above)
-     * ================================================================== */
-
-    /** Take $qty out of a batch. False if the batch does not have that much. */
     private function takeStock(int $batchId, int $qty): bool
     {
         $done = $this->exec(
@@ -340,7 +298,6 @@ class PhysicalSale extends Model
             ['qty' => $qty, 'min_qty' => $qty, 'batch_id' => $batchId]
         );
 
-        // A batch with nothing left is marked Depleted.
         $this->exec(
             "UPDATE stock_batches SET status = 'Depleted' WHERE batch_id = :batch_id AND quantity = 0",
             ['batch_id' => $batchId]
@@ -349,7 +306,6 @@ class PhysicalSale extends Model
         return $done > 0;
     }
 
-    /** Put $qty back into a batch (an expired batch stays Expired). */
     private function returnStock(int $batchId, int $qty): void
     {
         $this->exec(
@@ -361,7 +317,6 @@ class PhysicalSale extends Model
         );
     }
 
-    /** One row in stock_changes. $qty is signed: negative = stock out. */
     private function logStockChange(int $batchId, int $userId, string $type, int $qty, int $orderId, string $notes): void
     {
         $this->insertRow([

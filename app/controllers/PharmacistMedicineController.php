@@ -26,6 +26,7 @@ class PharmacistMedicineController extends Controller
             'page_title'      => 'Alternative Medicine Review',
             'active_page'     => 'prescriptions',
             'page_css'        => 'alternateMedicine.css',
+            'show_topbar' => false,
             'container_class' => 'dashboard-container',
         ]);
     }

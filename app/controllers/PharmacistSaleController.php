@@ -9,6 +9,7 @@
  *   edit($id)           edit quantities form
  *   update($id)         POST: save new quantities, go to the bill
  *   cancel($id)         POST: cancel / refund a sale, go to the history
+ *   details($id)        comprehensive order details screen
  *
  * No SQL here - everything goes through the PhysicalSale model.
  */
@@ -55,17 +56,26 @@ class PharmacistSaleController extends Controller
             $this->fail('/pharmacist/sales', 'Please choose Cash or Card.');
         }
 
-        // Keep only what the server needs: the batch and a whole-number quantity.
+        // Capture dispensed quantity, prescribed quantity, and frequency per item
         $items = [];
         foreach ((array) ($_POST['items'] ?? []) as $row) {
-            $batchId  = filter_var($row['batch_id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
-            $quantity = filter_var($row['quantity'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 10000]]);
+            $batchId       = filter_var($row['batch_id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+            $quantity      = filter_var($row['quantity'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 10000]]);
+            $prescribedQty = filter_var($row['prescribed_quantity'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 10000]]);
+            $frequency     = mb_substr(trim($row['frequency'] ?? ''), 0, 255);
 
             if ($batchId === false || $quantity === false) {
                 $this->fail('/pharmacist/sales', 'Every quantity must be a whole number of 1 or more.');
             }
-            $items[] = ['batch_id' => $batchId, 'quantity' => $quantity];
+
+            $items[] = [
+                'batch_id'            => $batchId,
+                'quantity'            => $quantity,
+                'prescribed_quantity' => $prescribedQty !== false ? $prescribedQty : null,
+                'frequency'           => $frequency !== '' ? $frequency : null,
+            ];
         }
+
         if (!$items) {
             $this->fail('/pharmacist/sales', 'Add at least one medicine to the sale.');
         }
@@ -80,36 +90,38 @@ class PharmacistSaleController extends Controller
         $this->redirect('/pharmacist/sales/' . $orderId . '/completed');
     }
 
-    //** GET /pharmacist/sales/{id}/completed */
-public function completed($id): void
-{
-    $this->requireRole('Pharmacist');
+    /** GET /pharmacist/sales/{id}/completed */
+    public function completed($id): void
+    {
+        $this->requireRole('Pharmacist');
 
-    // Try fetching from DB; fall back to static mock data if testing
-    try {
-        $order = $this->findOrder($id);
-    } catch (\Throwable $e) {
-        $order = [
-            'order_id'       => (int) $id,
-            'customer_name'  => 'Ms.D',
-            'pharmacist'     => 'Sarah Jenkins',
-            'payment_method' => 'Cash',
-            'created_at'     => '2026-09-23 16:19:52',
-            'total_amount'   => 25.00,
-            'items'          => [
-                [
-                    'name'         => 'Paracetamol 500mg',
-                    'batch_number' => 'PCM-001',
-                    'quantity'     => 1,
-                    'unit_price'   => 25.00,
-                    'subtotal'     => 25.00
+        try {
+            $order = $this->findOrder($id);
+        } catch (\Throwable $e) {
+            $order = [
+                'order_id'       => (int) $id,
+                'customer_name'  => 'Dilani Silva',
+                'pharmacist'     => 'Sarah Jenkins',
+                'payment_method' => 'Cash',
+                'created_at'     => date('Y-m-d H:i:s'),
+                'total_amount'   => 350.00,
+                'items'          => [
+                    [
+                        'name'                => 'Paracetamol 500mg',
+                        'batch_number'        => 'PCM-001',
+                        'quantity'            => 20,
+                        'prescribed_quantity' => 20,
+                        'frequency'           => '1 tablet twice daily after meals',
+                        'unit_price'          => 25.00,
+                        'subtotal'            => 500.00
+                    ]
                 ]
-            ]
-        ];
+            ];
+        }
+
+        $this->renderBare('sale.completed', ['order' => $order]);
     }
 
-    $this->renderBare('sale.completed', ['order' => $order]);
-}
     /** GET /pharmacist/sales/{id}/bill */
     public function show($id): void
     {
@@ -214,5 +226,19 @@ public function completed($id): void
         $this->redirect($path);
     }
 
-    
+    /** GET /pharmacist/sales/{id}/details */
+    public function details($id): void
+    {
+        $this->requireRole('Pharmacist');
+
+        $order = $this->findOrder($id);
+
+        $this->render('sale.details', [
+            'order'           => $order,
+            'page_title'      => 'Order Details #POS-' . $order['order_id'],
+            'active_page'     => 'history',
+            'page_css'        => 'physicalSale.css',
+            'container_class' => 'dashboard-container',
+        ]);
+    }
 }
