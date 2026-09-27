@@ -35,6 +35,10 @@ what the last one created:
 6. `005_demo_data.sql` - the 6 medicine categories (added only if missing),
    plus demo medicines, suppliers and stock batches.
 7. `006_add_password_resets_table.sql` - the forgot-password token table.
+8. `008_online_prescriptions_insertions.sql` - prescribed quantity and
+   frequency on counter-sale items, 3 test customers (`Demo@1234`, e.g.
+   `dilani.silva@gmail.com`), 4 pending and 2 reviewed prescriptions,
+   2 online orders and a sample counter sale for the Pharmacist screens.
 
 `database/schema-reference-customer.sql` is documentation only, not part of
 the import - see "Open group decisions" below.
@@ -50,10 +54,15 @@ Using the MySQL command-line client instead of phpMyAdmin, from the
 "C:\xampp\mysql\bin\mysql.exe" -u root < 004_link_prescriptions_to_family_members.sql
 "C:\xampp\mysql\bin\mysql.exe" -u root < 005_demo_data.sql
 "C:\xampp\mysql\bin\mysql.exe" -u root < 006_add_password_resets_table.sql
+"C:\xampp\mysql\bin\mysql.exe" -u root < 008_online_prescriptions_insertions.sql
 ```
 
 Every file after `001_schema.sql` is safe to import again - each one either
 checks a name exists first or deletes only its own rows before re-inserting.
+One exception: `005_demo_data.sql` empties the medicines and stock batches,
+so once any counter sale exists (including the one from 008) it stops with
+a foreign-key error and changes nothing. Re-import from `001_schema.sql` to
+reset the demo data.
 
 **Email (forgot password).** Copy `config/local.example.php` to
 `config/local.php` and fill in your own Mailtrap sandbox SMTP credentials.
