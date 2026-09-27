@@ -45,11 +45,11 @@
         </div>
         <div class="stat-card">
           <div class="stat-label">Pharmacists <i data-lucide="briefcase-medical" style="width:16px;height:16px;color:var(--teal-600)"></i></div>
-          <div class="stat-value">342</div>
+          <div class="stat-value">3</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Delivery Partners <i data-lucide="bike" style="width:16px;height:16px;color:var(--teal-600)"></i></div>
-          <div class="stat-value">1,204</div>
+          <div class="stat-value">22</div>
         </div>
       </div>
 
@@ -89,14 +89,14 @@
             <div class="delivery-cards">
               <a class="delivery-card" href="<?= BASE_URL ?>/admin/orders/detail?id=ORD-9021">
                 <div class="delivery-card-top"><span class="order-id">#ORD-9021</span></div>
-                <div class="cust-name">Sarah J. Miller</div>
-                <div class="cust-addr">422 Oak Street, Suite 10</div>
+                <div class="cust-name">Supun Perera</div>
+                <div class="cust-addr">10, vajira</div>
                 <div class="meta"><i data-lucide="user"></i> ETA: 45m</div>
               </a>
               <a class="delivery-card" href="<?= BASE_URL ?>/admin/orders/detail?id=ORD-8843">
                 <div class="delivery-card-top"><span class="order-id">#ORD-8843</span></div>
-                <div class="cust-name">David Chen</div>
-                <div class="cust-addr">15 King's Cross Road</div>
+                <div class="cust-name">Sangeeth Silva </div>
+                <div class="cust-addr">15 road, Navinna</div>
                 <div class="meta"><i data-lucide="truck"></i> Driver: Mike R.</div>
               </a>
               <a class="delivery-card active-track" href="<?= BASE_URL ?>/admin/orders/detail?id=ORD-9110">
@@ -104,8 +104,8 @@
                   <span class="order-id">#ORD-9110</span>
                   <span class="badge badge-gray">Normal</span>
                 </div>
-                <div class="cust-name">Hospital Central</div>
-                <div class="cust-addr">Medical Zone, Wing B</div>
+                <div class="cust-name">Nimali Jayathilaka</div>
+                <div class="cust-addr">Flemington, Nawala</div>
                 <div class="meta"><i data-lucide="navigation"></i> ETA: 12m</div>
               </a>
               <a class="delivery-card" href="<?= BASE_URL ?>/admin/orders/detail?id=ORD-7756">
@@ -113,44 +113,15 @@
                   <span class="order-id">#ORD-7756</span>
                   <span class="badge badge-red">Urgent</span>
                 </div>
-                <div class="cust-name">Anna Richards</div>
+                <div class="cust-name">Adithya Perera</div>
                 <div class="cust-addr" style="display:flex;align-items:center;gap:5px;"><i data-lucide="check" style="width:12px;height:12px"></i> Delivered 5m ago</div>
               </a>
             </div>
           </div>
 
           <!-- Audit Logs -->
-          <div class="panel">
-            <div class="panel-header"><h2>Recent Audit Logs</h2></div>
-            <div>
-              <div class="log-item">
-                <div class="log-icon teal"><i data-lucide="pencil"></i></div>
-                <div class="log-body">
-                  <div class="log-top">
-                    <div class="log-title"><a href="<?= BASE_URL ?>/admin/inventory/detail?id=BT-99021-X">Update Stock: Amoxicillin 500mg</a></div>
-                    <div class="log-time">Today, 14:22</div>
-                  </div>
-                  <div class="log-desc">Admin <b>Sarah J. Miller</b> increased inventory level by 500 units in <a href="<?= BASE_URL ?>/admin/inventory">Warehouse Alpha</a>.</div>
-                  <div class="log-badges">
-                    <span class="badge badge-teal">Inventory</span>
-                    <span class="badge badge-green">Successful</span>
-                  </div>
-                </div>
-              </div>
-              <div class="log-item">
-                <div class="log-icon amber"><i data-lucide="shield-alert"></i></div>
-                <div class="log-body">
-                  <div class="log-top">
-                    <div class="log-title">System Access Warning</div>
-                    <div class="log-time">Today, 11:05</div>
-                  </div>
-                  <div class="log-desc">Multiple failed login attempts from IP <span class="ip">192.168.1.104</span> targeting user r.taylor.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+          
+         </div>
         <!-- System alerts rail -->
         <div class="panel">
           <div class="panel-header">
@@ -160,16 +131,16 @@
           <div>
             <div class="alert-card crit">
               <div class="alert-title crit"><i data-lucide="pill"></i> Low Stock Alert</div>
-              <div class="alert-body">Insulin Glargine (Solostar) is below safety threshold (<b>5 units left</b>).</div>
+              <div class="alert-body">Omeprazol is below safety threshold (<b>5 units left</b>).</div>
               <a href="<?= BASE_URL ?>/admin/inventory" class="alert-btn crit" style="display:block;text-align:center;">View Inventory</a>
             </div>
             <div class="alert-card warn">
               <div class="alert-title warn"><i data-lucide="calendar-clock"></i> Expiry Warning</div>
-              <div class="alert-body">Batch #B-992 (Lisinopril) expires in <b>12 days</b>. 45 units remaining.</div>
+              <div class="alert-body">Batch #B panadol expires in <b>12 days</b>. 45 units remaining.</div>
             </div>
             <div class="alert-card info">
               <div class="alert-title" style="color:var(--ink-700)"><i data-lucide="shield"></i> Security Event</div>
-              <div class="alert-body">New device login for User USR-1002 from London, UK.</div>
+              <div class="alert-body">New device login for User USR-1002 from Kotte,Colombo</div>
               <a href="<?= BASE_URL ?>/admin/accounts/detail?id=USR-1002" class="alert-btn warn" style="display:block;text-align:center;">Verify</a>
             </div>
             <div class="alert-card crit">

@@ -87,16 +87,16 @@
             <label for="filterDriver">Assigned Driver</label>
             <select id="filterDriver">
               <option value="">Any driver</option>
-              <option value="MS">Michael S.</option>
-              <option value="JL">Jessica L.</option>
-              <option value="DA">David A.</option>
-              <option value="RH">Robert H.</option>
+              <option value="MS">Saman</option>
+              <option value="JL">Mahela</option>
+              <option value="DA">Dayan</option>
+              <option value="RH">Somathilaka</option>
               <option value="unassigned">Unassigned</option>
             </select>
           </div>
           <div class="form-group full">
-            <label for="filterSearch">Search Destination / Patient</label>
-            <input type="text" id="filterSearch" placeholder="e.g. Jonathan Edwards, Clinic B..." />
+            <label for="filterSearch">Search Destination </label>
+            <input type="text" id="filterSearch" placeholder="e.g Thushani Silva." />
           </div>
         </div>
 
@@ -105,7 +105,7 @@
             <thead>
               <tr>
                 <th>Delivery ID</th>
-                <th>Destination / Patient</th>
+                <th>Destination</th>
                 <th>Status</th>
                 <th>Priority</th>
                 <th>Assigned Driver</th>
@@ -117,8 +117,8 @@
                 <td class="order-id"><a class="order-id-link" href="<?= url('/deliveryPartner/order-detail') ?>?id=PH-2024-8841" onclick="event.stopPropagation()">#PH-2024-8841</a></td>
                 <td>
                   <div class="dest-cell">
-                    <span class="dest-name">Jonathan Edwards</span>
-                    <span class="dest-address">452 Oak Avenue, Medical Heights</span>
+                    <span class="dest-name">12,deans road</span>
+                    
                   </div>
                 </td>
                 <td><span class="status-badge issue">Issue</span></td>
@@ -126,7 +126,7 @@
                 <td>
                   <div class="driver-chip">
                     <div class="driver-avatar">MS</div>
-                    <span>Michael S.</span>
+                    <span>Mahela</span>
                   </div>
                 </td>
                 <td class="eta-cell muted">--:--</td>
@@ -136,7 +136,7 @@
                 <td class="order-id"><a class="order-id-link" href="<?= url('/deliveryPartner/order-detail') ?>?id=PH-2024-8842" onclick="event.stopPropagation()">#PH-2024-8842</a></td>
                 <td>
                   <div class="dest-cell">
-                    <span class="dest-name">901 Bulk Way, West Sector</span>
+                    <span class="dest-name">901, Shanthi road</span>
                   </div>
                 </td>
                 <td><span class="status-badge transit">In Transit</span></td>
@@ -144,18 +144,18 @@
                 <td>
                   <div class="driver-chip">
                     <div class="driver-avatar">JL</div>
-                    <span>Jessica L.</span>
+                    <span>Julia</span>
                   </div>
                 </td>
-                <td class="eta-cell">14:20 <span class="eta-sub">(9 min)</span></td>
+                <td class="eta-cell">14:20 </td>
               </tr>
 
               <tr data-status="pending" class="row-link" onclick="window.location='order-detail.php?id=PH-2024-8843'">
                 <td class="order-id"><a class="order-id-link" href="<?= url('/deliveryPartner/order-detail') ?>?id=PH-2024-8843" onclick="event.stopPropagation()">#PH-2024-8843</a></td>
                 <td>
                   <div class="dest-cell">
-                    <span class="dest-name">Dr. Amanda Lee</span>
-                    <span class="dest-address">Clinic B, Suite 400</span>
+                    <span class="dest-name">33, Nihal lane, Kotte </span>
+                   
                   </div>
                 </td>
                 <td><span class="status-badge pending">Pending</span></td>
@@ -168,8 +168,8 @@
                 <td class="order-id"><a class="order-id-link" href="<?= url('/deliveryPartner/order-detail') ?>?id=PH-2024-8839" onclick="event.stopPropagation()">#PH-2024-8839</a></td>
                 <td>
                   <div class="dest-cell">
-                    <span class="dest-name">Robert Thompson</span>
-                    <span class="dest-address">12 Silver Dr, Apt 2B</span>
+                    <span class="dest-name">Royak Lane, Colpetty</span>
+                   
                   </div>
                 </td>
                 <td><span class="status-badge delivered">Delivered</span></td>
@@ -177,7 +177,7 @@
                 <td>
                   <div class="driver-chip">
                     <div class="driver-avatar">DA</div>
-                    <span>David A.</span>
+                    <span>Dayan</span>
                   </div>
                 </td>
                 <td class="eta-cell">13:45 <span class="eta-sub">(Arrived)</span></td>
@@ -196,10 +196,10 @@
                 <td>
                   <div class="driver-chip">
                     <div class="driver-avatar">RH</div>
-                    <span>Robert H.</span>
+                    <span>Rohana</span>
                   </div>
                 </td>
-                <td class="eta-cell">14:05 <span class="eta-sub">(3 min)</span></td>
+                <td class="eta-cell">14:05 </td>
               </tr>
             </tbody>
           </table>

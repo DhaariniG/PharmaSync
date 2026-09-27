@@ -22,8 +22,8 @@
         <div class="profile-identity">
           <div class="profile-avatar-lg">SJ</div>
           <div>
-            <h2 class="page-heading">Sarah Jenkins</h2>
-            <p class="page-subheading">Senior Delivery Partner &bull; Driver ID: #4829</p>
+            <h2 class="page-heading">Kasun Bandara</h2>
+            <p class="page-subheading"> &bull; Driver ID: #4829</p>
           </div>
         </div>
         <div class="welcome-actions">
@@ -64,15 +64,15 @@
           <div class="info-list">
             <div class="info-row">
               <span class="info-label">Full Name</span>
-              <span class="info-value">Sarah Jenkins</span>
+              <span class="info-value">Kasun Bandara</span>
             </div>
             <div class="info-row">
               <span class="info-label">Email Address</span>
-              <span class="info-value">s.jenkins@pharmaroute.com</span>
+              <span class="info-value">jbandara@gmail.com</span>
             </div>
             <div class="info-row">
               <span class="info-label">Phone Number</span>
-              <span class="info-value">+1 (555) 012-3456</span>
+              <span class="info-value">0779239600</span>
             </div>
             <div class="info-row">
               <span class="info-label">Joined Date</span>
@@ -92,11 +92,11 @@
             </div>
             <div class="info-row">
               <span class="info-label">License Plate</span>
-              <span class="info-value">PH-772-RX<span class="info-sub">Registered: 2023</span></span>
+              <span class="info-value">CBK 6766<span class="info-sub">Registered: 2023</span></span>
             </div>
             <div class="info-row">
               <span class="info-label">Operating Region</span>
-              <span class="info-value">Metropolitan North (MN-04)</span>
+              <span class="info-value">Western Province</span>
             </div>
             <div class="info-row">
               <span class="info-label">Cargo Capacity</span>
@@ -104,7 +104,7 @@
             </div>
             <div class="info-row">
               <span class="info-label">Insurance Provider</span>
-              <span class="info-value">SafeGuard Logistics<span class="badge-active">Active</span></span>
+              <span class="info-value">Union Assurence<span class="badge-active">Active</span></span>
             </div>
           </div>
         </div>
@@ -137,21 +137,8 @@
         </div>
 
         <div class="mini-bars-wrap">
-          <span class="mini-bars-label">Delivery fulfillment density &bull; current cycle</span>
-          <div class="mini-bars">
-            <div class="mini-bar" style="height:35%"></div>
-            <div class="mini-bar" style="height:55%"></div>
-            <div class="mini-bar" style="height:40%"></div>
-            <div class="mini-bar" style="height:70%"></div>
-            <div class="mini-bar" style="height:85%"></div>
-            <div class="mini-bar" style="height:60%"></div>
-            <div class="mini-bar" style="height:95%"></div>
-            <div class="mini-bar" style="height:75%"></div>
-            <div class="mini-bar" style="height:50%"></div>
-            <div class="mini-bar" style="height:65%"></div>
-            <div class="mini-bar" style="height:90%"></div>
-            <div class="mini-bar" style="height:45%"></div>
-          </div>
+          <span class="mini-bars-label">&bull; current cycle</span>
+          
         </div>
       </div>
 

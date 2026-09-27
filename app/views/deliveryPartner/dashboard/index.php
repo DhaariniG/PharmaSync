@@ -21,8 +21,8 @@
       <!-- Welcome header -->
       <div class="welcome">
         <div>
-          <h2>Hello, Alex Rivero <a href="<?= url('/deliveryPartner/profile') ?>">Profile</a></h2>
-          <p>Wednesday, October 23, 2024 &bull; Shift started 4h 12m ago</p>
+          <h2>Hello, Kasun Bandara <a href="<?= url('/deliveryPartner/profile') ?>">Profile</a></h2>
+          
         </div>
         <div class="welcome-actions">
           <div class="status-pill">
@@ -41,7 +41,7 @@
             <svg class="icon" viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
           </div>
           <div class="metric-bottom">
-            <span class="metric-value">$1,240.50</span>
+            <span class="metric-value">Rs.700,000</span>
           </div>
         </div>
 
@@ -120,16 +120,7 @@
             </div>
           </div>
 
-          <div class="checklist">
-            <div class="checklist-item">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-              Est. Completion: 17:45
-            </div>
-            <div class="checklist-item">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-              Next: City General Pharmacy
-            </div>
-          </div>
+          
         </div>
       </div>
 
