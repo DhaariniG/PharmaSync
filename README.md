@@ -35,7 +35,9 @@ what the last one created:
 6. `005_demo_data.sql` - the 6 medicine categories (added only if missing),
    plus demo medicines, suppliers and stock batches.
 7. `006_add_password_resets_table.sql` - the forgot-password token table.
-8. `008_online_prescriptions_insertions.sql` - prescribed quantity and
+8. `007_add_customer_settings_table.sql` - the customer's notification
+   choices and password-change date for the Settings page.
+9. `008_online_prescriptions_insertions.sql` - prescribed quantity and
    frequency on counter-sale items, 3 test customers (`Demo@1234`, e.g.
    `dilani.silva@gmail.com`), 4 pending and 2 reviewed prescriptions,
    2 online orders and a sample counter sale for the Pharmacist screens.
@@ -54,6 +56,7 @@ Using the MySQL command-line client instead of phpMyAdmin, from the
 "C:\xampp\mysql\bin\mysql.exe" -u root < 004_link_prescriptions_to_family_members.sql
 "C:\xampp\mysql\bin\mysql.exe" -u root < 005_demo_data.sql
 "C:\xampp\mysql\bin\mysql.exe" -u root < 006_add_password_resets_table.sql
+"C:\xampp\mysql\bin\mysql.exe" -u root < 007_add_customer_settings_table.sql
 "C:\xampp\mysql\bin\mysql.exe" -u root < 008_online_prescriptions_insertions.sql
 ```
 
