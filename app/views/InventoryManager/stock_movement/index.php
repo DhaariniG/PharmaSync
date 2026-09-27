@@ -63,9 +63,9 @@
                     <tr>
                         <th>Medicine Name</th>
                         <th>Batch Number</th>
+                        <th>Date</th>
                         <th>Movement Type</th>
                         <th>Quantity</th>
-                        <th>Date</th>
                         <th>Reference</th>
                         <th>Notes</th>
                     </tr>
@@ -74,54 +74,54 @@
                     <tr>
                         <td class="td-name">Paracetamol 500mg</td>
                         <td class="td-muted">BATCH-2024-001</td>
+                        <td class="td-muted">May 22, 2025</td>
                         <td><span class="movement-badge in">Stock In</span></td>
                         <td><span class="qty-value in">+200</span></td>
-                        <td class="td-muted">May 22, 2025</td>
                         <td>PO#P00587</td>
                         <td><span class="td-note">Received from HealthCorp</span></td>
                     </tr>
                     <tr>
                         <td class="td-name">Amoxicillin 250mg</td>
                         <td class="td-muted">BATCH-2024-002</td>
+                        <td class="td-muted">May 21, 2025</td>
                         <td><span class="movement-badge out">Stock Out</span></td>
                         <td><span class="qty-value out">-50</span></td>
-                        <td class="td-muted">May 21, 2025</td>
                         <td>ORD#12342</td>
                         <td><span class="td-note">Dispensed for order</span></td>
                     </tr>
                     <tr>
                         <td class="td-name">Vitamin D3</td>
                         <td class="td-muted">BATCH-2024-003</td>
+                        <td class="td-muted">May 20, 2025</td>
                         <td><span class="movement-badge in">Stock In</span></td>
                         <td><span class="qty-value in">+300</span></td>
-                        <td class="td-muted">May 20, 2025</td>
                         <td>PO#P00585</td>
                         <td><span class="td-note">Received from PharmaLife</span></td>
                     </tr>
                     <tr>
                         <td class="td-name">Cetirizine 10mg</td>
                         <td class="td-muted">BATCH-2024-004</td>
+                        <td class="td-muted">May 19, 2025</td>
                         <td><span class="movement-badge disposed">Disposed</span></td>
                         <td><span class="qty-value disposed">-15</span></td>
-                        <td class="td-muted">May 19, 2025</td>
                         <td>DISP#001</td>
                         <td><span class="td-note">Expired batch disposed</span></td>
                     </tr>
                     <tr>
                         <td class="td-name">Metformin 500mg</td>
                         <td class="td-muted">BATCH-2024-005</td>
+                        <td class="td-muted">May 18, 2025</td>
                         <td><span class="movement-badge out">Stock Out</span></td>
                         <td><span class="qty-value out">-80</span></td>
-                        <td class="td-muted">May 18, 2025</td>
                         <td>ORD#12340</td>
                         <td><span class="td-note">Dispensed for order</span></td>
                     </tr>
                     <tr>
                         <td class="td-name">Salbutamol Inhaler</td>
                         <td class="td-muted">BATCH-2024-006</td>
+                        <td class="td-muted">May 17, 2025</td>
                         <td><span class="movement-badge in">Stock In</span></td>
                         <td><span class="qty-value in">+80</span></td>
-                        <td class="td-muted">May 17, 2025</td>
                         <td>PO#P00582</td>
                         <td><span class="td-note">Received from MedStock</span></td>
                     </tr>
