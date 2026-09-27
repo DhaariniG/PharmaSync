@@ -223,10 +223,6 @@
             <div class="pagination-buttons">
                 <button class="page-btn"><?= icon('chevron-right', 'material-symbols-outlined', 'font-size:18px; transform:rotate(180deg);') ?></button>
                 <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <span class="page-dots">...</span>
-                <button class="page-btn">21</button>
                 <button class="page-btn"><?= icon('chevron-right', 'material-symbols-outlined', 'font-size:18px;') ?></button>
             </div>
         </div>
