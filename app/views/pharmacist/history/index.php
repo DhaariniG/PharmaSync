@@ -28,59 +28,60 @@
                             <?php if (!empty($history)): ?>
                                 <?php foreach ($history as $row): ?>
                                     <tr>
-                                        <td>
-                                            <span class="batch-badge <?= $row['type'] === 'Physical' ? 'channel-physical' : 'channel-online' ?>">
-                                                <i data-lucide="<?= $row['type'] === 'Physical' ? 'shopping-bag' : 'globe' ?>" class="badge-icon"></i>
-                                                <?= e($row['type']) ?>
-                                            </span>
-                                        </td>
-                                        <td class="order-id"><?= e($row['order_id']) ?></td>
-                                        <td class="customer-name"><?= e($row['customer_name']) ?></td>
-                                        <td class="date-cell"><?= e($row['date']) ?></td>
-                                        <td class="amount-cell"><?= e($row['total_amount']) ?></td>
-                                        <td class="payment-cell"><?= e($row['payment_method']) ?></td>
-                                        <td>
-                                            <?php 
-                                                $statusClass = 'completed';
-                                                if ($row['status'] === 'Cancelled') $statusClass = 'cancelled';
-                                                if ($row['status'] === 'Refunded') $statusClass = 'refunded';
-                                            ?>
-                                            <span class="status-tag <?= $statusClass ?>">
-                                                <?= e($row['status']) ?>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <?php if ($row['type'] === 'Physical' && $row['raw_id'] > 0): ?>
-                                                <?php if ($row['status'] === 'Cancelled' || $row['status'] === 'Refunded'): ?>
-                                                    <span class="no-actions-text">No actions available</span>
-                                                <?php else: ?>
-                                                    <div class="action-group">
-                                                        <!-- View Bill Receipt -->
-                                                        <a href="<?= url('/pharmacist/sales/' . (int) $row['raw_id'] . '/bill') ?>" class="btn-action-view" title="View Printable Bill">
-                                                            <i data-lucide="file-text" class="action-icon"></i> View Bill
-                                                        </a>
+              <td>
+    <span class="batch-badge <?= $row['type'] === 'Physical' ? 'channel-physical' : 'channel-online' ?>">
+        <i data-lucide="<?= $row['type'] === 'Physical' ? 'shopping-bag' : 'globe' ?>" class="badge-icon"></i>
+        <?= e($row['type']) ?>
+    </span>
+</td>
+<td class="order-id"><?= e($row['order_id']) ?></td>
+<td class="customer-name"><?= e($row['customer_name']) ?></td>
+<td class="date-cell"><?= e($row['date']) ?></td>
+<td class="amount-cell"><?= e($row['total_amount']) ?></td>
+<td class="payment-cell"><?= e($row['payment_method']) ?></td>
+<td>
+    <?php 
+        $statusClass = 'completed';
+        if ($row['status'] === 'Cancelled') $statusClass = 'cancelled';
+        if ($row['status'] === 'Refunded') $statusClass = 'refunded';
+    ?>
+    <span class="status-tag <?= $statusClass ?>">
+        <?= e($row['status']) ?>
+    </span>
+</td>
 
-                                                        <!-- Edit Order (Stock Delta Adjustments) -->
-                                                        <a href="<?= url('/pharmacist/sales/' . (int) $row['raw_id'] . '/edit') ?>" class="btn-action-edit" title="Edit Quantities">
-                                                            <i data-lucide="edit-3" class="action-icon"></i> Edit
-                                                        </a>
+<!-- ACTIONS COLUMN -->
+<td>
+    <?php if ($row['type'] === 'Physical' && $row['raw_id'] > 0): ?>
+        <div class="action-group">
+            
+            <!-- View Details ALWAYS displays for all physical orders -->
+            <a href="<?= url('/pharmacist/sales/' . (int) $row['raw_id'] . '/details') ?>" class="btn-action-view" title="View Details">
+                <i data-lucide="file-text" class="action-icon"></i> View Details
+            </a>
 
-                                                        <!-- Cancel / Refund Order Form -->
-                                                        <form action="<?= url('/pharmacist/sales/' . (int) $row['raw_id'] . '/cancel') ?>" method="POST" onsubmit="return handleCancellation(this, '<?= (int) $row['raw_id'] ?>');" class="action-form">
-                                                            <?= csrf_field() ?>
-                                                            <input type="hidden" name="action_type" value="Cancelled">
-                                                            <input type="hidden" name="cancellation_reason" value="">
-                                                            <button type="submit" class="btn-action-void" title="Cancel or Refund Order">
-                                                                <i data-lucide="slash" class="action-icon"></i> Cancel
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                <?php endif; ?>
-                                            <?php else: ?>
-                                                <span class="sync-text">Online Sync</span>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
+            <?php if ($row['status'] !== 'Cancelled' && $row['status'] !== 'Refunded'): ?>
+                <!-- Edit Order -->
+                <a href="<?= url('/pharmacist/sales/' . (int) $row['raw_id'] . '/edit') ?>" class="btn-action-edit" title="Edit Quantities">
+                    <i data-lucide="edit-3" class="action-icon"></i> Edit
+                </a>
+
+                <!-- Cancel / Refund Order Form -->
+                <form action="<?= url('/pharmacist/sales/' . (int) $row['raw_id'] . '/cancel') ?>" method="POST" onsubmit="return handleCancellation(this, '<?= (int) $row['raw_id'] ?>');" class="action-form">
+                    <?= csrf_field() ?>
+                    <input type="hidden" name="action_type" value="Cancelled">
+                    <input type="hidden" name="cancellation_reason" value="">
+                    <button type="submit" class="btn-action-void" title="Cancel or Refund Order">
+                        <i data-lucide="slash" class="action-icon"></i> Cancel
+                    </button>
+                </form>
+            <?php endif; ?>
+
+        </div>
+    <?php else: ?>
+        <span class="sync-text">Online Sync</span>
+    <?php endif; ?>
+</td>                      </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>

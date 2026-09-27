@@ -32,6 +32,7 @@ public function review(): void
         'active_page'     => 'prescriptions',
         'page_css'        => 'prescriptionReview.css', // <--- Matches Review CSS
         'container_class' => 'dashboard-container',
+        'show_topbar' => false,
     ]);
 }
 }

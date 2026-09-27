@@ -8,10 +8,7 @@
         <h2 class="page-title"><?= e($page_title ?? 'Pharmacist Portal') ?></h2>
     </div>
     <div class="header-right-profile">
-        <div class="notification-wrapper">
-            <i data-lucide="bell" class="header-bell-icon"></i>
-            <span class="notification-indicator"></span>
-        </div>
+
         <div class="profile-details">
             <span class="profile-name"><?= e(Session::name()) ?></span>
             <span class="profile-role"><?= e(strtoupper((string) Session::role())) ?></span>
