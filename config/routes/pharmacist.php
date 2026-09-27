@@ -19,7 +19,6 @@ return [
 
     // Counter (physical) sales
     'GET  /sales/{id}/completed' => ['PharmacistSaleController', 'completed'],  // saleCompleted
-    // In your pharmacist routes file:
     'GET  /sales/{id}/details'   => ['PharmacistSaleController', 'details'],
     'GET  /sales/{id}/bill'      => ['PharmacistSaleController', 'show'],       // viewBill
     'GET  /sales/{id}/edit'      => ['PharmacistSaleController', 'edit'],       // editSale

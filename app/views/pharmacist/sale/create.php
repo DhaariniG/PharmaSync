@@ -210,7 +210,7 @@
                 <input type="number" name="items[${itemIndex}][prescribed_quantity]" placeholder="Qty" min="1" class="form-control" style="width: 60px; text-align: center; padding: 6px; margin: 0 auto;">
             </div>
             <div>
-                <input type="text" name="items[${itemIndex}][frequency]" placeholder="e.g. 1 tab twice daily" class="form-control" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
+                <input type="text" name="items[${itemIndex}][frequency]" maxlength="50" placeholder="e.g. 1 tab twice daily" class="form-control" style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px;">
             </div>
             <div class="subtotal-cell row-subtotal" style="display:none;">Rs. ${parseFloat(item.unit_price).toFixed(2)}</div>
             <div class="action-cell">

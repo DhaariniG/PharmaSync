@@ -62,10 +62,14 @@ class PharmacistSaleController extends Controller
             $batchId       = filter_var($row['batch_id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
             $quantity      = filter_var($row['quantity'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 10000]]);
             $prescribedQty = filter_var($row['prescribed_quantity'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 10000]]);
-            $frequency     = mb_substr(trim($row['frequency'] ?? ''), 0, 255);
+            $frequency     = trim($row['frequency'] ?? '');
 
             if ($batchId === false || $quantity === false) {
                 $this->fail('/pharmacist/sales', 'Every quantity must be a whole number of 1 or more.');
+            }
+            // physical_order_items.frequency is VARCHAR(50): reject, never cut.
+            if (mb_strlen($frequency) > 50) {
+                $this->fail('/pharmacist/sales', 'Frequency must be 50 characters or fewer.');
             }
 
             $items[] = [
